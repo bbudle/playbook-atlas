@@ -1,0 +1,2803 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<meta name="theme-color" content="#0d1726" />
+<meta name="description" content="게임 플레이어 행동·몰입·리텐션·UX를 연구한 논문을, 기획자 관점에서 검증하고 읽을 수 있는 연구 위키." />
+<title>Playbook Atlas — 게임 연구 아카이브</title>
+<style>
+  :root { --ink:#172339;--ink2:#3a4a5f;--muted:#718096;--main:#f5f7fb;--paper:#ffffff;--border:#e1e7f0;--sidebar:#111d2d;--violet:#7063e8;--violet-bg:#efecff;--blue:#2677d5;--blue-bg:#eaf3ff;--green:#16785f;--shadow:0 10px 32px rgba(18,36,68,.045);--radius:18px;--sans: "Pretendard", "Noto Sans KR", "Apple SD Gothic Neo", "Malgun Gothic", -apple-system, BlinkMacSystemFont, sans-serif; }
+  * { box-sizing:border-box; }
+  html { scroll-behavior:smooth; }
+  body { margin:0; font-family:var(--sans); background:var(--main); color:var(--ink); line-height:1.6; font-size:14px; }
+  button,input,select { font:inherit; }
+  button { cursor:pointer; }
+  a { color:inherit; }
+  button:focus-visible, a:focus-visible, input:focus-visible,select:focus-visible { outline:3px solid #89a8ff;outline-offset:3px; }
+  .layout { display:flex; min-height:100vh; }
+  .sidebar { flex:0 0 250px; width:250px; background:var(--sidebar); color:#b7c4d6; display:flex; flex-direction:column; padding:27px 17px 22px; position:sticky;top:0;height:100vh; overflow-y:auto;z-index:10; }
+  .brand { padding:2px 13px 30px; display:flex;gap:11px;align-items:center;text-decoration:none;}
+  .brand-mark { height:36px;width:36px; background:linear-gradient(140deg,#8b7afb,#526ce7); color:white; border-radius:11px; display:grid;place-items:center;font-weight:900;font-size:21px;box-shadow:0 5px 16px #5865cf5c; }
+  .brand b { display:block;font-size:16px; color:white; line-height:1.2;letter-spacing:-.4px; }
+  .brand small { display:block;color:#778aa5;font-size:10.5px;letter-spacing:.15em;text-transform:uppercase;margin-top:4px; }
+  .side-group { margin:5px 0 19px; }
+  .side-label { display:block;padding:0 13px 9px; font-size:10px;font-weight:800;color:#73869e;letter-spacing:.14em; }
+  .side-link { border:0;background:transparent;color:#aabbd0; width:100%;display:flex;align-items:center;gap:11px;text-align:left;padding:11px 12px;border-radius:10px;margin:2px 0;font-size:13px;font-weight:600;transition:.18s; }
+  .side-link svg { width:17px;height:17px;stroke-width:1.8; }
+  .side-link:hover { background:#21334b;color:#f6f8fb; }
+  .side-link.active { background:#30405f;color:white; }
+  .side-count { margin-left:auto;font-size:11px;padding:1px 7px;border-radius:99px;background:#22324a;color:#91a9cb; }
+  .sidebar-spacer { flex:1; }
+  .side-foot { border-top:1px solid #2c3a4c;margin:10px 7px 0;padding:18px 4px 0;color:#788ea7;font-size:11px;line-height:1.7; }
+  .main { min-width:0; flex:1; }
+  .masthead { height:69px;background:rgba(255,255,255,.83);backdrop-filter:blur(15px);border-bottom:1px solid var(--border);padding:0 clamp(24px,4.5vw,70px); display:flex;align-items:center;justify-content:space-between;gap:20px; }
+  .bread { font-size:12px;display:flex;align-items:center;gap:8px;color:#91a0b4; font-weight:600; }
+  .bread b { color:#273b57;font-weight:700; }
+  .header-right { display:flex;gap:12px;align-items:center;font-size:11px;color:#72839b; }
+  .live { width:7px;height:7px;border-radius:50%;background:#2fbc92;box-shadow:0 0 0 4px #e7f7f1;display:inline-block; }
+  .wrap { max-width:1410px; padding:39px clamp(24px,4.5vw,70px) 90px;margin:auto; }
+  .eyebrow { text-transform:uppercase;color:#62779d;letter-spacing:.16em;font-size:10px;font-weight:900;display:flex;gap:9px;align-items:center; }
+  .eyebrow::before { content:'';width:17px;height:2px;background:#7771f1;display:inline-block; }
+  h1,h2,h3,h4,p { margin:0; }
+  h1 { font-size:clamp(29px,3.2vw,43px); line-height:1.3; font-weight:850;letter-spacing:-1.9px;color:#142238; }
+  h2 { font-size:21px;line-height:1.3;letter-spacing:-.8px; }
+  h3 { font-size:17px;letter-spacing:-.55px;line-height:1.4; }
+  .hero { border:1px solid #dbe3ef; border-radius:23px;background:linear-gradient(105deg,#ffffff 3%,#f5f4ff 66%,#ebf0ff 100%); padding:39px clamp(27px,3vw,49px); position:relative;overflow:hidden; box-shadow:var(--shadow); }
+  .hero>*:not(.orb){position:relative;z-index:1;}
+  .hero .orb { position:absolute;width:315px;height:315px;border:1px solid #d5d5fb;border-radius:50%;right:-90px;top:-125px;opacity:.9;box-shadow:0 0 0 44px #f0efff66,0 0 0 88px #f2f0ff55; }
+  .hero h1 { margin:15px 0 14px;max-width:790px; }
+  .hero p { color:#6d7b90;font-size:13px;max-width:650px;line-height:1.9; }
+  .hero b.emph { color:#6e5fea; }
+  .hero-pills { display:flex;flex-wrap:wrap;gap:8px;margin-top:24px; }
+  .hero-pill { display:inline-flex;gap:7px;align-items:center;padding:7px 11px;background:#ffffffb5;border:1px solid #e3e6f2;border-radius:99px;font-size:11px;font-weight:700;color:#556684; }
+  .hero-pill strong { color:#202d43;font-size:12px; }
+  .section { margin-top:44px; }
+  .sect-head { display:flex;align-items:end;justify-content:space-between; gap:20px;margin-bottom:20px; }
+  .section-overline { letter-spacing:.13em;font-size:10px;color:#8c9bb1;font-weight:900;text-transform:uppercase;margin-bottom:8px; }
+  .section-subtitle { margin-top:6px;font-size:12px;color:#8794a7; }
+  .link-btn { border:0;background:transparent;color:#586ad6;font-size:12px;font-weight:800;padding:7px;white-space:nowrap; }
+  .link-btn:hover{text-decoration:underline;}
+  .cards { display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px; }
+  .card { background:var(--paper);border:1px solid var(--border); border-radius:18px;min-width:0;position:relative;overflow:hidden;display:flex;flex-direction:column;box-shadow:var(--shadow); transition:transform .16s,box-shadow .16s,border-color .16s; }
+  .card:hover { transform:translateY(-3px);box-shadow:0 13px 38px #18294712;border-color:#c8d4ec; }
+  .card:before { content:'';position:absolute;left:0;top:0;right:0;height:4px;background:#7968ec; }
+  .card.blue:before { background:#4584db; }
+  .card-body { padding:24px 22px 18px;flex:1;display:flex;flex-direction:column; }
+  .card-top { display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:17px; }
+  .category { font-weight:800;font-size:10px;letter-spacing:.03em;display:inline-flex;padding:5px 9px;border-radius:7px;background:var(--violet-bg);color:#6656bc; }
+  .blue .category { background:var(--blue-bg);color:#3173bb; }
+  .sub-meta { font-size:10.5px;color:#95a1b2;font-weight:600; white-space:nowrap; }
+  .card h3 {font-size:17px;line-height:1.49;letter-spacing:-.6px;min-height:50px; }
+  .card h3 button {border:0;background:transparent;color:inherit;text-align:left;padding:0;font-size:inherit;font-weight:850;line-height:inherit;letter-spacing:inherit; }
+  .card h3 button:hover {color:#554ad0;}
+  .card .description {font-size:12px;line-height:1.8;color:#77859b;margin:11px 0 17px;min-height:61px;}
+  .tag-wrap {display:flex;gap:6px;flex-wrap:wrap; }
+  .tag { border:1px solid #e3e9f0;background:#f7f9fc;color:#63758f;padding:4px 9px;border-radius:7px;font-size:10px;font-weight:750;line-height:1.4; }
+  button.tag:hover { color:#5145b5;border-color:#cac6ef;background:#f3f0ff; }
+  .card-bottom {display:flex;align-items:center;justify-content:space-between;border-top:1px solid #edf0f5;padding:13px 22px 14px;gap:8px; }
+  .card-bottom .foot-note {font-size:10px;color:#8c9aaf;}
+  .card-bottom button {background:transparent;border:0;color:#5962ce;font-size:11px;font-weight:850;white-space:nowrap;padding:4px 0;}
+  .card-bottom button:hover{text-decoration:underline;}
+  .chipline { display:flex;gap:6px;align-items:center;flex-wrap:wrap; }
+  .new-stamp {font-size:9px;color:#df7650; font-weight:900;letter-spacing:.07em;margin-left:3px; }
+  .filter-bar { display:flex; gap:9px;align-items:center; flex-wrap:wrap;margin-top:16px;margin-bottom:18px; }
+  .searchbox { flex:1 1 250px;display:flex;align-items:center;gap:8px;height:41px;border:1px solid var(--border);border-radius:10px;background:white;padding:0 13px;color:#8799af; }
+  .searchbox:focus-within {border-color:#8c83ee;box-shadow:0 0 0 3px #e9e6ff;}
+  .searchbox input {border:0;outline:0;min-width:0;width:100%;color:#29354a;font-size:12px;background:transparent;}
+  .searchbox input::placeholder {color:#a1adbd;}
+  .select {border:1px solid var(--border);background:white;border-radius:10px;height:41px;padding:0 32px 0 12px;color:#51627b;font-size:11px;font-weight:700;min-width:122px;}
+  .all-header {display:flex;justify-content:space-between;align-items:center;gap:10px;font-size:11px;color:#8493a8;margin-bottom:14px;}
+  .filter-tags {display:flex;gap:6px;flex-wrap:wrap;margin:10px 0 14px;}
+  .filter-tag {border:1px solid #e1e7f0;background:white;padding:6px 10px;border-radius:99px;color:#6e809a;font-size:10px;font-weight:700;}
+  .filter-tag:hover,.filter-tag.active{background:#eae8ff;border-color:#c7c1fa;color:#5b50ba;}
+  .clear {border:0;background:none;color:#7262e0;font-weight:750;font-size:11px;padding:5px;}
+  .empty {grid-column:1/-1;border:1px dashed #ccd6e3;background:#ffffffaf;padding:50px 20px;text-align:center;border-radius:14px;color:#708098;}
+  .empty strong {display:block;color:#34445b;margin:10px 0 4px;font-size:16px;}
+  .footer {margin-top:75px;padding-top:21px;border-top:1px solid #dce3ef;font-size:11px;color:#97a3b6;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;}
+  .icon {height:17px;width:17px;display:inline-block;vertical-align:-3px;fill:none;stroke:currentColor;stroke-width:1.75;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0;}
+  .back-button {font-size:12px;color:#5868a3;font-weight:800;border:0;background:none;padding:0;margin:0 0 23px;display:inline-flex;align-items:center;gap:5px;}
+  .detail-header {border:1px solid var(--border);background:white;border-radius:20px;padding:33px 36px;box-shadow:var(--shadow);}
+  .detail-header h1 {font-size:clamp(25px,3vw,37px);max-width:860px;margin:15px 0 13px;}
+  .detail-header p {color:#62738c; font-size:13px;line-height:1.8;}
+  .detail-meta {display:flex;flex-wrap:wrap;gap:16px;margin:18px 0;font-size:11px;color:#8b98aa;}
+  .detail-meta strong {color:#52637a;}
+  .detail-body { display:grid;grid-template-columns:minmax(0,1fr) 211px; gap:27px; margin-top:28px;align-items:start; }
+  .article {min-width:0;}
+  .paper-section {background:white;border:1px solid var(--border);border-radius:17px;margin-bottom:19px;padding:27px 29px;box-shadow:var(--shadow);scroll-margin-top:25px;}
+  .paper-section h2 {font-size:20px;margin-bottom:17px;display:flex;gap:10px;align-items:center;}
+  .section-num {font-size:11px;border-radius:8px;color:#6658d4;background:#f1efff;font-weight:900;padding:5px 8px;letter-spacing:0;}
+  .paper-section h3 {font-size:14px;margin:23px 0 10px;}
+  .paper-section p {color:#4f6078;font-size:12.6px;line-height:1.95;margin:9px 0;}
+  .paper-table-wrap {overflow:auto;max-width:100%;border:1px solid #e7ebf2;border-radius:12px;margin:14px 0;}
+  .paper-table {width:100%;border-collapse:collapse;font-size:12px;min-width:420px;}
+  .paper-table th {background:#f4f6fa;color:#64758b;font-size:11px;text-align:left;font-weight:850;padding:11px 13px;}
+  .paper-table td {padding:12px 13px;color:#3e4d64;vertical-align:top;border-top:1px solid #e9edf3;line-height:1.75;}
+  .paper-table td:first-child {font-weight:800;color:#263b56;white-space:nowrap;}
+  .paper-table tbody tr:hover {background:#fafaff;}
+  .summary-table {min-width:0;}
+  .summary-table td:first-child {width:124px;white-space:normal;}
+  .insight {border-radius:11px;padding:15px 17px;background:#f6f4ff;border:1px solid #e8e5ff;margin:15px 0;}
+  .insight.green {background:#edf8f5;border-color:#d8eee7;}
+  .insight.gold {background:#fff9ee;border-color:#faeed8;}
+  .insight .insight-label {font-size:10px;letter-spacing:.08em;font-weight:900;color:#6859c3;margin-bottom:6px;}
+  .insight.green .insight-label {color:#198168;}
+  .insight.gold .insight-label {color:#ae8435;}
+  .insight p {margin:0;font-size:12.5px;line-height:1.85;color:#44516c;}
+  .info-stack {display:grid;gap:10px;}
+  .info-block {background:#f8fafd;border:1px solid #e9eef5;padding:15px;border-radius:11px;}
+  .info-block strong {color:#293b55;font-size:12.5px;}
+  .info-block p {margin:6px 0 0;font-size:12px;}
+  .tiny-muted {font-size:11px!important;color:#8390a4!important;}
+  .charts {display:grid;gap:9px;margin:17px 0 20px;}
+  .chart-row {display:grid;grid-template-columns:113px 1fr 50px;align-items:center;gap:10px;}
+  .chart-name {font-size:11px;color:#6b7a91;font-weight:700;}
+  .chart-track {height:9px;background:#eceffa;border-radius:99px;overflow:hidden;}
+  .chart-fill {height:100%;background:linear-gradient(90deg,#9a86fa,#6656d9);border-radius:99px;}
+  .chart-value {font-size:11px;color:#5964a3;font-weight:850;font-variant-numeric:tabular-nums;text-align:right;}
+  .metric-kpi {font-size:44px;font-weight:900;letter-spacing:-2px;color:#486fd3;line-height:1.15;}
+  .experiment {padding:18px;border:1px solid #dfe7f1;background:#fbfcff;border-radius:12px;margin:13px 0;}
+  .experiment h4 {font-size:14px;margin-bottom:6px;}
+  .experiment dl {display:grid;grid-template-columns:85px 1fr;gap:8px 15px;font-size:11.5px;margin:12px 0 0;line-height:1.8;}
+  .experiment dt {font-weight:850;color:#667b98;}
+  .experiment dd {margin:0;color:#41516a;}
+  .toc {position:sticky;top:20px;background:#fff;border:1px solid var(--border);border-radius:14px;padding:18px 14px;}
+  .toc b {display:block;font-size:10px;letter-spacing:.12em;color:#8090aa;margin-bottom:12px;padding-left:6px;}
+  .toc a {display:block;font-size:11.5px;color:#60718a;text-decoration:none;padding:9px 7px;border-radius:8px;line-height:1.45;}
+  .toc a:hover {background:#f5f4ff;color:#6455c9;}
+  .source-link {border:1px solid #d9e0eb;background:white;color:#4e5d81;text-decoration:none;font-weight:750;font-size:11px;padding:9px 12px;border-radius:9px;display:inline-flex;gap:6px;align-items:center;margin:4px 6px 3px 0;}
+  .source-link:hover {border-color:#a9ade6;color:#5549c7;}
+  .mobile-nav {display:none;}
+  @media (max-width:1200px) { .cards {grid-template-columns:repeat(2,minmax(0,1fr));} .sidebar {flex-basis:215px;width:215px;} .wrap {padding:31px 26px 70px;} .masthead {padding:0 26px;} }
+  @media (max-width:920px) { .sidebar {display:none;} .masthead {height:62px;} .mobile-nav{display:flex;align-items:center;gap:9px;font-weight:900;color:#222e45;font-size:13px;} .detail-body {grid-template-columns:1fr;} .toc {display:none;} }
+  @media (max-width:650px) { .wrap{padding:20px 15px 55px;} .masthead{padding:0 16px;} .hero{padding:27px 22px;border-radius:16px;} .hero h1{font-size:29px;letter-spacing:-1.3px;} .cards{grid-template-columns:1fr;} .section{margin-top:35px;} .filter-bar .select {flex:1 1 44%;} .filter-bar .searchbox{flex-basis:100%;} .detail-header{padding:22px 19px;} .paper-section{padding:21px 17px;} .detail-header h1{font-size:25px;} .header-right{font-size:10px;} .masthead .bread{display:none;} .chart-row{grid-template-columns:91px 1fr 40px;} .card h3{min-height:0;} .card .description{min-height:0;} .hero .orb{opacity:.25;} .summary-table td:first-child{width:85px;} }
+  @media (prefers-reduced-motion:reduce){*,*:before,*:after{scroll-behavior:auto!important;transition:none!important;animation:none!important;}}
+
+  /* 02. 연구의 기획 활용을 먼저 이해하는 인사이트 요약 */
+  .eval-lead {background:#f3f6fc;border:1px solid #dbe3f0;border-left:4px solid #6d74d9;border-radius:12px;padding:21px 22px;margin:12px 0 21px;}
+  .eval-eyebrow {font-size:11px;letter-spacing:.05em;font-weight:850;color:#5467a7;margin-bottom:9px;}
+  .paper-section .eval-lead p {font-size:15px;font-weight:800;line-height:1.75;color:#263752;margin:0;letter-spacing:-.25px;}
+  .eval-lessons {display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin:13px 0 24px;}
+  .eval-lesson {border:1px solid #e3e9f2;border-radius:12px;background:#fbfcff;padding:16px 15px;min-width:0;}
+  .eval-number {font-size:10px;color:#776bd6;font-weight:900;letter-spacing:.08em;display:block;margin-bottom:8px;}
+  .eval-lesson strong {display:block;font-size:13px;line-height:1.5;color:#22334d;letter-spacing:-.4px;}
+  .paper-section .eval-lesson p {font-size:11.6px;line-height:1.8;margin:9px 0 0;color:#596a82;}
+  .eval-scenario {display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:13px 0 24px;}
+  .eval-scenario-item {padding:17px;border:1px solid #e2e8f0;border-radius:12px;background:#fff;}
+  .eval-scenario-item.action {background:#edf7f4;border-color:#d5eae3;}
+  .eval-scenario-item b {font-size:11px;color:#71849e;display:block;margin-bottom:9px;}
+  .eval-scenario-item.action b {color:#16745f;}
+  .paper-section .eval-scenario-item p {font-size:12px;color:#33445c;line-height:1.85;margin:0;}
+  .eval-metrics {display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px;margin:12px 0 21px;}
+  .eval-metric {padding:12px 13px;border-radius:10px;border:1px solid #e5eaf3;background:#fafbfe;}
+  .eval-metric strong {font-size:11.5px;display:block;color:#354766;}
+  .eval-metric span {color:#7d8ca1;font-size:10.5px;display:block;margin-top:4px;}
+  .eval-boundary {border-top:1px dashed #e0e6ef;padding-top:18px;margin-top:7px;}
+  .eval-boundary dl {display:grid;grid-template-columns:104px 1fr;gap:9px 12px;margin:0;}
+  .eval-boundary dt {font-size:11px;font-weight:850;color:#667b98;}
+  .eval-boundary dd {font-size:11.5px;line-height:1.8;color:#54667e;margin:0;}
+  .eval-bottom {font-size:13px;font-weight:850;color:#243854;border-top:1px solid #e8edf4;margin-top:18px;padding-top:16px;line-height:1.8;}
+  @media (max-width:1100px){.eval-lessons{grid-template-columns:1fr;}}
+  @media (max-width:650px){.eval-scenario,.eval-metrics{grid-template-columns:1fr;}.eval-lead{padding:17px;}.paper-section .eval-lead p{font-size:14px;}.eval-boundary dl{grid-template-columns:1fr;gap:3px;}.eval-boundary dd{margin-bottom:10px;}}
+
+  /* 02. 검증 결과 → 근거가 있는 해석 → 친숙한 예시 */
+  .evidence-list {display:grid;grid-template-columns:1fr;gap:11px;margin:14px 0 27px;}
+  .evidence-item {background:#fff;border:1px solid #dfe7f0;border-radius:12px;padding:17px 19px;display:grid;grid-template-columns:minmax(108px,160px) 1fr;align-items:start;gap:16px;}
+  .evidence-stat {color:#5f54bb;font-size:16px;line-height:1.4;font-weight:900;letter-spacing:-.5px;}
+  .evidence-title {font-weight:850;font-size:13px;color:#22354d;}
+  .paper-section .evidence-description {font-size:12px;line-height:1.85;color:#52647e;margin:6px 0;}
+  .evidence-cite {display:inline-block;font-size:10.5px;color:#6175a0;text-decoration:underline;text-decoration-color:#b8c8e7;text-underline-offset:3px;margin-top:5px;}
+  .interpretation-list {display:grid;gap:13px;margin:14px 0 18px;}
+  .interpretation-item {background:#fbfcff;border:1px solid #e0e6ef;border-radius:14px;padding:20px;}
+  .interpretation-item h4 {font-size:14px;font-weight:850;margin:0 0 12px;line-height:1.55;}
+  .reasoning-step {margin:10px 0;border-left:2px solid #d3d5e6;padding:0 0 0 13px;}
+  .reasoning-step b {display:block;font-size:10.5px;font-weight:850;color:#6256b9;margin-bottom:4px;}
+  .paper-section .reasoning-step p {font-size:12px;line-height:1.75;color:#455772;margin:0;}
+  .reasoning-step.example {border-color:#9dc8b6;background:#f3faf7;border-radius:0 9px 9px 0;padding:11px 13px;margin-top:13px;}
+  .reasoning-step.example b {color:#17745b;}
+  .paper-section .interpretation-boundary {font-size:11px;color:#7c889c;margin:13px 0 0;line-height:1.7;}
+  .interpretation-footnote {font-size:11px;color:#7c889c;line-height:1.8;margin:-5px 0 17px;}
+  @media (max-width:650px){.evidence-item{grid-template-columns:1fr;gap:6px;padding:15px;}.evidence-stat{font-size:15px;}.interpretation-item{padding:16px;}}
+</style>
+</head>
+<body>
+<div class="layout">
+  <aside class="sidebar" aria-label="위키 탐색">
+    <a class="brand" href="#home" aria-label="Playbook Atlas 홈"><span class="brand-mark">P</span><span><b>Playbook Atlas</b><small>Research library</small></span></a>
+    <div class="side-group"><span class="side-label">LIBRARY</span>
+      <button class="side-link active" data-action="nav-home" id="nav-home"><svg class="icon"><use href="#i-grid"></use></svg>연구 아카이브<span class="side-count" id="all-count">5</span></button>
+      <button class="side-link" data-action="nav-new" id="nav-new"><svg class="icon"><use href="#i-spark"></use></svg>새로운 연구</button>
+      <button class="side-link" data-action="nav-saved" id="nav-saved"><svg class="icon"><use href="#i-bookmark"></use></svg>저장한 연구</button>
+    </div>
+    <div class="side-group"><span class="side-label">TOPICS</span><div id="sidebar-topics"></div></div>
+    <div class="sidebar-spacer"></div>
+    <div class="side-foot">논문에서 확인한 사실과<br>게임 기획자의 해석을 분리한<br>근거 중심 연구 위키.<br><br><span id="sidebar-updated"></span></div>
+  </aside>
+  <main class="main" id="main"><header class="masthead"><div class="mobile-nav"><span class="brand-mark" style="height:27px;width:27px;border-radius:8px;font-size:16px;">P</span> Playbook Atlas</div><div class="bread" id="breadcrumbs"><b>Research library</b><span>/</span> Home</div><div class="header-right"><span class="live"></span><span id="header-status">연구 위키 · 5 papers</span></div></header><div id="content"></div></main>
+</div>
+<svg xmlns="http://www.w3.org/2000/svg" style="position:absolute;width:0;height:0;overflow:hidden"><symbol id="i-grid" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></symbol><symbol id="i-spark" viewBox="0 0 24 24"><path d="m12 2 2.5 7.5L22 12l-7.5 2.5L12 22l-2.5-7.5L2 12l7.5-2.5z"/></symbol><symbol id="i-bookmark" viewBox="0 0 24 24"><path d="M5 4.5A1.5 1.5 0 0 1 6.5 3h11A1.5 1.5 0 0 1 19 4.5V21l-7-4-7 4z"/></symbol><symbol id="i-tag" viewBox="0 0 24 24"><path d="m20 13-7 7-10-10V3h7z"/><circle cx="7.8" cy="7.8" r="1.4"/></symbol><symbol id="i-search" viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="7"/><path d="m16 16 5 5"/></symbol><symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14m-6-6 6 6-6 6"/></symbol><symbol id="i-back" viewBox="0 0 24 24"><path d="M19 12H5m6-6-6 6 6 6"/></symbol><symbol id="i-external" viewBox="0 0 24 24"><path d="M14 3h7v7m0-7-9 9"/><path d="M21 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h6"/></symbol></svg>
+<script>
+/*
+ * GAME RESEARCH ATLAS — 연구 데이터
+ * 새로운 논문을 추가할 때 window.RESEARCH_REVIEWS 배열에 같은 형식의 객체를 넣으면 됩니다.
+ * 직접 검증된 연구 사실과 별도 기획 제안을 반드시 구분하세요.
+ */
+window.RESEARCH_REVIEWS = [
+  {
+    id: 'mobile-flow-loyalty-2026',
+    title: '몰입과 게임 평가가 만족도·재이용 의향에 미치는 영향',
+    kicker: '좋은 플레이 경험과 편리한 이용 환경은 어떻게 연결될까?',
+    originalTitle: 'Flow, Game Evaluation, and Player Loyalty in Mobile Games: Evidence from Korea and Japan',
+    authors: 'Sun Hee Kwon · Segu Oh · Hyemi Bang',
+    journal: 'Sustainability',
+    doi: '10.3390/su182111334',
+    sourceUrl: 'https://www.mdpi.com/2071-1050/18/21/11334',
+    published: '2026-11-07',
+    updated: '2026-11-11',
+    researchType: '실증 연구',
+    dataType: '설문',
+    domain: '몰입·UX',
+    rank: 1,
+    confidence: '중간',
+    accent: 'violet',
+    tags: ['몰입', '게임 평가', '시스템 품질', '만족도', '재이용 의향', 'UX', 'PLS-SEM'],
+    dataSummary: '한국 115명 + 일본 115명, 유료 결제 경험이 있는 성인 모바일 게임 이용자 230명의 7점 척도 설문(2024년 1~3월).',
+    methodSummary: 'PLS-SEM(부분최소제곱 구조방정식)과 5,000회 부트스트랩으로 변수 간 관계를 분석.',
+    finding: '도전감·사회적 상호작용·자기평가 숙련도가 몰입과 유의한 양의 관계를 보였다. 시스템 품질은 게임 평가와 비교적 큰 관계를, 만족도는 재이용 의향과 양의 관계를 보였다.',
+    shortFinding: '도전감·상호작용·숙련도가 높을수록 몰입 점수가 높고, UI 편의성 평가가 높을수록 게임 적합성 평가도 높았음',
+    limitation: '게임 접속 로그가 아닌 횡단면 설문이다. 재이용 의향은 실제 D7·D30 잔존율이 아니며 인과관계를 입증하지 않는다.',
+    useCase: '몰입과 UI·정보 탐색 편의성을 별개 지표로 검증하고, 만족도 설문과 실제 이용 행동을 연결해 측정.',
+    audience: '전투 기획 · UX 기획 · 아웃게임 시스템',
+    summaryRows: [
+      ['연구 질문', '플레이 경험(몰입)과 운영 경험(게임 평가)이 만족도 및 재이용 의향과 어떤 관계가 있는가?'],
+      ['연구 데이터', '한국 115명·일본 115명, 총 230명 / 모바일 유료 결제 경험자 / 2024년 1~3월 / 7점 설문'],
+      ['분석 방법', 'PLS-SEM, 5,000회 부트스트랩, 국가별 비교'],
+      ['결론', '도전감·사회적 상호작용·숙련도 점수가 높을수록 몰입 점수도 높았음. 시스템 품질 점수가 높을수록 게임 적합성 평가도 높았으며, 만족도가 높을수록 재이용 의향도 높았음.'],
+      ['실무 한계', '실제 잔존율이나 행동 변화가 아닌 설문 상의 관계. 인과관계 미입증.']
+    ],
+    evaluation: {
+      "lead": "도전감·사회적 교류·자기평가 숙련도가 높은 응답자일수록 몰입 점수도 높았다. UI·정보 탐색 편의성을 높게 평가한 응답자는 게임 적합성 평가도 높았고, 이 게임 평가는 몰입보다 만족도와 더 큰 경로계수를 보였다.",
+      "highlights": [
+        {
+          "stat": "β +0.252 / +0.236 / +0.231",
+          "title": "사회적 교류·도전감·자기평가 숙련도가 높을수록 몰입 점수도 높았다",
+          "plain": "세 요인은 모두 몰입과 통계적으로 유의한 양의 관계를 보였다(p≤0.003). 목표 명확성은 유의한 관계가 확인되지 않았다(β=0.065, p=0.398).",
+          "source": "논문 표 6 · 몰입 관련 변수"
+        },
+        {
+          "stat": "β +0.379",
+          "title": "화면 이용 편의성을 높게 평가할수록 게임 적합성 평가도 높았다",
+          "plain": "UI 이해도·정보 탐색 용이성 중심의 시스템 품질은 게임 평가와 유의한 양의 관계를 보였다(p<0.001). 운영 변수 중 과금 정책(β=0.170), 고객 지원(β=0.133)보다 계수가 컸다.",
+          "source": "논문 표 1의 문항 정의 · 표 6"
+        },
+        {
+          "stat": "β +0.563 vs +0.288",
+          "title": "게임 적합성 평가는 몰입보다 만족도와 더 큰 계수를 보였다",
+          "plain": "만족도와의 경로계수는 게임 평가 β=0.563, 몰입 β=0.288로 모두 유의한 양의 관계였다(p<0.001). 수치가 크다고 UI 개선의 인과효과가 더 크다고 볼 수는 없다.",
+          "source": "논문 표 6 · 만족도 경로"
+        },
+        {
+          "stat": "β +0.622",
+          "title": "만족도가 높은 응답자일수록 재이용 의향도 높았다",
+          "plain": "만족도와 재이용 의향 사이에 유의한 양의 관계가 나타났다(p<0.001). 실제 다음 날 재접속했는지 측정한 것은 아니다.",
+          "source": "논문 표 1의 설문 문항 · 표 6"
+        }
+      ],
+      "interpretations": [
+        {
+          "title": "목표를 알기 쉽게 안내하는 것만으로 몰입을 설명하기는 어렵다",
+          "observed": "도전감·사회적 교류·자기평가 숙련도는 몰입과 유의한 양의 관계를 보였지만, 목표 명확성은 그렇지 않았다.",
+          "reasoning": "같은 분석 모형에서 목표 명확성만 독립적인 관계가 확인되지 않았다. 따라서 “무엇을 할지 이해하는 경험”과 “플레이에 빠져드는 경험”은 같은 것으로 취급하지 않는 편이 타당하다.",
+          "example": "퀘스트 위치는 명확히 보이는데, 그곳에서 반복하는 전투가 지루한 경우를 떠올리면 된다.",
+          "boundary": "목표 안내가 무용하거나, 도전 요소를 늘리면 몰입이 반드시 높아진다는 뜻은 아니다."
+        },
+        {
+          "title": "플레이의 재미와 이용 편의성은 만족도를 이해할 때 둘 다 살펴볼 요소다",
+          "observed": "몰입과 만족도는 β=0.288, 게임 적합성 평가와 만족도는 β=0.563으로 모두 양의 관계였다. UI 편의성 중심의 시스템 품질은 게임 평가와 β=0.379의 양의 관계를 보였다.",
+          "reasoning": "이용 편의성이 높게 평가된 경우 게임 적합성 평가도 높았고, 그 게임 평가와 몰입이 각각 만족도와 양의 관계를 보였다. 따라서 만족도가 낮을 때 “게임이 재미없는가?”만 물어보면 이용 편의성 문제를 놓칠 수 있다는 판단이 나온다.",
+          "example": "전투는 재미있지만 장비창에서 필요한 정보를 찾기가 번거로운 게임. 전투 재미와 화면 편의성을 따로 물어야 두 경험의 차이를 알 수 있다.",
+          "boundary": "이 설문으로 “UI를 고치면 만족도가 오른다”는 인과효과를 입증한 것은 아니다."
+        },
+        {
+          "title": "재이용 의향이 높다는 결과를 실제 잔존율로 바꿔 읽으면 안 된다",
+          "observed": "만족도와 재이용 의향의 경로계수는 β=0.622였지만, 조사 데이터는 설문이고 게임 접속 기록은 수집하지 않았다.",
+          "reasoning": "이 수치는 만족한 사람이 “앞으로도 할 생각”이라고 답하는 경향을 보여준다. 실제로 돌아오는 비율(D7·D30)은 별도의 행동 데이터로 확인해야 한다.",
+          "example": "“이 게임 내일도 해야지”라고 답한 사람과 실제로 내일 접속한 사람은 같지 않을 수 있다.",
+          "boundary": "재이용 의향이 무의미하다는 뜻은 아니다. 실제 재방문의 대체 지표로 확정할 수 없다는 뜻이다."
+        }
+      ],
+      "takeaway": "이 표본에서는 몰입뿐 아니라 UI 이용 편의성과 연결된 게임 적합성 평가도 만족도와 유의한 양의 관계를 보였다. 만족도를 볼 때 플레이 경험과 이용 경험을 함께 살펴볼 이유가 있다."
+    },
+    variables: [
+      ['몰입 (Flow)', '게임이 재미있고 흥미로운지, 관심이 지속되는지, 게임에 완전히 빠져드는지를 묻는 설문 문항.', '플레이 시간·실제 접속량과 동일하지 않다.'],
+      ['목표 명확성 (Goal)', '해야 할 일과 목표 및 결과가 명확하고 필요한 정보를 제공받는다고 느끼는 정도.', '목표 안내 자체가 효과 없다는 뜻은 아니다.'],
+      ['도전감 (Challenge)', '잘 플레이하려면 집중해야 하고 스스로에게 도전하는 느낌.', '실제 난이도나 실패율과 동일하지 않다.'],
+      ['상호작용 (Interaction)', '다른 이용자와 의견 교환·커뮤니티 활동을 할 수 있고 숙련자가 인정받는다고 느끼는 정도.', '전투 조작 반응성이라는 의미가 아니다.'],
+      ['숙련도 (Skill)', '플레이 방법을 알고 스스로 숙련되었다고 평가하는 정도.', '게임 로그에서 계산한 객관적인 실력 점수가 아니다.'],
+      ['시스템 품질 (System Quality)', 'UI 이해도, 정보 탐색 용이성, 편리한 이용 환경 등 기술·사용성 중심의 품질 평가.', '전투 밸런스·성장 시스템 완성도를 직접 측정한 것이 아니다.'],
+      ['게임 평가 (Game Evaluation)', '이 게임이 나에게 즐기기 적합한 게임인지에 대한 전반적인 주관 평가.', '객관적 완성도 점수나 리뷰 평점이 아니다.'],
+      ['만족도 (Satisfaction)', '게임 이용 경험에 대한 만족 정도.', '단일 문항 결과변수라는 제한이 있다.'],
+      ['재이용 의향 (Reuse Intention)', '앞으로도 이 게임을 계속 이용할 생각이 있는지.', '실제 D7/D30 잔존율이 아니다.']
+    ],
+    methodDetails: [
+      {title:'왜 PLS-SEM을 사용했나?', body:'몰입·게임 평가·만족도처럼 직접 관측하기 어려운 개념을 여러 설문 문항(일부는 단일 문항)으로 측정하고, 다수 변수 사이의 관계를 하나의 모형에서 추정하려는 목적에 맞는 방법이다. 중간 규모 표본과 복합 경로 모형을 고려해 연구진이 선택했다.'},
+      {title:'PLS-SEM은 대략 무엇인가?', body:'설문 문항으로 잠재적인 개념을 나타내는 점수를 추정한 뒤, 그 개념들 사이의 통계적인 경로계수(β)를 계산하는 구조방정식 방법이다. 관계의 방향과 설명력을 분석하지만, 횡단면 설문만으로 인과관계를 증명하지 않는다.'},
+      {title:'부트스트랩 5,000회는?', body:'원본 230명의 응답에서 중복을 허용해 다시 표본을 뽑고 같은 분석을 5,000번 반복한다. 이 재표본 분석에서 경로계수의 변동을 확인해 신뢰구간과 p값을 추정한다. 230명에게 설문을 5,000번 새로 한 것은 아니다.'}
+    ],
+    metricExplanations: [
+      ['β (표준화 경로계수)', '양수면 두 변수가 같은 방향으로 관련되고, 음수면 반대 방향으로 관련됨. 모형 내 관련성의 크기이지 매출·리텐션 변화율이 아님.'],
+      ['p값', '관계가 0이라는 가정 아래 현재와 같거나 더 극단적인 결과를 얻을 확률. p<0.05는 흔한 판단 기준이지만 효과의 중요도나 인과성을 뜻하지 않음.'],
+      ['f² (추가 설명력)', '특정 변수를 모델에서 제외했을 때 설명력이 얼마나 감소하는지를 나타냄. 보통 0.02·0.15·0.35를 작은·중간·큰 효과의 참고 기준으로 사용.'],
+      ['R² (설명력)', '설명변수들이 결과변수의 변동을 어느 정도 설명하는가를 나타냄. 예측 정확도나 인과적 설명력과 동일하지 않음.']
+    ],
+    results: [
+      {
+        title: '어떤 경험이 몰입과 관련되었나?',
+        columns: ['입력 변수', 'β', 'p값', '해석'],
+        rows: [
+          ['사회적 상호작용', '0.252', '0.002', '유의한 양의 관계'],
+          ['도전감', '0.236', '0.003', '유의한 양의 관계'],
+          ['자기평가 숙련도', '0.231', '<0.001', '유의한 양의 관계'],
+          ['목표 명확성', '0.065', '0.398', '유의하지 않음']
+        ],
+        note: '목표 명확성이 불필요하다는 뜻이 아니라, 이 모형에서 몰입과의 독립적인 관계를 확인하지 못했다는 의미다.',
+        chart: [{name:'상호작용',value:.252},{name:'도전감',value:.236},{name:'숙련도',value:.231},{name:'목표 명확성',value:.065}]
+      },
+      {
+        title: '어떤 운영 요인이 게임 평가와 관련되었나?',
+        columns: ['입력 변수', 'β', 'p값', 'f²'],
+        rows: [
+          ['시스템 품질', '0.379', '<0.001', '0.150'],
+          ['과금 정책', '0.170', '0.007', '0.033'],
+          ['서비스 품질', '0.133', '0.036', '0.018']
+        ],
+        note: '여기서 시스템 품질은 UI와 이용 편의성을 중심으로 측정했다. 전투 시스템의 수치 밸런스를 직접 평가한 것이 아니다.',
+        chart: [{name:'시스템 품질',value:.379},{name:'과금 정책',value:.170},{name:'서비스 품질',value:.133}]
+      },
+      {
+        title: '몰입·게임 평가·만족도는 어떻게 연결되었나?',
+        columns: ['경로', 'β', 'p값', 'f²'],
+        rows: [
+          ['몰입 → 만족도', '0.288', '<0.001', '0.147'],
+          ['게임 평가 → 만족도', '0.563', '<0.001', '0.560'],
+          ['만족도 → 추천 의향', '0.472', '<0.001', '0.287'],
+          ['만족도 → 재이용 의향', '0.622', '<0.001', '0.631']
+        ],
+        note: '통계적 경로 관계를 나타낸다. 만족도가 실제 리텐션을 62.2% 올렸다는 의미가 아니다.'
+      }
+    ],
+    experiments: [
+      {title:'성장 정보 UX 개선',hypothesis:'성장 전후 수치·필요 재료·획득처를 알기 쉽게 제공하면 작업 성공률과 이용 편의성 평가가 개선될 것이다.',control:'기존 성장 화면과 정보 탐색 흐름',treatment:'성장 가능 여부·재료 획득처·성장 전후 변화 강조',primary:'작업 성공률, 평균 완료 시간, 탐색 실패율',guardrail:'D7 잔존율, UI 오류율, 화면 이탈률'},
+      {title:'전투 숙련도 피드백',hypothesis:'패링·저스트 회피의 성과를 명확히 보여주면 숙련 개선 체감과 재도전 행동이 개선될 것이다.',control:'기존 전투 결과 화면',treatment:'정확한 타이밍과 숙련 성과의 피드백 강화',primary:'재도전율, 몰입 설문, 전투 성공률 변화',guardrail:'전투 포기율, 반복 실패율, D7 잔존율'}
+    ],
+    citations: [
+      {label:'논문 원문 · MDPI',url:'https://www.mdpi.com/2071-1050/18/21/11334'},
+      {label:'DOI',url:'https://doi.org/10.3390/su182111334'}
+    ]
+  },
+  {
+    id: 'dynamic-group-churn-2026',
+    title: '길드의 집단 안정성으로 구성원 이탈을 예측할 수 있을까?',
+    kicker: '플레이어 개인뿐 아니라 소속 집단의 변화도 살펴야 한다',
+    originalTitle: 'Predicting member churn in dynamic groups: A multi-dimensional analysis',
+    authors: 'Maha Marhag · Raji Ghawi · Jürgen Pfeffer',
+    journal: 'Social Networks',
+    doi: '10.1016/j.socnet.2026.07.003',
+    sourceUrl: 'https://www.sciencedirect.com/science/article/pii/S0378873326000626',
+    published: '2026-10',
+    updated: '2026-11-11',
+    researchType: '실증 연구',
+    dataType: '행동 로그',
+    domain: '리텐션·이탈',
+    rank: 2,
+    confidence: '상세 검증 필요',
+    accent: 'blue',
+    tags: ['길드', '이탈 예측', '집단 안정성', '사회연결망', '머신러닝', '행동 로그', '라이브 운영'],
+    dataSummary: '온라인 전략 게임 Travian의 18,000명 이상 플레이어와 4,700개 이상 동맹·집단의 시계열 소속·변화 데이터.',
+    methodSummary: '개인·집단·네트워크 차원의 특징을 결합하여 여러 머신러닝 분류 모델로 구성원 이탈을 예측.',
+    finding: '개인의 헌신도와 집단 안정성이 집단 이탈 예측에 중요한 특징으로 제시되었다. 논문은 이론 기반 특징 집합을 사용해 최고 98.2% 분류 정확도를 보고했다.',
+    shortFinding: '개인 헌신도와 길드 안정성이 탈퇴 예측에서 중요한 특징으로 보고됨',
+    limitation: '집단 탈퇴는 게임 전체 이탈과 다르다. 공개 초록만으로 모델별 재현율·정밀도·특징 계산식 등 전체 검증 조건을 확인하지 못했다.',
+    useCase: '길드 안정성 지표를 개인 행동 모델에 추가했을 때 실제로 이탈 예측력이 개선되는지 비교.',
+    audience: '라이브 서비스 · 소셜 시스템 · 데이터 분석',
+    summaryRows: [
+      ['연구 질문', '개인 정보 외에 집단 안정성·성과·네트워크 관계를 함께 분석하면 길드 구성원의 이탈을 더 잘 예측할 수 있는가?'],
+      ['연구 데이터', 'Travian 플레이어 18,000명 이상, 동맹·집단 4,700개 이상, 장기간 집단 변화 기록'],
+      ['분석 방법', '개인·집단·네트워크 특징 기반 다차원 머신러닝 분류 예측'],
+      ['결론', '개인 헌신도·집단 안정성을 주요 예측 특징으로 보고. 최고 분류 정확도 98.2%(탈퇴자 재현율은 미확인).'],
+      ['실무 한계', '집단 이탈에 관한 연구이며 게임 전체 이탈이 아님. 정확도 외 세부 평가 결과 추가 검증 필요.']
+    ],
+    evaluation: {
+      "lead": "길드 구성원의 탈퇴를 예측할 때 개인 헌신도와 소속 집단의 안정성이 중요한 특징으로 보고됐다. 최고 정확도는 98.2%였지만, 이 값만으로 실제 탈퇴자를 얼마나 잘 찾아냈는지는 판단할 수 없다.",
+      "highlights": [
+        {
+          "stat": "주요 예측 특징",
+          "title": "개인의 헌신도와 집단 안정성이 길드 탈퇴 예측에 중요했다",
+          "plain": "Travian의 플레이어 18,000명 이상·동맹 4,700개 이상의 변화 데이터를 분석했다. 연구진은 개인 헌신도와 집단 안정성을 중요한 예측 특징으로 명시했다. 두 특징의 정확한 계산식과 영향 방향은 현재 확보한 자료에서 확인되지 않았다.",
+          "source": "출판사 초록·하이라이트 · 주요 예측 특징"
+        },
+        {
+          "stat": "최고 98.2%",
+          "title": "머신러닝 분류 정확도가 98.2%까지 보고됐다",
+          "plain": "개인·집단·관계망 정보를 이용한 이탈 예측 결과다. 그러나 이탈자 비율·정밀도·재현율이 확인되지 않아 “이탈자를 98.2% 찾아냈다”는 의미로 해석할 수는 없다.",
+          "source": "출판사 초록·하이라이트 · 최고 분류 정확도"
+        }
+      ],
+      "interpretations": [
+        {
+          "title": "개인 활동만 보지 말고, 그가 속한 길드의 변화도 살펴볼 필요가 있다",
+          "observed": "연구진은 개인 헌신도뿐 아니라 집단 안정성도 길드 탈퇴를 예측하는 중요한 특징으로 보고했다.",
+          "reasoning": "집단의 상태가 예측에 쓸 만한 정보를 가진다는 결과이므로, 길드 탈퇴를 개인 활동량 하나로만 판단하지 말자는 해석이 가능하다. 다만 어떤 특징이 얼마만큼 성능을 높였는지는 공개 자료만으로 확정할 수 없다.",
+          "example": "둘 다 일주일 접속하지 않았더라도, 한 사람의 길드는 구성원이 그대로이고 다른 사람의 길드는 최근 탈퇴자가 많다면 같은 상황으로만 보기는 어렵다.",
+          "boundary": "길드가 불안정하면 탈퇴가 발생한다는 원인·결과 관계는 증명하지 않았다."
+        },
+        {
+          "title": "높은 정확도보다 실제 탈퇴자를 찾아내는지가 중요하다",
+          "observed": "최고 정확도 98.2%가 보고됐지만 정밀도·재현율과 이탈자 비율은 이번에 확인한 자료에 없다.",
+          "reasoning": "탈퇴자가 매우 적으면 모두 “유지”로 예측해도 정확도가 높다. 이탈 위험을 실제로 판별하는지 알려면 정밀도와 재현율이 필요하다.",
+          "example": "100명 중 2명만 탈퇴할 때 모두 “남는다”고 예측하면 정확도 98%지만 탈퇴한 2명은 아무도 찾지 못한다.",
+          "boundary": "논문의 98.2%가 잘못됐다는 뜻은 아니다. 현재 수치만으로 실사용 성능을 평가할 수 없다는 뜻이다."
+        }
+      ],
+      "takeaway": "길드 이탈을 예측할 때 개인의 활동 이력 외에 길드 구성의 안정성도 중요한 단서가 될 수 있다. 다만 실제 이탈자 탐지 성능은 정확도 외 지표를 확인해야 한다."
+    },
+    variables: [
+      ['구성원 이탈 (Member Churn)', '한 플레이어가 현재 소속된 동맹·집단을 떠나는 현상.', '게임 접속 중단과 동일하지 않다.'],
+      ['헌신도 (Dedication)', '플레이어가 특정 집단과 얼마나 지속적으로 관계를 유지하는지를 표현하는 개념.', '동일 연구진의 선행연구에서는 특정 집단 활동 기간 ÷ 전체 활동 기간을 사용했으나, 이번 논문의 동일 계산식 사용 여부는 미확인.'],
+      ['집단 안정성 (Group Stability)', '시간에 따라 집단의 구성과 관계가 얼마나 유지되고 안정적으로 변화하는지.', '이번 논문에서 사용한 구체적 산식·윈도우 크기는 원문 전체 확인 필요.'],
+      ['집단 성과 (Group Performance)', '집단 차원의 활동과 성과 수준.', '어떤 게임 내 성과 지표를 선택했는지는 원문 전체 검증 필요.'],
+      ['네트워크 특징', '구성원 사이의 연결 관계와 네트워크 구조의 변화.', '중심성 등은 가능한 예시이지만 이번 연구의 사용 특징으로 단정하면 안 된다.']
+    ],
+    methodDetails: [
+      {title:'왜 머신러닝 분류를 사용했나?', body:'연구 질문이 변수 간 관계 설명뿐 아니라 “누가 실제로 집단에서 이탈할지 맞히는가”이기 때문이다. 개인·집단·관계망 특징을 함께 입력한 모델의 예측력을 비교할 수 있다.'},
+      {title:'머신러닝 분류는 무엇인가?', body:'과거의 활동·집단 변화 데이터와 실제 이탈 여부를 학습해, 이후 구성원이 특정 기간 안에 이탈할지 분류하는 방법이다. 사용된 알고리즘의 전체 목록이나 각 성능표는 현재 확인된 공개 초록만으로 확정할 수 없다.'},
+      {title:'왜 정확도만으로 부족한가?', body:'이탈자가 2%라면 모든 이용자를 “유지”라고 분류해도 정확도 98%가 된다. 실제 이탈자를 잘 찾는지 확인하려면 정밀도·재현율·PR-AUC와 평가 데이터 분리 방식이 함께 필요하다.'}
+    ],
+    metricExplanations: [
+      ['정확도 (Accuracy)', '전체 예측 중 맞힌 비율. 이탈자가 드문 데이터에서는 높아도 무용할 수 있다.'],
+      ['정밀도 (Precision)', '이탈한다고 예측한 사람 중 실제 이탈한 비율. 잘못된 위험 경고를 줄이는 데 중요하다.'],
+      ['재현율 (Recall)', '실제 이탈한 사람 중 예측 모델이 찾아낸 비율. 이탈자 누락을 줄이는 데 중요하다.'],
+      ['PR-AUC', '예측 임계값을 변화시키며 정밀도와 재현율의 균형을 살펴보는 종합 지표. 희귀 이탈 사건 분석에서 유용하다.']
+    ],
+    results: [
+      {title:'연구에서 보고한 예측 결과',columns:['항목','보고 내용','주의'],rows:[
+        ['분류 정확도','최고 98.2%','이탈 비율·정밀도·재현율 등 세부 검증 필요'],
+        ['주요 특징','개인 헌신도·집단 안정성','정확한 특징 산식은 원문 추가 확인 필요'],
+        ['분석 범위','개인·집단·네트워크','집단 이탈이며 게임 전체 이탈이 아님']
+      ],note:'공개 초록과 하이라이트에 기반한 수치이며, 원문 전체의 모델별 실험표는 아직 검증하지 않았다.'}
+    ],
+    experiments: [
+      {title:'개인 정보 vs 개인+집단 정보 이탈 예측',hypothesis:'개인 행동 정보에 길드 안정성·활동률을 추가하면 향후 14일 길드 이탈 예측의 성능이 개선될 것이다.',control:'모델 A: 개인 접속일·협동 참여 횟수·게임 활동량만 사용',treatment:'모델 B: 동일한 개인 정보 + 길드 구성원 유지율·활동률·교체율',primary:'PR-AUC, 이탈 클래스 재현율, 정밀도',guardrail:'미래 정보 누수 방지, 길드별 편향, 가입·탈퇴 정의 일관성'},
+      {title:'길드 활동 회복 개입',hypothesis:'집단 안정성이 낮은 길드에 맞춤형 협동 목표·신규 모집 지원을 제공하면 길드 유지율이 개선될 것이다.',control:'기존 길드 운영 도구 제공',treatment:'집단 안정성 위험 신호에 기반한 맞춤 지원',primary:'14일 길드 유지율, 협동 참여율',guardrail:'D28 게임 잔존율, 길드 간 인원 쏠림, 운영 부담'}
+    ],
+    suggestedMetrics: [
+      ['7일 구성원 유지율','7일 전 길드원 중 현재 남아 있는 수 ÷ 7일 전 길드원 수'],
+      ['7일 활동률','최근 7일 활동한 길드원 수 ÷ 현재 길드원 수'],
+      ['길드 교체율','기간 중 가입·탈퇴한 인원 수 ÷ 기간 시작 길드원 수'],
+      ['협동 참여율','협동 콘텐츠 참여 인원 ÷ 참여 가능한 길드원 수'],
+      ['14일 이탈률','기준 시점 구성원 중 14일 내 탈퇴 인원 ÷ 기준 시점 인원']
+    ],
+    citations: [
+      {label:'논문 원문 · ScienceDirect',url:'https://www.sciencedirect.com/science/article/pii/S0378873326000626'},
+      {label:'DOI',url:'https://doi.org/10.1016/j.socnet.2026.07.003'}
+    ]
+  },
+{
+  "id": "cross-game-choice-flexibility-2026",
+  "title": "게임마다 유리한 전략이 달라도 플레이어의 선택 성향은 유지될까?",
+  "kicker": "LoL과 TFT를 모두 플레이한 같은 이용자의 선택 기록으로 전략 다양성과 성과를 비교한 연구",
+  "originalTitle": "Change is Hard: Consistent Player Behavior Across Games with Conflicting Incentives",
+  "authors": "Emily Chen · Alexander J. Bisberg · Dmitri Williams · Magy Seif El-Nasr · Emilio Ferrara",
+  "journal": "CHI 2026 (ACM Conference on Human Factors in Computing Systems)",
+  "doi": "10.1145/3772318.3791411",
+  "sourceUrl": "https://doi.org/10.1145/3772318.3791411",
+  "published": "2026-04-13",
+  "updated": "2026-11-12",
+  "researchType": "실증 연구",
+  "dataType": "행동 로그",
+  "domain": "선택·행동",
+  "rank": 3,
+  "confidence": "논문 본문 확인",
+  "accent": "violet",
+  "tags": [
+    "플레이어 선택",
+    "전략 다양성",
+    "행동 패턴",
+    "LoL",
+    "TFT",
+    "게임 설계",
+    "행동 로그"
+  ],
+  "dataSummary": "LoL과 TFT에서 각각 랭크 솔로 게임 50판 이상을 플레이한 동일 이용자 4,830명의 Riot API 경기 기록. 데이터 수집 2023.05.22~2024.07.22.",
+  "dataCaveat": "실제 경기 종료 정보로 선택 분포를 추정했다. 한 경기 중간에 전략을 몇 번 바꿨는지는 관측할 수 없다. 두 게임을 모두 50판 이상 즐긴 랭크 플레이어가 대상이다.",
+  "methodSummary": "선택 다양성 지표를 만들고 각 게임의 경쟁 성과와의 관계를 회귀분석했다. 같은 이용자의 두 게임 선택 성향을 비교하고 예측 분석으로 일관성을 점검했다.",
+  "finding": "LoL에서는 플레이 스타일을 좁게 집중하는 경향이 높은 경쟁 성과와 연결되고, TFT에서는 다양한 조합을 쓰는 경향이 높은 성과와 연결됐다. 그러나 동일 이용자의 다양성 선호는 두 게임 사이에서 대체로 일관되게 나타났다.",
+  "shortFinding": "LoL은 전문화, TFT는 유연한 조합이 성과에 유리했지만 개인의 선택 성향은 두 게임에서 이어졌다.",
+  "limitation": "두 게임의 관찰연구로 특정 보상 구조가 성향을 직접 변화시키는지 실험하지 않았다. 랭크 플레이어만 포함하며 경기 중 선택 전환 기록은 없다. 개인의 습관과 고유 성향의 원인도 분리하기 어렵다.",
+  "useCase": "최적 전략을 따르지 않는 이용자를 정보 부족으로만 해석하지 않고, 다양성 탐색을 선호하는 이용자와 주력 조합을 선호하는 이용자의 행동을 분리해 살펴볼 수 있다.",
+  "audience": "전투 · 캐릭터 · 밸런스 · 빌드 설계",
+  "summaryRows": [
+    [
+      "연구 질문",
+      "게임마다 성과에 유리한 플레이 방식이 다를 때, 동일 플레이어는 자신의 선택 습관을 바꾸는가?"
+    ],
+    [
+      "연구 데이터",
+      "LoL·TFT 양쪽에서 랭크 50판 이상 플레이한 동일 이용자 4,830명 / Riot API / 2023.05~2024.07 수집"
+    ],
+    [
+      "분석 방법",
+      "게임별 선택 다양성 지표 구축, 회귀분석·예측 분석, 동일 이용자 교차 게임 비교"
+    ],
+    [
+      "핵심 결론",
+      "LoL에서는 전문화, TFT에서는 조합의 다양성이 경쟁 성과와 유리하게 연결. 그러나 개인의 다양성 선호는 게임이 달라도 유지되는 경향."
+    ],
+    [
+      "해석 범위",
+      "성과와 선택 습관의 관찰 관계이며, 특정 설계가 습관을 변화시킨다는 인과효과는 미검증."
+    ]
+  ],
+  "evaluation": {
+    "lead": "LoL에서는 특정 플레이 스타일에 집중한 이용자의 성과가 더 좋았고, TFT에서는 다양한 조합을 사용한 이용자의 성과가 더 좋았다. 그런데 같은 이용자는 두 게임에서도 비슷한 선택 성향을 유지했다.",
+    "highlights": [
+      {
+        "stat": "4,830명",
+        "title": "두 게임을 모두 플레이한 동일 이용자를 비교했다",
+        "plain": "각 게임에서 최소 50판 이상의 랭크 경기 기록을 가진 이용자를 추적했다. 서로 다른 게임 이용자 집단을 단순 비교한 것이 아니다.",
+        "source": "논문 §3 Methods"
+      },
+      {
+        "stat": "LoL 음(-) · TFT 양(+)",
+        "title": "선택 다양성과 경쟁 성과의 관계 방향이 서로 달랐다",
+        "plain": "LoL에서는 한정된 역할·챔피언 스타일에 집중하는 플레이가, TFT에서는 여러 조합을 쓰는 플레이가 높은 경쟁 성과와 연결됐다.",
+        "source": "논문 Results · H1 검증"
+      },
+      {
+        "stat": "게임 간 일관성",
+        "title": "개인의 다양성 선호는 두 게임에서 비슷하게 이어졌다",
+        "plain": "두 게임의 성공 전략이 달라도, 한 게임에서 다양한 스타일을 선택하는 이용자는 다른 게임에서도 유연한 경향을 보였다.",
+        "source": "논문 Discussion · H2 검증"
+      }
+    ],
+    "interpretations": [
+      {
+        "title": "최적 전략이 존재해도 모두가 그 방식만 선택하는 것은 아니다",
+        "observed": "LoL과 TFT가 서로 다른 스타일을 성과 측면에서 보상했지만, 동일 이용자의 선택 다양성은 두 게임에서 일관되는 경향을 보였다.",
+        "reasoning": "유리한 전략이 플레이어의 선택을 어느 정도 유도하지만, 원래 여러 조합을 써 보거나 한 조합을 파는 선호도 남는다는 해석이 가능하다.",
+        "example": "수집형 RPG에서 다양한 캐릭터를 번갈아 육성하는 사람과 주력 캐릭터 하나를 계속 키우는 사람이 모두 존재하는 상황.",
+        "boundary": "플레이어가 최적 전략을 몰랐는지, 알면서도 취향 때문에 따르지 않았는지는 확정할 수 없다."
+      },
+      {
+        "title": "전략 다양성은 모든 장르에서 일관된 장점이 아니다",
+        "observed": "다양성이 성과와 연결되는 방향이 LoL에서는 음, TFT에서는 양이었다.",
+        "reasoning": "성공에 유리한 플레이 폭은 게임의 규칙과 한 경기에서 요구되는 의사결정 방식에 따라 다르다.",
+        "example": "한 캐릭터의 조작 숙련이 중요한 액션 게임과, 매 판 무작위로 등장하는 유닛을 조합해야 하는 오토배틀러의 차이.",
+        "boundary": "이 결과만으로 모든 액션 게임은 전문화를, 모든 전략 게임은 다양화를 장려해야 한다고 일반화할 수 없다."
+      },
+      {
+        "title": "이용자마다 선호하는 선택 폭을 나누어 보는 것이 설명력이 있을 수 있다",
+        "observed": "같은 플레이어의 다양성 선호가 게임을 바꿔도 관측됐다.",
+        "reasoning": "모든 플레이어를 하나의 평균 선택 패턴으로 묶으면 안정적인 개인 차이를 놓칠 수 있다.",
+        "example": "신규 장비 세팅을 자주 실험하는 유저와 기존 세팅의 옵션을 끝까지 최적화하는 유저를 따로 살펴보는 방식.",
+        "boundary": "이용자 유형을 고정된 성격이나 불변의 개인 특성으로 단정할 근거는 없다."
+      }
+    ],
+    "takeaway": "게임이 어떤 전략을 보상하는지와 플레이어가 원래 어떤 선택을 선호하는지는 별개다. 성과만으로 플레이 방식의 다양성을 해석하지 말자."
+  },
+  "variables": [
+    [
+      "유연성 / 선택 다양성(Flexibility)",
+      "LoL에서는 다양한 기능적 챔피언 스타일, TFT에서는 여러 최종 조합을 선택한 폭.",
+      "실시간 전략 전환 횟수나 단순 보유 캐릭터 수와 다르다."
+    ],
+    [
+      "전문화(Specialization)",
+      "한정된 챔피언 스타일 또는 조합에 선택이 집중되는 경향.",
+      "한 캐릭터 숙련도 자체를 직접 측정한 개념은 아니다."
+    ],
+    [
+      "경쟁 성과(Competitive Success)",
+      "랭크 경기에서의 경쟁적 성공 수준.",
+      "실제 플레이 재미·만족도·장기 리텐션과 동일하지 않다."
+    ],
+    [
+      "동일 이용자의 행동 일관성",
+      "LoL과 TFT에서 한 이용자가 보인 다양성 선택 경향의 일치 정도.",
+      "완전히 동일한 선택을 했다는 뜻이 아니라 다양성 선호 경향을 비교한 것이다."
+    ]
+  ],
+  "methodDetails": [
+    {
+      "title": "왜 동일 이용자를 두 게임에서 비교했나?",
+      "body": "서로 다른 플레이어 집단을 비교하면 원래부터 다양한 스타일을 좋아하는 이용자 비율이 다를 수 있다. 같은 이용자를 두 게임에서 추적하면 그런 집단 구성 차이를 일부 줄인다."
+    },
+    {
+      "title": "선택 다양성 지표는 어떻게 만들었나?",
+      "body": "경기 기록에 남은 챔피언 스타일과 최종 TFT 조합의 분포를 보고 선택 폭을 수치화했다. 단순히 승률만 비교하지 않고, 몇 종류의 스타일을 얼마나 편중되게 선택했는지 분석한다."
+    },
+    {
+      "title": "회귀분석과 예측 분석은 왜 했나?",
+      "body": "회귀분석은 다양성과 경쟁 성과의 관계 방향을 확인하는 데, 교차 게임 분석은 한 게임의 행동으로 다른 게임의 선택 성향을 설명할 수 있는지 확인하는 데 사용했다. 인과 실험은 아니다."
+    }
+  ],
+  "metricExplanations": [
+    [
+      "회귀계수",
+      "다른 조건을 고려했을 때 다양성 점수가 성과와 어떤 방향으로 관련되는지 나타낸다. 승률 변화율로 바로 읽을 수는 없다."
+    ],
+    [
+      "p값",
+      "관계가 0이라는 가정 아래 관측 결과의 통계적 놀라움을 나타내는 값이다. 작다고 인과관계나 중요한 효과를 보장하지 않는다."
+    ],
+    [
+      "선택 분포",
+      "여러 스타일을 고르게 쓰면 다양성이 높고, 한 스타일에 집중하면 낮다. 결과는 분류 기준에 따라 달라질 수 있다."
+    ]
+  ],
+  "results": [
+    {
+      "title": "게임마다 성과와 연결된 플레이 스타일은 서로 달랐다",
+      "columns": [
+        "게임",
+        "유연성과 경쟁 성과의 관계",
+        "핵심 해석"
+      ],
+      "rows": [
+        [
+          "LoL",
+          "음(-), p=0.001",
+          "전문화된 선택이 상대적으로 높은 성과와 연결"
+        ],
+        [
+          "TFT",
+          "양(+), p<0.001",
+          "다양한 최종 조합 사용이 상대적으로 높은 성과와 연결"
+        ]
+      ],
+      "note": "두 게임의 데이터 단위와 변수 척도가 달라 계수 크기를 직접 비교해 어느 게임에서 효과가 더 큰지 단정하면 안 된다."
+    },
+    {
+      "title": "개인의 선택 성향은 게임이 달라도 상당 부분 유지됐다",
+      "columns": [
+        "검증",
+        "관측 결과"
+      ],
+      "rows": [
+        [
+          "동일 이용자 교차 비교",
+          "한 게임에서 유연한 사람은 다른 게임에서도 유연한 경향"
+        ],
+        [
+          "상위권 이용자",
+          "성과 보상에 맞춘 일부 적응이 관찰돼도 개인의 기존 성향이 완전히 사라지지는 않음"
+        ]
+      ],
+      "note": "원인까지 밝혀낸 연구는 아니다. 자기선택과 경험 누적 등이 영향을 줄 수 있다."
+    }
+  ],
+  "experiments": [
+    {
+      "title": "플레이 스타일 선호에 따른 선택 분포 비교",
+      "hypothesis": "다양성을 선호하는 이용자와 전문화를 선호하는 이용자의 신규 캐릭터 사용 패턴이 다를 것이다.",
+      "control": "기존 캐릭터 위주 이용자 코호트",
+      "treatment": "최근 여러 캐릭터를 고르게 사용한 이용자 코호트",
+      "primary": "신규 캐릭터 최초 사용률, 이후 재사용률, 캐릭터 선택 엔트로피",
+      "guardrail": "실력·계정 성장 단계·보유 캐릭터 차이를 통제하고 인과 결과로 해석하지 않기"
+    },
+    {
+      "title": "다양한 조합 실험을 유도하는 안내",
+      "hypothesis": "새 조합의 시도 경로를 쉽게 알려주면 일부 유저의 선택 다양성이 높아질 수 있다.",
+      "control": "일반 편성 안내",
+      "treatment": "기존 편성 외 대안 조합 1~2개를 제시",
+      "primary": "대안 조합 실제 사용률, 다음 세션 재사용률",
+      "guardrail": "승률·전투 실패율·이용자 피로도 확인"
+    }
+  ],
+  "suggestedMetrics": [
+    [
+      "캐릭터 선택 다양성",
+      "최근 30판의 챔피언·캐릭터 선택 분포를 엔트로피나 고유 선택 수로 측정"
+    ],
+    [
+      "주력 스타일 집중도",
+      "최근 30판 중 가장 자주 선택한 스타일의 비율"
+    ],
+    [
+      "새로운 조합 시도율",
+      "최근 30일 내 기존에 사용하지 않았던 조합을 사용한 세션 / 전체 세션"
+    ]
+  ],
+  "citations": [
+    {
+      "label": "ACM CHI 2026 원문",
+      "url": "https://doi.org/10.1145/3772318.3791411"
+    },
+    {
+      "label": "공개 프리프린트",
+      "url": "https://arxiv.org/abs/2603.16136"
+    }
+  ]
+},
+{
+  "id": "lol-survival-churn-2026",
+  "title": "LoL에서 어떤 플레이어가 오래 남고, 누가 이탈하는가?",
+  "kicker": "약 29.5만 명의 실제 게임 기록으로 플레이 다양성·경쟁 성과·사회적 관계와 이탈 위험을 분석",
+  "originalTitle": "Analyzing player churn in esports games: a survival analysis of league of legends log data",
+  "authors": "Jongho Kim · Kihan Kim · Hansol Kim · Shanshan Li",
+  "journal": "Sport, Business and Management: An International Journal",
+  "doi": "10.1108/SBM-04-2025-0093",
+  "sourceUrl": "https://doi.org/10.1108/SBM-04-2025-0093",
+  "published": "2026-06-10",
+  "updated": "2026-11-12",
+  "researchType": "실증 연구",
+  "dataType": "행동 로그",
+  "domain": "리텐션·이탈",
+  "rank": 4,
+  "confidence": "공개 초록 확인",
+  "accent": "blue",
+  "tags": [
+    "리텐션",
+    "이탈 예측",
+    "챔피언 다양성",
+    "LoL",
+    "생존분석",
+    "경쟁 성과",
+    "소셜 플레이",
+    "행동 로그"
+  ],
+  "dataSummary": "LoL 이용자 295,008명의 플레이 로그. 경기 참여(GEL), 성과(GPL), 플레이 다양성(PVL), 사회적 플레이(SPL)와 이용 중단 시점의 관계를 분석했다.",
+  "dataCaveat": "실제 경기 로그 기반이다. 이번에 접근 가능한 출판사 초록에는 이탈 사건의 정확한 정의·관측 기간·변수별 전체 위험비가 공개되지 않아 원문 표를 추가 검토해야 한다.",
+  "methodSummary": "Cox 비례위험 생존분석으로 게임 참여·성과·플레이 다양성·사회적 연결과 이탈까지 걸리는 시간의 관계를 추정했다.",
+  "finding": "경쟁 성과 관련 6개 지표, 챔피언 다양성, 사회적 연결은 낮은 이탈 위험과 연결됐다. 반면 높은 티어와 선호 포지션에 대한 집중은 높은 이탈 위험과 연결됐다. 경기 수 자체의 독립적인 효과는 약했다.",
+  "shortFinding": "챔피언 다양성과 경기 성과·사회적 연결은 낮은 이탈 위험과, 높은 티어는 높은 이탈 위험과 연결됨.",
+  "limitation": "관찰 데이터 기반 Cox 분석이므로 요인 간 연관성만 확인할 수 있고 인과효과는 알 수 없다. 공개 초록에서 변수별 위험비와 구체적 이탈 판정 기준을 확인하지 못했다.",
+  "useCase": "총 플레이 횟수만으로 이탈을 설명하지 않고, 실제 경기 성과와 다양한 챔피언 경험, 사회적 연결을 구분해서 살펴볼 수 있다.",
+  "audience": "라이브 운영 · 경쟁 콘텐츠 · 리텐션 분석",
+  "summaryRows": [
+    [
+      "연구 질문",
+      "LoL 이용자는 어떤 행동·성과·사회적 관계를 가질수록 이탈 위험이 낮거나 높은가?"
+    ],
+    [
+      "연구 데이터",
+      "실제 LoL 플레이 로그 / 295,008명"
+    ],
+    [
+      "분석 방법",
+      "Cox 생존분석으로 이탈 시점과 여러 행동 변수 사이의 관계 추정"
+    ],
+    [
+      "핵심 결론",
+      "챔피언 다양성·경기 성과·사회적 연결은 이탈 위험과 음의 관계, 높은 티어는 양의 관계."
+    ],
+    [
+      "해석 범위",
+      "확인된 것은 관찰 관계이며, 다양한 챔피언을 쓰게 만들면 이탈이 줄어든다는 인과효과는 미검증."
+    ]
+  ],
+  "evaluation": {
+    "lead": "LoL에서 챔피언을 다양하게 사용하고, 경기 성과가 좋고, 다른 플레이어와 연결되어 있을수록 이탈 위험이 낮았다. 반대로 높은 경쟁 티어는 더 높은 이탈 위험과 연결됐다.",
+    "highlights": [
+      {
+        "stat": "295,008명",
+        "title": "대규모 실제 경기 기록으로 이탈 시점을 분석했다",
+        "plain": "이용량·성과·플레이 다양성·사회적 플레이를 네 묶음으로 구분해 Cox 생존분석에 투입했다.",
+        "source": "논문 초록 · Methods"
+      },
+      {
+        "stat": "이탈 위험 ↓",
+        "title": "챔피언을 다양하게 사용하는 플레이어의 이탈 위험이 낮았다",
+        "plain": "한 포지션에만 집중하는 경향은 높은 이탈 위험과, 챔피언 다양성은 낮은 위험과 연결됐다. 두 유형의 다양성 지표는 같은 결과를 보이지 않았다.",
+        "source": "논문 초록 · PVL Findings"
+      },
+      {
+        "stat": "성과 ↑ / 이탈 ↓",
+        "title": "경기 성과 지표 6개 모두 낮은 이탈 위험과 연결됐다",
+        "plain": "게임을 얼마나 오래 했는지에 비해 성과 지표들이 이탈 위험과 더 일관된 관계를 보였다.",
+        "source": "논문 초록 · GPL Findings"
+      },
+      {
+        "stat": "높은 티어 / 위험 ↑",
+        "title": "높은 경쟁 티어는 오히려 높은 이탈 위험과 연결됐다",
+        "plain": "티어가 높은 이용자가 반드시 더 오래 남는 것은 아니었다. 왜 그런지에 대한 스트레스·좌절 가설은 논문에서 인과적으로 검증한 것이 아니다.",
+        "source": "논문 초록 · GEL Findings"
+      },
+      {
+        "stat": "사회적 연결 / 위험 ↓",
+        "title": "다른 플레이어와의 사회적 연결은 낮은 이탈 위험과 연결됐다",
+        "plain": "사회적 연결은 전반적으로 이탈 위험이 낮은 쪽과 관련됐다. 단, 팀원과 함께 플레이하는 것이 승률과 항상 같은 방향을 보인 것은 아니다.",
+        "source": "논문 초록 · SPL Findings"
+      }
+    ],
+    "interpretations": [
+      {
+        "title": "플레이 횟수만 많다고 장기 이용 가능성이 높다고 보기는 어렵다",
+        "observed": "총 경기 수와 팀 경기 간 시간 간격의 독립적인 연관성은 작게 보고됐고, 경기 성과 지표들은 모두 낮은 이탈 위험과 연결됐다.",
+        "reasoning": "단순 이용량이 같아도 경험한 성과와 게임 내 선택이 서로 다른 사람은 이탈 패턴도 다를 수 있다는 뜻이다.",
+        "example": "똑같이 100판을 한 두 사람 중 한 명은 여러 챔피언으로 승리 경험을 얻고, 다른 사람은 같은 포지션에서 연패를 반복하는 상황.",
+        "boundary": "승리를 많이 제공하면 이탈을 줄일 수 있다는 인과효과는 검증하지 않았다."
+      },
+      {
+        "title": "챔피언 선택의 다양성은 리텐션을 이해하는 유용한 단서다",
+        "observed": "챔피언 다양성이 높을수록 이탈 위험이 낮았지만, 선호 포지션에 집중하는 것은 높은 이탈 위험과 관련됐다.",
+        "reasoning": "‘다양한 플레이’라고 뭉뚱그리기보다 어떤 종류의 다양성인지 분리하면 서로 다른 관계가 보일 수 있다.",
+        "example": "서포터 포지션을 계속하면서 여러 서포터 챔피언을 바꿔 쓰는 이용자는 포지션 다양성은 낮고 챔피언 다양성은 높은 이용자다.",
+        "boundary": "다양성이 원인인지, 오래 즐길 이용자가 다양하게 플레이하는 결과인지는 모른다."
+      },
+      {
+        "title": "높은 티어는 이탈 위험이 낮다는 보증이 아니다",
+        "observed": "높은 게임 티어는 오히려 높은 이탈 위험과 연결됐다. 동시에 경기 성과 자체는 낮은 위험과 연결됐다.",
+        "reasoning": "티어라는 누적 지위와 최근 경기에서의 성과·경험은 서로 다른 정보를 제공한다. 따라서 상위 티어 이용자를 단순히 안전한 잔존 집단으로 간주할 수 없다.",
+        "example": "상위 랭크에서 큰 압박을 받는 이용자와, 중간 티어지만 꾸준히 성취를 느끼는 이용자가 서로 다르게 행동할 수 있다.",
+        "boundary": "경쟁 스트레스가 원인이라는 설명은 가능한 가설일 뿐 이 연구에서 감정 원인을 직접 확인하지 않았다."
+      }
+    ],
+    "takeaway": "플레이어를 오래 붙잡는 요인을 찾을 때 경기 수만 보지 말자. 무엇을 플레이했고 어떤 성과를 경험했는지 함께 봐야 한다."
+  },
+  "variables": [
+    [
+      "이탈(Churn)",
+      "게임의 참여가 중단되는 사건과 그 발생까지의 시간.",
+      "이탈의 정확한 판정 창은 이번에 확인한 출판사 초록에 나와 있지 않다."
+    ],
+    [
+      "GEL: 참여 수준",
+      "플레이 횟수, 플레이 레벨, 팀 경기 간 간격 등 참여 관련 정보.",
+      "많이 했다는 것과 만족했다는 것은 다르다."
+    ],
+    [
+      "GPL: 성과 수준",
+      "경기 성과를 나타내는 6개 세부 지표.",
+      "정확한 지표 목록과 산식은 원문 전체 표를 확인해야 한다."
+    ],
+    [
+      "PVL: 플레이 다양성",
+      "선호 포지션 집중 정도와 챔피언 선택 다양성.",
+      "포지션 다양성과 챔피언 다양성은 서로 다른 지표다."
+    ],
+    [
+      "SPL: 소셜 플레이",
+      "다른 플레이어와 연결되어 플레이하는 정도.",
+      "게임 내 친구 관계·협동 플레이는 서로 다른 행동일 수 있다."
+    ],
+    [
+      "Game Tier",
+      "경쟁 랭크 티어.",
+      "최근 한 경기에서의 성과와 다르다."
+    ]
+  ],
+  "methodDetails": [
+    {
+      "title": "왜 생존분석을 사용했나?",
+      "body": "단순히 “이탈했다/안 했다”만 보는 대신 언제 이탈했는지, 이용 중단 위험이 시간이 흐르며 어떻게 달라지는지 분석해야 하기 때문이다."
+    },
+    {
+      "title": "Cox 모델은 무엇인가?",
+      "body": "이탈이 발생하기까지의 시간 정보와 행동 변수를 결합해, 다른 조건을 고려했을 때 각 특징이 이탈의 순간 위험과 어떤 관계가 있는지 추정하는 통계 모형이다."
+    },
+    {
+      "title": "HR(위험비)은 어떻게 읽나?",
+      "body": "HR=1이면 기준과 위험이 같고, HR<1이면 낮고 HR>1이면 높다. 위험비는 누적 이탈자 비율의 차이와 다르다. 이번 공개 초록에서는 대부분 변수의 정확한 HR 수치가 제공되지 않았다."
+    }
+  ],
+  "metricExplanations": [
+    [
+      "HR(위험비)",
+      "HR<1이면 기준 대비 순간 이탈 위험이 낮고, HR>1이면 높다. 인과효과는 아니다."
+    ],
+    [
+      "생존곡선",
+      "시간이 지날수록 이용이 지속될 것으로 추정되는 비율의 변화."
+    ],
+    [
+      "검열(Censoring)",
+      "관측이 끝날 때까지 이탈하지 않은 사람의 정보도 분석에 포함하는 처리 방식."
+    ],
+    [
+      "p값",
+      "관측된 관련성이 통계적으로 유의한지를 판단할 때 참고한다. 효과의 크기나 실무 중요도를 대체하지 않는다."
+    ]
+  ],
+  "results": [
+    {
+      "title": "플레이 참여·성과와 이탈 위험",
+      "columns": [
+        "요인",
+        "관계 방향",
+        "해석"
+      ],
+      "rows": [
+        [
+          "경기 성과 관련 6개 지표",
+          "이탈 위험 낮음",
+          "성과 측면 변수가 일관된 양상"
+        ],
+        [
+          "경쟁 티어",
+          "이탈 위험 높음",
+          "높은 지위가 곧 높은 잔존은 아님"
+        ],
+        [
+          "총 경기 수·팀 경기 간 간격",
+          "영향 미미",
+          "전체 이용량만으로는 설명이 제한적"
+        ]
+      ],
+      "note": "출판사 초록에서 확인한 방향성이다. 개별 지표의 위험비·신뢰구간은 원문 전체 검증 필요."
+    },
+    {
+      "title": "선택 다양성과 사회적 관계",
+      "columns": [
+        "요인",
+        "관계 방향",
+        "해석"
+      ],
+      "rows": [
+        [
+          "챔피언 다양성",
+          "이탈 위험 낮음",
+          "여러 챔피언 이용자에서 낮은 위험 관측"
+        ],
+        [
+          "선호 포지션 집중",
+          "이탈 위험 높음",
+          "챔피언 다양성과 다른 방향"
+        ],
+        [
+          "사회적 연결",
+          "이탈 위험 낮음",
+          "다른 플레이어와 연결된 이용자의 위험이 낮음"
+        ]
+      ],
+      "note": "관찰된 관계로, 선택 다양성이나 친구 기능을 강제로 늘릴 때 같은 효과가 나타난다는 뜻은 아니다."
+    },
+    {
+      "title": "시점에 따른 이탈 경향",
+      "columns": [
+        "시점",
+        "논문 초록 보고 내용"
+      ],
+      "rows": [
+        [
+          "60일",
+          "이탈 확률 8% 증가 보고"
+        ],
+        [
+          "90일",
+          "이탈 확률 20% 증가 보고"
+        ]
+      ],
+      "note": "비교 기준과 정확한 시점별 정의가 공개 초록만으로 충분히 확인되지 않아 상대 변화율이나 절대 이탈률로 바꾸어 해석하지 않는다."
+    }
+  ],
+  "experiments": [
+    {
+      "title": "챔피언 선택 다양성과 이탈 위험의 관계 재현",
+      "hypothesis": "내 게임에서도 플레이 선택 다양성과 잔존 사이에 관련성이 있을 것이다.",
+      "control": "주력 캐릭터에 선택이 집중된 집단",
+      "treatment": "여러 캐릭터를 고르게 사용한 집단",
+      "primary": "D7·D30 잔존율, 시간에 따른 이탈 위험",
+      "guardrail": "계정 레벨·접속 기간·보유 캐릭터 수·실력 등의 차이를 통제"
+    },
+    {
+      "title": "상위 티어와 최근 성과를 분리 분석",
+      "hypothesis": "상위 티어 여부보다 최근 성과가 이탈을 구분하는 데 중요한 추가 정보를 줄 것이다.",
+      "control": "티어 기반 이탈 모델",
+      "treatment": "동일 모델에 최근 승패·성과 지표 추가",
+      "primary": "이탈 위험 예측 개선 정도, PR-AUC 또는 생존모형 적합도",
+      "guardrail": "미래 성적을 예측 시점에 포함하지 않는 시간 누수 방지"
+    }
+  ],
+  "suggestedMetrics": [
+    [
+      "챔피언 다양성",
+      "최근 N경기에서 사용한 챔피언 수 또는 선택 엔트로피"
+    ],
+    [
+      "최근 성과",
+      "최근 N경기 승률과 역할별 성과 변화"
+    ],
+    [
+      "사회적 연결",
+      "최근 N경기 중 친구와 함께 플레이한 비율 등"
+    ],
+    [
+      "D30 잔존",
+      "첫 접속 이후 30일째 재방문한 이용자 비율"
+    ]
+  ],
+  "citations": [
+    {
+      "label": "출판사 초록 · Emerald",
+      "url": "https://doi.org/10.1108/SBM-04-2025-0093"
+    },
+    {
+      "label": "출판사 문헌 정보",
+      "url": "https://www.sciencedirect.com/org/science/article/abs/pii/S2042678X2600020X"
+    }
+  ]
+},
+{
+  "id": "first-purchase-churn-2026",
+  "title": "첫 결제 시점은 플레이어 이탈 위험과 얼마나 연결될까?",
+  "kicker": "방치형 RPG 약 128만 계정의 실제 결제·접속 기록을 바탕으로 첫 결제 날짜와 이탈 위험의 관계를 분석",
+  "originalTitle": "First purchase timing matters: Monetization and churn in Free-to-Play mobile games — A survival-analysis case study of “Dealers Only Squad”",
+  "authors": "JaeJun Lee · GaGyeong Kim",
+  "journal": "Entertainment Computing, Volume 58 (September 2026)",
+  "doi": "10.1016/j.entcom.2026.101195",
+  "sourceUrl": "https://doi.org/10.1016/j.entcom.2026.101195",
+  "published": "2026-09",
+  "updated": "2026-11-12",
+  "researchType": "실증 연구",
+  "dataType": "결제·접속 로그",
+  "domain": "과금·리텐션",
+  "rank": 5,
+  "confidence": "논문 본문 확인",
+  "accent": "violet",
+  "tags": [
+    "첫 결제",
+    "BM",
+    "과금",
+    "리텐션",
+    "이탈 예측",
+    "Cox 분석",
+    "생존분석",
+    "F2P",
+    "행동 로그"
+  ],
+  "dataSummary": "상용 모바일 방치형 RPG Dealers Only Squad의 1,276,463개 계정과 약 40만 건의 결제 이력, 2017년 3월~2021년 9월 서비스 데이터. 14일 연속 미접속을 이탈로 정의.",
+  "dataCaveat": "한 개의 방치형 RPG 서비스에서 수집한 관찰 데이터다. 처음부터 오래 즐길 의향이 높은 이용자가 일찍 결제했을 가능성이 있으며, 결제의 인과효과를 입증하지 않는다.",
+  "methodSummary": "Kaplan–Meier 생존곡선으로 기간별 생존 패턴을 비교하고, 시간 변화 정보를 고려한 Cox 생존모형으로 결제 시점·상품 유형·가격대와 이탈 위험의 관계를 추정했다.",
+  "finding": "첫날 결제 집단의 비결제자 대비 이탈 위험비는 HR=0.5497로 약 45% 낮았다. 1~3일, 4~7일, 8일 이후 결제 집단도 낮은 위험비를 보였다. 정기 혜택 상품과 고가 상품 구매 집단에서도 낮은 위험비가 관측됐다.",
+  "shortFinding": "첫날 결제 집단은 비결제자 대비 이탈 위험비 HR 0.55. 다만 결제 유도의 인과효과는 증명하지 않음.",
+  "limitation": "이용자 선호와 결제 결정의 자기선택 효과를 분리하지 못한 관찰연구다. 비례위험 가정의 시간 변화 및 게임 단일 표본 문제도 있어 일반화와 인과해석에 주의가 필요하다.",
+  "useCase": "초기 결제를 일으키면 잔존이 높아진다고 단정하기보다, 결제 시점을 게임에 대한 초기 관심·적합성을 나타내는 위험 분류 신호의 하나로 검토할 수 있다.",
+  "audience": "BM 기획 · 라이브 서비스 · 리텐션 분석",
+  "summaryRows": [
+    [
+      "연구 질문",
+      "첫 결제 시점, 첫 구매 상품의 종류와 가격은 이후 게임 이탈 위험과 어떤 관계가 있는가?"
+    ],
+    [
+      "연구 데이터",
+      "모바일 방치형 RPG 약 128만 계정·약 40만 결제 기록 / 2017.03~2021.09 / 14일 미접속을 이탈로 정의"
+    ],
+    [
+      "분석 방법",
+      "Kaplan–Meier 생존곡선, Cox 생존분석(시간 변화 결제 상태), 가격·상품 유형별 비교"
+    ],
+    [
+      "핵심 결론",
+      "가입 당일 결제자의 비결제자 대비 HR=0.5497(약 45% 낮은 순간 이탈 위험). 다른 결제 시점 집단도 HR<1."
+    ],
+    [
+      "해석 범위",
+      "상관된 위험비이며 결제를 강제로 앞당기면 잔존율이 45% 높아진다는 뜻이 아니다."
+    ]
+  ],
+  "evaluation": {
+    "lead": "첫날 결제한 플레이어의 이탈 위험비는 비결제자 대비 약 45% 낮았다(HR=0.5497). 다만 이는 결제가 플레이어를 오래 남게 만든다는 인과 증거가 아니라, 결제 시점과 이후 행동이 뚜렷하게 연결되어 있었다는 결과다.",
+    "highlights": [
+      {
+        "stat": "HR 0.5497",
+        "title": "가입 당일 결제한 집단에서 가장 낮은 이탈 위험비가 관찰됐다",
+        "plain": "비결제자를 HR=1로 설정했을 때 첫날 결제자는 0.5497로 나타났다(p<0.001). 이탈한 사람 비율이 45%포인트 낮다는 뜻은 아니다.",
+        "source": "논문 Table 2 · Payment Timing"
+      },
+      {
+        "stat": "HR 0.7545~0.7742",
+        "title": "1일차 이후 결제 집단도 비결제자보다 낮은 위험비를 보였다",
+        "plain": "1~3일 HR=0.7545, 4~7일 HR=0.7707, 8일 이후 HR=0.7742로 보고됐다.",
+        "source": "논문 Table 2 · Payment Timing"
+      },
+      {
+        "stat": "HR 0.6285",
+        "title": "정기 혜택·구독형 첫 구매 집단에서 낮은 위험비가 나타났다",
+        "plain": "상품 종류별 비교에서 정기 혜택형 첫 구매 HR=0.6285로, 단품과 복합 패키지보다 낮게 나타났다.",
+        "source": "논문 Table 2 · Item Type"
+      },
+      {
+        "stat": "HR 0.5859",
+        "title": "첫 구매 가격이 높은 집단에서 더 낮은 위험비가 관찰됐다",
+        "plain": "고가 상품 HR=0.5859, 중가 0.6218, 저가 0.6565로 나타났다. 비용 자체의 효과를 증명하지는 않는다.",
+        "source": "논문 Table 2 · Price Range"
+      }
+    ],
+    "interpretations": [
+      {
+        "title": "첫 결제는 이용자의 초기 호감이나 장기 이용 의향을 알려주는 단서일 수 있다",
+        "observed": "첫날 결제 집단의 이탈 위험비가 비결제자보다 낮았고, 후발 결제 집단과도 차이가 났다.",
+        "reasoning": "초기부터 게임이 자신의 취향에 맞았던 사람이 더 빨리 결제했을 수 있다. 결제의 효과와 원래 강한 관심을 가진 사람의 선택을 관찰연구만으로 분리하기 어렵다.",
+        "example": "게임을 켜자마자 좋아하는 캐릭터나 성장 구조를 발견해 첫날 패스를 산 이용자는 이미 오래 즐길 마음이 있었을 수 있다.",
+        "boundary": "첫날 결제를 권하면 이탈을 45% 줄일 수 있다는 주장은 연구 결과가 아니다."
+      },
+      {
+        "title": "첫 결제의 날짜만이 아니라 무엇을 샀는지도 차이를 보였다",
+        "observed": "정기 혜택형 상품과 고가 상품의 첫 구매 집단에서 상대적으로 낮은 이탈 위험비가 관측됐다.",
+        "reasoning": "첫 결제가 모두 같은 행동은 아닐 수 있다. 앞으로 여러 날 이용해야 혜택이 쌓이는 상품과 즉시 소비하는 상품은 구매 맥락이 다르다.",
+        "example": "한 번에 재화를 받는 패키지와 매일 접속해 보상을 받는 월정액 상품을 처음 구매하는 상황은 다르다.",
+        "boundary": "월정액 상품 자체가 유저를 더 오래 남게 만들었다는 인과효과는 미검증이다."
+      },
+      {
+        "title": "이탈 위험비를 잔존율 증가율로 혼동하면 안 된다",
+        "observed": "첫날 결제 집단의 Cox 위험비는 HR=0.5497로 보고됐다.",
+        "reasoning": "위험비는 같은 시간 지점에서의 순간 이탈 위험을 비교한다. 30일째 남은 이용자 비율의 절대 차이와는 별개의 통계량이다.",
+        "example": "D30 잔존율 20%에서 65%로 올랐다는 뜻이 아니라, 분석 모형에서 비결제자 대비 이탈 위험비가 낮게 나타났다는 뜻이다.",
+        "boundary": "연구의 추정 방식 및 시간에 따른 위험 변화까지 고려해야 한다."
+      }
+    ],
+    "takeaway": "초기 결제는 매출 이벤트이면서 이용자 관심을 나타내는 행동 신호일 수 있다. 결제를 강제했을 때 같은 잔존 효과가 난다고 해석하지 말자."
+  },
+  "variables": [
+    [
+      "이탈(Churn)",
+      "14일 연속 미접속한 상태를 이탈로 정의.",
+      "게임을 영구 삭제했다는 뜻과 다르다."
+    ],
+    [
+      "첫 결제 시점",
+      "가입 당일 / 1~3일 / 4~7일 / 8일 이후 결제의 4집단.",
+      "결제 전에는 비결제 상태라는 시간 정보를 고려해야 한다."
+    ],
+    [
+      "상품 유형",
+      "낮은 복잡도 단품, 정기 혜택·구독형, 복합 패키지 등 첫 구매 상품 분류.",
+      "이용자 선호가 상품 선택과 이탈 양쪽에 영향을 줄 수 있다."
+    ],
+    [
+      "가격 구간",
+      "첫 구매 상품 가격을 저가·중가·고가로 구분.",
+      "비용 증가의 인과효과를 의미하지 않는다."
+    ],
+    [
+      "HR(위험비)",
+      "비결제자를 기준(HR=1)으로 하여 이탈의 순간 위험을 비교.",
+      "위험비 감소율은 실제 이탈자 수의 절대 감소율이 아니다."
+    ]
+  ],
+  "methodDetails": [
+    {
+      "title": "왜 Kaplan–Meier를 사용했나?",
+      "body": "첫 결제 시점에 따라 시간이 흐르면서 얼마나 많은 이용자가 이탈하지 않고 남아 있는지 생존곡선을 그려 비교하기 위해서다."
+    },
+    {
+      "title": "왜 Cox 생존분석을 사용했나?",
+      "body": "이탈까지 걸리는 시간과 결제 여부·상품 유형 등 여러 변수의 연관성을 동시에 분석하고, 비결제자 대비 위험비(HR)를 추정하기 위해서다."
+    },
+    {
+      "title": "시간에 따라 바뀌는 결제 상태는 왜 중요할까?",
+      "body": "가입 7일째 처음 결제한 사람을 가입 첫날부터 “결제자”라고 취급하면 그 사람이 결제 전까지 살아남아야 한다는 시간 조건이 왜곡될 수 있다. 따라서 결제 상태가 언제 변했는지를 고려하는 모델이 중요하다."
+    },
+    {
+      "title": "비례위험 가정에는 주의가 필요하다",
+      "body": "논문은 비례위험 가정과 추정의 안정성을 진단했다. 대규모 표본에서는 아주 작은 차이도 유의하게 탐지될 수 있고, 일부 위험 관계는 시간에 따라 변한다. 그래서 하나의 HR이 모든 시점에 똑같이 적용된다고 해석하면 안 된다."
+    }
+  ],
+  "metricExplanations": [
+    [
+      "HR(Hazard Ratio)",
+      "HR<1이면 기준보다 순간 이탈 위험이 낮다. HR=0.55는 위험비 약 45% 낮음을 뜻하지만 D30 잔존율 +45%와 다르다."
+    ],
+    [
+      "p값",
+      "영향이 없다는 귀무가설에서 관측 결과가 나타날 통계적 놀라움의 정도. 실무 효과나 인과성을 증명하지 않는다."
+    ],
+    [
+      "생존함수(Survival)",
+      "시간 t까지 이탈 사건이 발생하지 않았을 것으로 추정되는 비율."
+    ],
+    [
+      "시간 변화 변수",
+      "가입 후 결제 이전과 이후의 상태가 달라지는 것을 모델에서 추적하는 방식."
+    ]
+  ],
+  "results": [
+    {
+      "title": "첫 결제 시점별 이탈 위험비",
+      "columns": [
+        "집단",
+        "HR(비결제자=1)",
+        "쉬운 해석"
+      ],
+      "rows": [
+        [
+          "가입 당일",
+          "0.5497",
+          "약 45% 낮은 위험비"
+        ],
+        [
+          "가입 1~3일",
+          "0.7545",
+          "약 25% 낮은 위험비"
+        ],
+        [
+          "가입 4~7일",
+          "0.7707",
+          "약 23% 낮은 위험비"
+        ],
+        [
+          "가입 8일 이후",
+          "0.7742",
+          "약 23% 낮은 위험비"
+        ]
+      ],
+      "note": "모든 집단 p<0.001. 순간 위험비이며 기간별 누적 이탈률이나 인과적 감소율과 다르다."
+    },
+    {
+      "title": "첫 구매 상품 유형·가격별 이탈 위험비",
+      "columns": [
+        "구분",
+        "HR(비결제자=1)",
+        "해석"
+      ],
+      "rows": [
+        [
+          "단품형",
+          "0.6467",
+          "기준보다 낮은 위험비"
+        ],
+        [
+          "정기 혜택형",
+          "0.6285",
+          "유형 중 낮은 위험비"
+        ],
+        [
+          "복합형",
+          "0.6559",
+          "기준보다 낮은 위험비"
+        ],
+        [
+          "저가(<$8.55)",
+          "0.6565",
+          "저가 첫 구매 집단"
+        ],
+        [
+          "중가($8.55~$25.66)",
+          "0.6218",
+          "중가 첫 구매 집단"
+        ],
+        [
+          "고가(>$25.66)",
+          "0.5859",
+          "고가 첫 구매 집단"
+        ]
+      ],
+      "note": "상품군 사이의 점 추정치 차이만으로 각 군의 인과적 효과나 통계적 우열을 확정할 수 없다."
+    }
+  ],
+  "experiments": [
+    {
+      "title": "초기 구매 행동을 리텐션 예측 변수로 사용",
+      "hypothesis": "가입 후 첫 구매 시점·상품 종류를 추가하면 미구매자와 구매자 간 D30 이탈 위험을 더 잘 구분할 수 있을 것이다.",
+      "control": "접속·성장 등 비구매 행동 중심 모델",
+      "treatment": "기존 변수 + 첫 결제 날짜·상품 유형·가격대",
+      "primary": "시간 기반 예측 성능, 예측 보정, 정밀도·재현율",
+      "guardrail": "결제 전 상태를 미리 결제자로 분류하지 않기, 미래 정보 누수 방지"
+    },
+    {
+      "title": "월정액 구매 효과를 실제로 검증",
+      "hypothesis": "유사한 이용자에게 동일한 조건의 월정액 안내를 제공했을 때 장기 잔존의 변화를 측정할 수 있다.",
+      "control": "기존 월정액 안내",
+      "treatment": "신규 월정액 안내 UI",
+      "primary": "구매 전환율, D7·D30 잔존율",
+      "guardrail": "과소비 유도·이탈·환불율, 가격 및 보상 가치 동일화"
+    }
+  ],
+  "suggestedMetrics": [
+    [
+      "첫 결제 전환일",
+      "가입일 기준 최초 결제일까지 걸린 일수"
+    ],
+    [
+      "초기 결제 코호트 잔존",
+      "첫 결제일 집단별 D7·D30 실제 잔존율"
+    ],
+    [
+      "상품 유형별 잔존",
+      "첫 구매 상품 종류별 기간 내 잔존 비율"
+    ],
+    [
+      "14일 미접속 이탈",
+      "연속 미접속 14일 달성 여부"
+    ]
+  ],
+  "citations": [
+    {
+      "label": "논문 원문 · Elsevier Open Access",
+      "url": "https://www.sciencedirect.com/science/article/pii/S1875952126001175"
+    },
+    {
+      "label": "DOI",
+      "url": "https://doi.org/10.1016/j.entcom.2026.101195"
+    }
+  ]
+},
+{
+  "id": "id-gacha-character-2026",
+  "title": "가챠 캐릭터를 좋아하게 되는 이유는 획득 과정에도 있을까?",
+  "kicker": "캐릭터의 외형·성능·이야기뿐 아니라 가챠 결과, 육성 시간, 관계 설정이 애착 경험에 어떻게 포함되는지 살펴본 연구",
+  "originalTitle": "Gacha Impact: Systems, Characters, and the Player Experience of Gacha Games",
+  "authors": "Angeleen Tan · Elin Carstensdottir",
+  "journal": "Proceedings of the ACM on Human-Computer Interaction · CHI PLAY 2026",
+  "doi": "10.1145/3831332",
+  "sourceUrl": "https://doi.org/10.1145/3831332",
+  "published": "2026-11-03",
+  "updated": "2026-11-13",
+  "researchType": "질적 실증 연구",
+  "dataType": "서술형 설문",
+  "domain": "캐릭터·가챠",
+  "rank": 6,
+  "confidence": "공개 원문·초록 확인",
+  "accent": "violet",
+  "tags": [
+    "가챠",
+    "캐릭터 애착",
+    "캐릭터 디자인",
+    "캐릭터 육성",
+    "스토리",
+    "팬덤",
+    "질적 분석"
+  ],
+  "dataSummary": "영어권 18세 이상 가챠 게임 이용자 서술형 설문 563건. 여러 가챠 게임을 비교한 선행 작업과 응답을 주제별로 분석. 해당 응답 데이터는 2025년 석사학위논문에 먼저 사용되었고, 2026년 동료심사 논문으로 발표됨.",
+  "methodSummary": "반복적·성찰적 주제 분석(reflexive thematic analysis): 자유응답에서 반복해서 나타나는 경험의 의미를 코드와 주제로 묶음. 확률·인과효과 추정이 아니라 사람들이 캐릭터를 어떻게 이해하는지 설명하는 질적 분석.",
+  "finding": "응답에서는 캐릭터의 외형·스토리·플레이 성능 외에도 가챠에서 얻은 경험, 애써 모은 재화, 육성에 투자한 시간, 다른 캐릭터와의 관계 및 팬덤 경험이 애착과 평가의 일부로 나타났다. 같은 요소도 플레이어에게 긍정적이거나 부정적인 경험으로 해석될 수 있다.",
+  "shortFinding": "캐릭터의 매력은 외형·성능만이 아니라 획득과 육성의 개인적 경험까지 함께 형성됨",
+  "limitation": "질적 설문이며 캐릭터 매력의 상대적 효과나 리텐션·결제 증가율을 측정하지 않았다. 커뮤니티 기반 자발 참여 표본이며 하나의 응답 데이터가 2025년 학위논문과 2026년 학술 논문에 사용됐다.",
+  "useCase": "캐릭터를 평가할 때 외형·성능 외에 획득 경험과 실제 플레이 중 형성된 애착도 별도 축으로 생각할 수 있다. 특정 연출이 애착을 증가시키는지는 추가 검증이 필요하다.",
+  "audience": "게임 기획 · UX · 플레이어 연구",
+  "summaryRows": [
+    [
+      "연구 질문",
+      "플레이어는 가챠 캐릭터에게 어떻게 애착을 느끼고, 가챠·육성 시스템이 그 관계에 어떤 경험을 더하는가?"
+    ],
+    [
+      "연구 데이터",
+      "가챠 이용자 563명의 서술형 응답(영어권 18세 이상). 2025년 학위논문 분석 데이터가 2026년 학술 논문에 재사용됨."
+    ],
+    [
+      "분석 방법",
+      "반복적 주제 분석(qualitative/reflexive thematic analysis): 여러 응답의 공통 패턴을 질적으로 묶어 설명"
+    ],
+    [
+      "결론",
+      "선호 캐릭터의 외형·성능·스토리뿐 아니라 획득 성공·실패, 재화 축적, 직접 육성한 시간, 관계·팬덤 경험이 캐릭터에 대한 감정과 평가에 개입했다."
+    ],
+    [
+      "주요 한계",
+      "질적 서술형 연구. 효과 크기·인과효과·리텐션 수치 없음."
+    ]
+  ],
+  "evaluation": {
+    "lead": "캐릭터에 대한 선호는 “예쁘다” 또는 “강하다”만으로 끝나지 않았다. 응답자들은 캐릭터를 얻은 과정, 직접 육성한 시간, 스토리 속 관계, 팬덤 경험까지 자기만의 캐릭터 경험으로 설명했다.",
+    "highlights": [
+      {
+        "stat": "563명",
+        "title": "캐릭터를 평가하는 기준은 여러 층으로 나타났다",
+        "plain": "외형·성격·서사·실전 성능·캐릭터 관계가 응답에서 함께 등장했고, 스토리는 좋지만 전투 성능은 부족한 캐릭터를 별도로 평가하기도 했다.",
+        "source": "2026 논문 초록 / 동일 데이터의 2025 학위논문 Discussion §8.1.1"
+      },
+      {
+        "stat": "획득 경험",
+        "title": "가챠 운과 재화 준비 과정이 캐릭터 감정에 영향을 주었다",
+        "plain": "쉽게 얻은 캐릭터를 특별한 인연처럼 표현하거나, 실패·천장까지의 재화 축적으로 기대와 실망이 커진 경험이 기록됐다.",
+        "source": "학위논문 Discussion §8.1.2"
+      },
+      {
+        "stat": "육성·관계",
+        "title": "소유 후의 경험도 애착을 구성했다",
+        "plain": "레벨·장비에 들인 시간, 함께 플레이한 경험, 캐릭터 간 서사 관계 및 전투 시너지 등을 중요하게 이야기한 응답이 있었다.",
+        "source": "학위논문 Discussion §8.1.2"
+      }
+    ],
+    "interpretations": [
+      {
+        "title": "같은 캐릭터라도 이용자마다 애착의 이유가 다를 수 있다",
+        "observed": "응답자들은 외형·스토리·성능과 가챠 경험을 별개로 평가했고 선호 기준도 달랐다.",
+        "reasoning": "단일한 캐릭터 점수만으로는 캐릭터를 좋아하는 이유의 차이를 놓칠 수 있다.",
+        "example": "한 유저는 스토리 때문에, 다른 유저는 플레이 스타일 때문에 같은 캐릭터를 주력으로 사용한다.",
+        "boundary": "어떤 기준이 인구 전체에서 가장 중요한지는 이 연구가 계량적으로 비교하지 않았다."
+      },
+      {
+        "title": "캐릭터는 뽑는 순간이 아니라 뽑은 뒤에도 계속 의미가 변한다",
+        "observed": "응답에는 획득 운·육성 시간·전투 동행이 애착 경험으로 등장한다.",
+        "reasoning": "캐릭터를 좋아하는 감정은 출시 이미지 한 번으로 고정되지 않고 사용 경험 속에서 달라질 수 있다.",
+        "example": "처음에는 관심 없던 캐릭터가 던전에서 계속 활약하면서 어느새 애정 캐릭터가 되는 상황.",
+        "boundary": "육성 시간을 늘리면 애착이 반드시 증가한다고 실험으로 입증한 것은 아니다."
+      },
+      {
+        "title": "캐릭터 간 관계는 캐릭터의 매력 자체를 바꿀 수 있다",
+        "observed": "응답자들은 캐릭터의 이야기상 관계와 전투 시너지까지 매력 요인으로 설명했다.",
+        "reasoning": "캐릭터 한 명의 외형·스펙뿐 아니라 누구와 연결되는지도 감상과 플레이 경험에 중요할 수 있다.",
+        "example": "스토리에서 둘이 동료이고 전투에서도 서로 버프를 주는 조합에 더 정이 가는 상황.",
+        "boundary": "모든 이용자가 이 방식으로 반응한다고 일반화할 수는 없다."
+      }
+    ],
+    "takeaway": "캐릭터 애착은 “캐릭터 자체의 특징”과 “플레이어가 그 캐릭터와 겪은 경험”이 함께 형성한다. 다만 원인별 효과의 크기는 검증되지 않았다."
+  },
+  "variables": [
+    [
+      "캐릭터 애착",
+      "캐릭터를 좋아하거나 가까운 관계로 느끼는 주관적인 경험. 외형·성격·서사·경험 등으로 표현된다.",
+      "임상적 애착 척도나 단일 점수로 일괄 측정하지 않았다."
+    ],
+    [
+      "가챠 경험",
+      "캐릭터를 얻기 위해 재화를 준비하고 뽑기 결과를 경험하는 과정.",
+      "희귀도·결제액만으로 환원되지 않는다."
+    ],
+    [
+      "소유와 육성",
+      "캐릭터를 획득해 레벨·장비·전투에 투자한 경험.",
+      "육성 시간이 길수록 만족이 올라간다는 인과 증거는 없다."
+    ],
+    [
+      "캐릭터 관계",
+      "캐릭터 간 이야기상의 관계 및 전투상의 시너지.",
+      "플레이어가 주관적으로 중요하게 평가한 요인."
+    ],
+    [
+      "팬덤 경험",
+      "커뮤니티 토론, 팬아트 등 게임 외부에서 캐릭터를 만나는 경험.",
+      "팬덤 참여자에 편향된 설문일 수 있다."
+    ]
+  ],
+  "methodDetails": [
+    {
+      "title": "왜 자유응답·질적 분석을 사용했나?",
+      "body": "선택지형 문항에 미리 정해둔 이유만 제시하지 않고 이용자가 스스로 설명한 애착의 다양한 이유를 수집하려는 목적이다."
+    },
+    {
+      "title": "주제 분석이란?",
+      "body": "응답 문장을 반복해서 읽으며 의미 단위에 코드를 붙이고, 비슷한 코드를 묶어 큰 주제를 형성한다. 통계 회귀계수 대신 경험의 유형과 맥락을 설명한다."
+    },
+    {
+      "title": "이 연구가 무엇을 증명하지 못하나?",
+      "body": "“이 기능을 추가하면 애착이 몇 % 증가한다”는 효과 추정이나 원인-결과 실험이 아니다."
+    }
+  ],
+  "metricExplanations": [
+    [
+      "응답 수 563",
+      "분석한 사람의 수다. 특정 답변에 동의한 사람의 비율을 뜻하지 않는다."
+    ],
+    [
+      "주제(theme)",
+      "여러 사람의 응답에서 반복되거나 의미가 있다고 판단된 경험의 패턴."
+    ],
+    [
+      "인과효과",
+      "이 연구에서는 추정하지 않았다."
+    ]
+  ],
+  "results": [
+    {
+      "title": "캐릭터 선호를 구성하는 요인",
+      "columns": [
+        "응답에서 드러난 요소",
+        "해석"
+      ],
+      "rows": [
+        [
+          "외형·성격·스토리",
+          "관심을 갖게 되는 이유이자 캐릭터 해석의 출발점"
+        ],
+        [
+          "전투 성능·조작 스타일",
+          "스토리 선호와 별개로 평가되기도 함"
+        ],
+        [
+          "캐릭터 간 관계·팬덤",
+          "개별 캐릭터를 넘어 관계와 커뮤니티가 평가에 참여"
+        ]
+      ],
+      "note": "주제 분석 결과의 정성적 요약이다. 발생 빈도의 순위나 상대 효과를 표시한 것이 아니다."
+    },
+    {
+      "title": "획득 후 경험",
+      "columns": [
+        "관찰된 서술",
+        "의미"
+      ],
+      "rows": [
+        [
+          "가챠 결과를 캐릭터와의 인연처럼 해석",
+          "획득의 우연성이 개인적 기억으로 남을 수 있음"
+        ],
+        [
+          "원하는 캐릭터를 위해 재화 저축",
+          "획득 전부터 기대와 투자가 쌓이는 경험"
+        ],
+        [
+          "육성·편성·일일 플레이",
+          "획득 이후의 동행이 관계를 변화시키는 경험"
+        ]
+      ],
+      "note": "질적 사례의 존재를 말하며 전체 이용자 비율을 뜻하지 않는다."
+    }
+  ],
+  "experiments": [
+    {
+      "title": "애착 형성 이유를 구분해 듣기",
+      "hypothesis": "이용자가 캐릭터를 좋아하는 이유를 외형·서사·전투·획득 경험으로 나누어 묻고, 실제 응답에서 새로운 주제가 나타나는지 탐색한다.",
+      "control": "캐릭터 호감도 하나만 조사",
+      "treatment": "자유응답을 포함한 여러 이유별 조사",
+      "primary": "요인별 응답 패턴, 예상하지 못한 호감·불만 주제",
+      "guardrail": "자발 응답 편향, 과도한 문항 유도"
+    },
+    {
+      "title": "캐릭터 사용 경험의 변화 보기",
+      "hypothesis": "획득 직후와 일정 기간 실제 사용한 뒤 캐릭터에 대한 감정이 어떻게 달라지는지 탐색한다.",
+      "control": "획득 직후 동일 문항",
+      "treatment": "플레이 경험 후 동일 문항(동일 이용자 추적)",
+      "primary": "애착·만족도 변화, 실제 편성·육성 행동",
+      "guardrail": "탈락 응답자 편향, 시간에 따른 다른 콘텐츠 영향"
+    }
+  ],
+  "citations": [
+    {
+      "label": "2026 ACM 논문",
+      "url": "https://doi.org/10.1145/3831332"
+    },
+    {
+      "label": "2025 동일 설문 데이터 학위논문(본문·해석 근거)",
+      "url": "https://escholarship.org/uc/item/47n870q2"
+    },
+    {
+      "label": "학위논문 PDF",
+      "url": "https://escholarship.org/content/qt47n870q2/qt47n870q2_noSplash_457d79f85f236fb5e4ab32526530cac5.pdf"
+    }
+  ],
+  "dataCaveat": "563개 응답은 실제 게임 로그가 아니라 온라인 커뮤니티에서 모집한 자유응답이다. 2026 논문과 2025 학위논문은 동일 연구 데이터에 기반하므로 별개 연구 두 건으로 중복 집계하지 않는다."
+},
+{
+  "id": "cognitive-game-repeat-2026",
+  "title": "같은 게임을 다시 플레이하면 즐거움과 보상감이 줄어들까?",
+  "kicker": "두 번째 플레이에서 흥미·호기심·보상감이 어떻게 달라지는지, 플레이 전 스트레스가 그 경험을 바꾸는지 살펴본 실험",
+  "originalTitle": "The Role of Stress and Repeated Gameplay in Players’ Motivation and Engagement in a Cognitive Assessment Game",
+  "authors": "Benny Markovitch · Jonas Carl Christian Kamps · Panos Markopoulos · Max V. Birk",
+  "journal": "Proceedings of the ACM on Human-Computer Interaction · CHI PLAY 2026",
+  "doi": "10.1145/3831284",
+  "sourceUrl": "https://doi.org/10.1145/3831284",
+  "published": "2026-11-03",
+  "updated": "2026-11-13",
+  "researchType": "실험 연구",
+  "dataType": "실험·설문",
+  "domain": "반복 플레이·몰입",
+  "rank": 7,
+  "confidence": "공개 초록 중심 검증",
+  "accent": "blue",
+  "tags": [
+    "반복 플레이",
+    "흥미",
+    "보상감",
+    "호기심",
+    "몰입",
+    "스트레스",
+    "게임 UX"
+  ],
+  "dataSummary": "인지 평가 게임 Tunnel Runner를 두 차례 플레이한 참가자 93명. 2회차 직전 VR 스트레스 유발 절차와 대조 절차에 무작위 배정. 각 세션에서 동기·참여 경험을 자기보고로 측정.",
+  "methodSummary": "반복측정(1회차와 2회차) 비교 + 2회차 전 스트레스 유발/대조 조건 무작위 배정. 스트레스 유발 조작의 작동 여부와 게임 경험 점수의 변화를 비교.",
+  "finding": "VR 스트레스 유발 절차는 작동했지만 플레이어가 보고한 게임 동기·몰입은 스트레스 조건에 대체로 큰 변화를 보이지 않았다. 반면 1회차에서 2회차로 넘어가며 호기심·즐거움·보상감 등 다수 경험 점수가 감소했다.",
+  "shortFinding": "스트레스 조작보다 두 번째 플레이 자체에서 호기심·즐거움·보상감 감소가 두드러짐",
+  "limitation": "인지 능력 평가용 단일 게임, 두 번의 짧은 세션, 93명 실험이다. 일반 상용 RPG의 장기 리텐션이나 반복 수십 회 상황으로 일반화할 수 없다. 공개 초록에는 개별 효과 크기·정확한 문항이 없어 추가 검증 필요.",
+  "useCase": "반복 콘텐츠의 매력을 판단할 때 “처음 재미있었는가”만 묻지 말고 두 번째 경험에서도 호기심과 보상감이 유지되는지 비교해 볼 가치가 있다.",
+  "audience": "게임 기획 · UX · 플레이어 연구",
+  "summaryRows": [
+    [
+      "연구 질문",
+      "반복 플레이와 플레이 전 스트레스가 인지 평가 게임의 즐거움·동기·몰입 경험에 어떤 영향을 주는가?"
+    ],
+    [
+      "연구 데이터",
+      "인지 평가 게임 Tunnel Runner의 2회 플레이 실험 참가자 93명. 2회차 전 VR 스트레스/대조 조건 무작위 배정"
+    ],
+    [
+      "분석 방법",
+      "두 세션의 자기보고 경험 변화 비교 + 무작위 배정 조건 간 비교"
+    ],
+    [
+      "결론",
+      "스트레스 유발은 성공했으나 게임 동기·참여도에 대한 영향은 제한적. 호기심·즐거움·보상감은 2회차에 감소."
+    ],
+    [
+      "주요 한계",
+      "단일 평가 게임과 두 세션 실험. 일반 게임 장기 잔존율에 대한 결론 아님."
+    ]
+  ],
+  "evaluation": {
+    "lead": "반복 경험의 변화가 두드러졌다. 93명이 같은 인지 평가 게임을 다시 할 때 호기심·즐거움·보상감 등이 낮아졌다. 반면 VR로 유발한 일시적 스트레스의 영향은 제한적이었다.",
+    "highlights": [
+      {
+        "stat": "93명 · 2회",
+        "title": "두 번째 플레이에서 여러 경험 점수가 감소했다",
+        "plain": "호기심, 즐거움, 보상감을 포함한 자기보고 경험이 두 세션 사이에서 전반적으로 감소했다.",
+        "source": "CHI PLAY 2026 공식 초록 / DOI 10.1145/3831284"
+      },
+      {
+        "stat": "무작위 배정",
+        "title": "2회차 전에 VR 스트레스 조건을 분리했다",
+        "plain": "참가자를 스트레스 유발 또는 대조 절차에 무작위 배정했고, 스트레스 유도 자체는 효과적이었다.",
+        "source": "논문 초록 · 실험 설계"
+      },
+      {
+        "stat": "제한적 영향",
+        "title": "스트레스 조건은 게임 동기·몰입에 큰 차이를 만들지 못했다",
+        "plain": "스트레스 유발 후에도 게임에서 느낀 동기와 몰입은 대체로 유지되는 양상이었다.",
+        "source": "논문 초록 · 결과"
+      }
+    ],
+    "interpretations": [
+      {
+        "title": "처음 재미있었다는 평가만으로 반복 플레이의 재미를 판단할 수 없다",
+        "observed": "동일 게임의 2회차에 호기심·즐거움·보상감이 낮아졌다.",
+        "reasoning": "플레이어가 첫 경험에 높은 점수를 줬더라도 다시 돌아왔을 때는 다른 평가를 할 수 있다.",
+        "example": "처음에는 퍼즐의 답을 찾는 과정이 신선했지만, 같은 퍼즐을 두 번째 풀 때는 이미 해법을 알고 있는 상황.",
+        "boundary": "이는 인지 평가 게임의 2회차 결과이며 반복 던전 전체에 대한 일반 법칙은 아니다."
+      },
+      {
+        "title": "호기심과 보상감을 나누어 관찰할 이유가 있다",
+        "observed": "연구는 즐거움뿐 아니라 호기심과 보상감 같은 경험 항목의 변화도 보고했다.",
+        "reasoning": "모든 감정 경험을 “재미 점수” 하나로 합치면 어떤 부분이 빨리 줄어드는지 파악하기 어렵다.",
+        "example": "첫 판은 새로운 패턴이 궁금하고, 두 번째는 익숙해서 궁금함은 줄었지만 클리어 보상은 여전히 만족스러울 수 있다.",
+        "boundary": "각 항목에 대한 정확한 수치·효과 크기는 공개 초록에서 확인되지 않았다."
+      },
+      {
+        "title": "일시적 스트레스가 게임 경험을 반드시 크게 흔들지는 않는다",
+        "observed": "VR 스트레스 유발은 성공했으나 자기보고 동기·참여도 변화는 제한적이었다.",
+        "reasoning": "사전 컨디션이 게임 경험에 영향을 줄 가능성은 있지만, 이 실험에서는 스트레스보다 반복 세션의 변화가 뚜렷했다.",
+        "example": "긴장된 상태에서도 익숙한 간단한 게임을 평소와 비슷하게 즐길 수 있는 상황.",
+        "boundary": "다른 강도의 스트레스나 다른 장르에서 동일할지는 모른다."
+      }
+    ],
+    "takeaway": "처음의 흥미와 두 번째의 흥미는 다를 수 있다. 반복 콘텐츠를 볼 때는 재방문 시 경험이 어떻게 변하는지 직접 확인해야 한다."
+  },
+  "variables": [
+    [
+      "참여·몰입(Engagement)",
+      "게임을 플레이할 때 느끼는 참여와 관심의 정도를 자기보고 문항으로 평가.",
+      "이용 시간이나 실제 D7 잔존율이 아니다."
+    ],
+    [
+      "동기(Motivation)",
+      "게임을 하려는 의욕·보상감·호기심 등 경험 차원.",
+      "하나의 고정된 값이 아니라 세션에 따라 달라질 수 있다."
+    ],
+    [
+      "스트레스 유도 조건",
+      "2회차 직전에 수행한 VR 스트레스 유발 절차.",
+      "실생활 만성 스트레스와 같지 않다."
+    ],
+    [
+      "대조 조건",
+      "스트레스 유발을 의도하지 않은 비교 VR 절차.",
+      "참가자가 무작위로 배정되었다."
+    ],
+    [
+      "반복 플레이",
+      "동일 게임을 1회차와 2회차에서 경험한 것.",
+      "장기 반복 수십 회를 의미하지 않는다."
+    ]
+  ],
+  "methodDetails": [
+    {
+      "title": "왜 반복측정이 필요한가?",
+      "body": "같은 사람의 첫 플레이와 두 번째 플레이를 비교하면 개인마다 원래 재미를 느끼는 성향 차이를 일부 제거하고 변화 자체에 집중할 수 있다."
+    },
+    {
+      "title": "왜 무작위 배정했나?",
+      "body": "2회차의 스트레스 조건이 경험에 영향을 미치는지 비교할 때 원래 참여자의 특성이 집단에 치우치는 문제를 줄이기 위해서다."
+    },
+    {
+      "title": "스트레스 조작 점검이란?",
+      "body": "VR 절차를 거친 뒤 실제 스트레스가 높아졌는지 확인해, 조건 차이가 생기지 않아 결과가 없었던 것은 아닌지 점검하는 과정이다."
+    }
+  ],
+  "metricExplanations": [
+    [
+      "참가자 수 N=93",
+      "실험에 참여한 사람 수이며 반복 플레이 횟수가 93회라는 뜻은 아니다."
+    ],
+    [
+      "세션 간 변화",
+      "1회차와 2회차에서 같은 경험 질문에 답한 점수의 차이."
+    ],
+    [
+      "집단 간 차이",
+      "스트레스 조건과 대조 조건의 경험 점수 차이."
+    ],
+    [
+      "효과 크기",
+      "어느 정도 줄었는지 나타내지만 공개 초록에는 구체적인 수치가 제시되지 않았다."
+    ]
+  ],
+  "results": [
+    {
+      "title": "반복과 스트레스에 따른 변화",
+      "columns": [
+        "분석 항목",
+        "공개된 결론"
+      ],
+      "rows": [
+        [
+          "호기심·즐거움·보상감",
+          "2회차에서 감소"
+        ],
+        [
+          "스트레스 유발 절차",
+          "실제로 스트레스 유도에 성공"
+        ],
+        [
+          "스트레스 조건의 게임 동기·참여 영향",
+          "전반적으로 제한적"
+        ]
+      ],
+      "note": "정확한 세션 평균값, 신뢰구간, 효과 크기는 공개 초록에서 확인되지 않아 수치를 만들어 넣지 않는다."
+    },
+    {
+      "title": "해석의 범위",
+      "columns": [
+        "연구가 측정한 것",
+        "연구가 측정하지 않은 것"
+      ],
+      "rows": [
+        [
+          "두 차례 플레이 후 자기보고 경험",
+          "상용 모바일 게임의 D7·D30 잔존율"
+        ],
+        [
+          "VR로 일시 유도한 스트레스",
+          "일상생활 스트레스와 장기적인 심리 건강"
+        ],
+        [
+          "인지 평가 게임 Tunnel Runner",
+          "모든 게임 장르의 반복 콘텐츠"
+        ]
+      ],
+      "note": "과도한 일반화를 피하기 위해 실험 범위를 구분한다."
+    }
+  ],
+  "experiments": [
+    {
+      "title": "1회차와 2회차의 경험 비교",
+      "hypothesis": "같은 콘텐츠를 처음 즐길 때와 두 번째 즐길 때 호기심·재미·보상감이 다르게 평가되는가?",
+      "control": "첫 플레이 후 설문",
+      "treatment": "동일 콘텐츠 두 번째 플레이 후 같은 설문",
+      "primary": "호기심·즐거움·보상감의 개인별 변화",
+      "guardrail": "숙련 향상으로 성과가 좋아지는 영향을 함께 기록"
+    },
+    {
+      "title": "반복 조건별 흥미 변화 확인",
+      "hypothesis": "동일 경험을 반복하는 경우와 일부 구성이 바뀌는 경우의 흥미 저하 속도에 차이가 있을까?",
+      "control": "동일 구성 2회",
+      "treatment": "퍼즐·적 패턴 등 일부 변형 2회",
+      "primary": "경험 차이, 완료율",
+      "guardrail": "변형으로 난이도가 달라지는 영향 분리"
+    }
+  ],
+  "citations": [
+    {
+      "label": "ACM 논문 DOI",
+      "url": "https://doi.org/10.1145/3831284"
+    },
+    {
+      "label": "CHI PLAY 2026 공식 프로그램",
+      "url": "https://programs.sigchi.org/chiplay/2026/program/content/264999"
+    }
+  ],
+  "dataCaveat": "모든 결과는 특정 인지 평가 게임에서 두 차례 측정한 자기보고에 대한 것이다. 실제 게임 이탈률을 측정하지 않았다."
+},
+{
+  "id": "deceptive-design-awareness-2026",
+  "title": "유저는 불리한 과금 유도를 알아차려도 왜 계속 이용할까?",
+  "kicker": "조작적인 과금·시간 압박·UI 설계를 알아차리는 정도가 확률형 상품 이용 및 문제적 게임 이용 증상과 어떻게 연결되는지 조사",
+  "originalTitle": "When Fun Becomes Exploitation: Player Perceptions of Deceptive Design Patterns in Games",
+  "authors": "Ruijie Wang · Yuanchen Xu · Helena Donald · Charlotte Armitage · John King · Daniel Fitton",
+  "journal": "Proceedings of the ACM on Human-Computer Interaction · CHI PLAY 2026",
+  "doi": "10.1145/3831295",
+  "sourceUrl": "https://doi.org/10.1145/3831295",
+  "published": "2026-11-05",
+  "updated": "2026-11-13",
+  "researchType": "혼합방법 실증 연구",
+  "dataType": "설문·자유응답",
+  "domain": "UX·과금 윤리",
+  "rank": 8,
+  "confidence": "공개 초록 중심 검증",
+  "accent": "violet",
+  "tags": [
+    "다크 패턴",
+    "확률형 보상",
+    "과금 UX",
+    "문제적 게임 이용",
+    "사용자 인지",
+    "윤리적 설계",
+    "질적 분석"
+  ],
+  "dataSummary": "영국 성인 게이머 100명 이상을 대상으로 확률형 상품 사용(LBU), 기만적 설계 인지(DPA), 문제적 게임 이용 증상(IGD)을 설문으로 조사. 자유응답에서 조작적 디자인 인식도 분석.",
+  "methodSummary": "혼합방법(mixed methods): 설문 변수의 통계적 예측 관계를 분석하는 정량 연구와, 응답자가 알아차린 기만적 설계 유형을 주제별로 정리한 반성적 주제 분석을 결합.",
+  "finding": "확률형 상품 이용(LBU)은 기만적 설계 인지(DPA)를 함께 고려한 모형에서 높은 문제적 게임 이용 증상(IGD)과 통계적으로 연결됐다. 반면 DPA 자체는 그 위험을 낮추는 보호 요인으로 확인되지 않았다. 응답자들은 유도 장치를 알아차리면서도 뽑기의 재미를 느끼는 모순된 경험을 설명했다.",
+  "shortFinding": "과금 유도 장치를 인식하는 것만으로 문제적 이용 위험이 낮아지지는 않았음",
+  "limitation": "영국 성인 100명 이상 관찰 설문이며 사용량·증상 간 인과관계를 입증하지 않는다. IGD는 임상 진단 그 자체가 아닌 설문 지표로 보고됐으며, 공개 초록에는 정확한 계수와 표본 수가 없다.",
+  "useCase": "이용자가 가격·확률·시간 압박을 이해했다고 해서 조작적인 경험의 영향이 사라진다고 가정해서는 안 된다. 실제 행동·이해도와 부담을 함께 살펴볼 이유가 있다.",
+  "audience": "게임 기획 · UX · 플레이어 연구",
+  "summaryRows": [
+    [
+      "연구 질문",
+      "기만적 게임 설계를 알아차리는 사람이 확률형 보상 이용 및 문제적 게임 이용 증상에서 더 안전한가? 플레이어는 어떤 유도 장치를 인식하는가?"
+    ],
+    [
+      "연구 데이터",
+      "영국 성인 플레이어 100명 이상 설문 및 자유응답(정확한 N은 공개 초록에 미기재)"
+    ],
+    [
+      "분석 방법",
+      "확률형 상품 이용·다크 패턴 인식·IGD 증상 관계 분석 + 반성적 주제 분석"
+    ],
+    [
+      "결론",
+      "확률형 상품 이용은 높은 IGD 점수와 통계적으로 연결됐지만, 유도 장치 인지는 위험을 낮추는 효과가 확인되지 않았다. 인지하면서도 재미를 느낀다는 응답이 있었다."
+    ],
+    [
+      "주요 한계",
+      "관찰 설문이라 원인과 결과를 확정하지 못함. 공개 초록에서 정확한 효과 크기·N을 확인할 수 없음."
+    ]
+  ],
+  "evaluation": {
+    "lead": "이용자들은 금전 지출 압박, 시간 제한, 감정 자극, UI의 시선 유도 같은 장치를 인식했지만, 그렇다고 해당 경험을 모두 피하거나 확률형 상품에 대한 흥미를 잃는 것은 아니었다.",
+    "highlights": [
+      {
+        "stat": "100명+",
+        "title": "이용자들은 여러 형태의 기만적 설계를 알아차렸다",
+        "plain": "금전적 유도, 시간 압박, 감정 조작, 시각·UI 오도라는 네 유형이 자유응답 주제 분석에서 도출됐다.",
+        "source": "논문 초록 · Qualitative Findings"
+      },
+      {
+        "stat": "양의 관계",
+        "title": "확률형 보상 이용은 높은 IGD 증상 점수와 연결됐다",
+        "plain": "확률형 상품 이용(LBU)은 인지(DPA)를 함께 고려한 모형에서도 IGD와 유의한 예측 관계를 나타냈다.",
+        "source": "논문 초록 · Quantitative Findings"
+      },
+      {
+        "stat": "보호 효과 미확인",
+        "title": "유도 장치를 잘 안다는 것만으로 위험이 낮아지지 않았다",
+        "plain": "다크 패턴 인지(DPA)는 문제적 게임 이용 증상 위험을 낮추는 보호 요인으로 확인되지 않았다.",
+        "source": "논문 초록 · Quantitative Findings"
+      }
+    ],
+    "interpretations": [
+      {
+        "title": "불편함을 알아차린다고 실제로 이용을 멈추는 것은 아니다",
+        "observed": "응답자들은 조작적인 수단을 알아차렸으나 확률형 상품의 재미도 경험한다고 설명했다.",
+        "reasoning": "인지와 행동은 같은 것이 아니다. “이건 과금 압박이다”라고 인식해도 즐기는 마음은 남을 수 있다.",
+        "example": "기간 한정 뽑기에서 시간 압박을 알고도 좋아하는 캐릭터를 얻으려 계속 화면을 확인하는 상황.",
+        "boundary": "실제 지출 횟수 변화까지 무작위 실험으로 측정한 결과는 아니다."
+      },
+      {
+        "title": "설명을 추가하는 것과 구조를 바꾸는 것은 다른 개입이다",
+        "observed": "DPA는 높은 IGD 증상을 낮추는 보호 요인으로 확인되지 않았다.",
+        "reasoning": "설계가 주는 압박을 이용자가 알아차리는 것만으로 문제가 완전히 해소된다고 기대하기 어렵다.",
+        "example": "확률을 설명하는 버튼은 있어도 결제까지 여러 재화로 변환되면 총금액을 한눈에 알기 어려운 UI.",
+        "boundary": "확률 표시를 없애라는 뜻이 아니며, 투명성과 사용성 개선 자체의 효과를 실험한 연구는 아니다."
+      },
+      {
+        "title": "문제적 이용과 일반적인 게임 재미를 혼동하지 말아야 한다",
+        "observed": "확률형 상품 이용과 IGD 점수의 관계, 재미를 느낀다는 자유응답이 함께 보고됐다.",
+        "reasoning": "같은 경험이 어떤 사람에게는 즐거움이면서 동시에 부담이 될 수 있음을 보여준다.",
+        "example": "좋아하는 뽑기 연출이 즐겁지만 결과가 나오지 않아 여러 번 결제하는 일은 후회스러울 수 있다.",
+        "boundary": "이 연구가 모든 확률형 보상 이용자를 중독자로 분류한 것은 아니다."
+      }
+    ],
+    "takeaway": "플레이어는 기만적 설계를 인식하면서도 해당 경험을 즐길 수 있다. “알고 있으니 괜찮다”는 가정만으로 유저 보호를 판단할 수 없다."
+  },
+  "variables": [
+    [
+      "LBU: 확률형 상품 이용",
+      "게임의 무작위 보상 상품(loot box)을 얼마나 사용하는지의 설문상 지표.",
+      "가챠 이용자 모두가 문제적 이용을 한다는 뜻이 아니다."
+    ],
+    [
+      "DPA: 기만적 설계 인지",
+      "게임이 이용자의 행동을 유도하는 조작적 디자인을 알아차리는 정도.",
+      "인지가 높아도 행동을 회피한다는 뜻은 아니다."
+    ],
+    [
+      "IGD: 문제적 게임 이용 증상",
+      "Internet Gaming Disorder 관련 증상 점수.",
+      "의학적 진단이나 실제 중독 유병률과 동일시하면 안 된다."
+    ],
+    [
+      "Deceptive design pattern",
+      "금전 가치 흐리기, 시간 압박, 감정 자극, UI 오도 등 이용자의 결정을 불리하게 유도하는 설계.",
+      "모든 유료 상품이나 한정 이벤트를 자동으로 다크 패턴으로 분류하는 것은 아니다."
+    ]
+  ],
+  "methodDetails": [
+    {
+      "title": "왜 혼합방법을 사용했나?",
+      "body": "LBU·DPA·IGD 사이의 통계적 관계만으로는 플레이어가 어떤 장치를 어떻게 인식하는지 설명하기 어려워, 수치 분석과 자유응답 분석을 함께 수행했다."
+    },
+    {
+      "title": "정량 관계 분석이란?",
+      "body": "특정 설문 점수가 높은 이용자가 다른 점수도 높은지 여러 변수를 함께 고려해 분석한다. 이 연구의 공개 초록에는 정확한 회귀식·계수가 없다."
+    },
+    {
+      "title": "반성적 주제 분석이란?",
+      "body": "자유응답을 읽어 반복되는 이용자 경험을 코드화하고 “금전 압박”, “시간 속임수”, “UI 오도”처럼 경험의 패턴으로 정리하는 방법이다."
+    }
+  ],
+  "metricExplanations": [
+    [
+      "통계적으로 유의",
+      "이번 표본에서 관계가 0이라는 가정에 불리한 증거가 있다는 뜻. 원인과 결과가 밝혀졌다는 뜻은 아니다."
+    ],
+    [
+      "IGD 점수",
+      "문제적 게임 이용 증상의 자기보고 수준. 임상 진단 여부를 직접 의미하지 않는다."
+    ],
+    [
+      "효과 크기",
+      "공개 초록에는 β/OR 등 구체적 수치가 제시되지 않아 임의로 적지 않는다."
+    ]
+  ],
+  "results": [
+    {
+      "title": "정량 연구에서 확인한 관계",
+      "columns": [
+        "비교 변수",
+        "결과"
+      ],
+      "rows": [
+        [
+          "LBU → IGD 증상",
+          "확률형 상품 이용이 높을수록 IGD 점수도 높은 쪽과 유의한 관계"
+        ],
+        [
+          "DPA → IGD 증상",
+          "인지도가 높다고 IGD 위험이 유의하게 낮아지지는 않음"
+        ]
+      ],
+      "note": "관찰 설문 결과다. 이용이 증상을 유발하는지, 증상이 있는 이용자가 확률형 상품을 더 사용하는지 구분할 수 없다."
+    },
+    {
+      "title": "이용자가 지적한 설계 유형",
+      "columns": [
+        "유형",
+        "쉽게 이해하는 예시"
+      ],
+      "rows": [
+        [
+          "노골적인 과금 유도",
+          "구매 유도나 가치 비교를 어렵게 하는 상품 구성"
+        ],
+        [
+          "시간 압박",
+          "마감 시간으로 결정을 서두르게 만드는 방식"
+        ],
+        [
+          "감정 자극",
+          "놓치면 후회할 것 같은 감정을 이용한 연출"
+        ],
+        [
+          "감각·UI 오도",
+          "시각적 강조 또는 재화 변환으로 실제 금액을 파악하기 어려운 구조"
+        ]
+      ],
+      "note": "이 사례들은 논문의 유형을 설명하기 위한 이해용 예시이며 모든 해당 기능을 기만적 설계로 판정하는 목록은 아니다."
+    }
+  ],
+  "experiments": [
+    {
+      "title": "인식과 이해·행동을 분리해 보기",
+      "hypothesis": "유저가 구매 구조를 알고 있다고 답하는 것과 실제 총비용·확률을 맞게 이해하는 것은 같은가?",
+      "control": "기존 상점 안내 방식",
+      "treatment": "실제 화폐 표시·재화 전환·확률을 명확하게 병기한 비교 화면",
+      "primary": "총비용 이해도, 잘못된 구매 인지, 후회 보고",
+      "guardrail": "구매액 증가를 성공 지표로 삼지 않고 의사결정 이해도를 우선"
+    },
+    {
+      "title": "이용자가 느끼는 시간 압박 조사",
+      "hypothesis": "한정 판매 문구가 얼마나 실제 선택의 압박과 후회를 유발하는지 관찰한다.",
+      "control": "중립적으로 기한을 표시하는 문구",
+      "treatment": "압박을 더 낮춘 중립적 설명 문구",
+      "primary": "시간 압박 인지, 구매 전 이해도, 구매 후 후회",
+      "guardrail": "취약 이용자에게 불필요한 과금 유도를 하지 않도록 설계"
+    }
+  ],
+  "citations": [
+    {
+      "label": "논문 DOI",
+      "url": "https://doi.org/10.1145/3831295"
+    },
+    {
+      "label": "저자 소속 대학 공식 논문 정보",
+      "url": "https://staffprofiles.bournemouth.ac.uk/display/journal-article/520418"
+    },
+    {
+      "label": "대학 리포지터리",
+      "url": "https://eprints.bournemouth.ac.uk/42451/"
+    }
+  ],
+  "dataCaveat": "설문 조사로 개인별 인식과 문제적 게임 이용 증상 점수의 관계를 살폈다. 실제 인과효과나 행동 변화를 시험한 A/B 테스트가 아니며 구체적인 N·효과크기는 현재 확인한 초록에 없었다."
+}
+,
+{
+  "updated": "2026-11-16",
+  "researchType": "실증 연구",
+  "rank": 9,
+  "confidence": "원문·공식 초록 검증",
+  "id": "tradeoff-player-values-2026",
+  "title": "보상·탐험·스토리·도전이 충돌하면 플레이어는 무엇을 고를까?",
+  "kicker": "좋아하는 요소를 나열하는 설문 대신, 하나를 얻으려면 다른 하나를 포기해야 하는 상황에서 선호를 측정",
+  "originalTitle": "Value Orientation in Players: Development and Validation of a Tradeoff-Based Scale of In-Game Priorities",
+  "authors": "Ziao Tang · Ben Kirman",
+  "journal": "International Journal of Human–Computer Interaction",
+  "doi": "10.1080/10447318.2026.2750678",
+  "sourceUrl": "https://pure.york.ac.uk/portal/en/publications/value-orientation-in-players-development-and-validation-of-a-trad/",
+  "published": "2026-10-22",
+  "dataType": "설문·선택 과제",
+  "domain": "선택·동기",
+  "accent": "violet",
+  "tags": [
+    "선택 구조",
+    "플레이어 선호",
+    "트레이드오프",
+    "효율",
+    "탐험",
+    "스토리",
+    "도전",
+    "설문 척도"
+  ],
+  "dataSummary": "중국 플레이어 총 813명을 대상으로 수행한 3개 연구. 선택의 기회비용을 드러내는 설문 문항과 별도 상황 선택 과제 등으로 측정 도구를 개발·검증.",
+  "methodSummary": "탐색적 요인분석(EFA)으로 4요인을 발견하고, 별도 표본의 확인적 요인분석(CFA)과 상황 과제·재검사로 척도 검증.",
+  "finding": "효율·탐험·스토리·도전이라는 4개 우선순위를 16문항으로 측정할 수 있었고, 독립 표본에서 4요인 구조 적합도가 높았음(CFI=0.99). 문항 답변은 표현을 바꾼 별도 상황 과제의 선택도 예측했다.",
+  "shortFinding": "플레이어가 좋아하는 요소뿐 아니라 무엇을 포기하고 무엇을 고르는지를 4개 우선순위로 측정",
+  "limitation": "중국인 표본 중심의 척도 개발·검증. 실제 상용 게임의 장기 행동·리텐션 변화나 선호를 바꾸는 인과 실험은 아님.",
+  "useCase": "선호도를 물을 때 “성장도 좋고 스토리도 좋아요”만 묻지 않고, 둘 중 하나를 선택해야 하는 구체적 상황을 제시하면 우선순위 차이를 파악할 수 있다.",
+  "audience": "시스템 기획 · 캐릭터·콘텐츠 기획 · 유저 리서치",
+  "summaryRows": [
+    [
+      "연구 질문",
+      "게임에서 목표가 충돌할 때 플레이어의 실제 우선순위는 무엇이며, 이를 설문으로 안정적으로 측정할 수 있을까?"
+    ],
+    [
+      "연구 데이터",
+      "중국 플레이어 총 813명, 3개 연구. 기회비용을 포함한 선택 문항과 별도 상황 선택 과제"
+    ],
+    [
+      "분석 방법",
+      "탐색적 요인분석(EFA), 확인적 요인분석(CFA), 다른 과제로 예측력 검증, 재검사 안정성 검증"
+    ],
+    [
+      "결론",
+      "효율·탐험·스토리·도전 4요인의 16문항 척도 검증. 독립 표본에서 CFI=0.99, 다른 상황 과제의 선택도 예측"
+    ],
+    [
+      "주요 한계",
+      "플레이어의 선호·가상 상황 선택을 측정했으며, 실제 게임 이탈이나 구매 효과를 입증하지 않음"
+    ]
+  ],
+  "evaluation": {
+    "lead": "플레이어의 선호는 “좋아하는 콘텐츠”만 물을 때보다, 보상과 탐험처럼 두 목표가 충돌할 때 무엇을 먼저 고르는지를 물으면 더 구체적으로 드러났다. 연구진은 이를 효율·탐험·스토리·도전의 4가지 우선순위로 측정했다.",
+    "highlights": [
+      {
+        "stat": "813명",
+        "title": "3개 연구에서 플레이어의 우선순위를 측정했다",
+        "plain": "서로 다른 목표 사이에서 무엇을 선택하는지 묻는 문항을 제작하고, 전체 813명 데이터를 통해 점검했다.",
+        "source": "논문 초록 · Three studies"
+      },
+      {
+        "stat": "16문항",
+        "title": "효율·탐험·스토리·도전의 4가지 축이 확인됐다",
+        "plain": "별도 표본에서 4요인 구조가 재현됐고 모형 적합도 CFI=0.99였다. CFI는 선택 예측 정확도 99%라는 뜻이 아니다.",
+        "source": "논문 초록 · EFA/CFA"
+      },
+      {
+        "stat": "별도 과제 예측",
+        "title": "설문 결과가 다른 상황에서의 선택도 설명했다",
+        "plain": "문항 표현이 다른 상황 선택 과제에서도 우선순위 척도가 예측 정보를 제공했으며, 시간 간 재검사에서도 비교적 안정적이었다.",
+        "source": "논문 초록 · Predictive validity / Retest"
+      }
+    ],
+    "interpretations": [
+      {
+        "title": "“둘 다 좋다”와 “둘 중 하나만 고른다”는 다른 정보다",
+        "observed": "연구는 각 문항에 명시적인 기회비용을 포함했고 4개 우선순위로 구분되는 구조를 검증했다.",
+        "reasoning": "모두 좋아한다고 답한 이용자도 제한된 시간과 자원 앞에서는 무엇을 우선할지 다르게 결정할 수 있다.",
+        "example": "같은 30분이라도 A는 재료 파밍을, B는 맵 구석의 숨은 이벤트 탐색을 먼저 고르는 상황.",
+        "boundary": "이 예시는 연구의 개념을 설명한 것일 뿐, 실제 RPG에서 선택 비율을 측정한 사례는 아니다."
+      },
+      {
+        "title": "콘텐츠를 분류하기보다 플레이어가 포기한 선택을 함께 보자",
+        "observed": "효율·탐험·스토리·도전은 서로 구별되는 요인으로 재현됐고 별도 상황 과제의 선택과도 연결됐다.",
+        "reasoning": "선택 결과만 기록하면 왜 그렇게 골랐는지 알기 어렵다. 대안을 함께 보면 우선순위에 관한 추가 단서가 생긴다.",
+        "example": "보상이 큰 전투와 보상이 적지만 새로운 스토리가 있는 퀘스트 중 무엇을 고르는지 살펴보기.",
+        "boundary": "개인이 모든 상황에서 동일한 우선순위로 행동한다고 증명한 것은 아니다."
+      },
+      {
+        "title": "선호 유형이 고정된 성격이라고 단정하지 않는다",
+        "observed": "재검사 안정성이 확인됐지만 실제 게임·국가·상황을 바꾼 장기 추적 실험은 아니다.",
+        "reasoning": "척도는 일정한 경향을 측정할 수 있어도 환경에 따라 선택이 달라질 가능성은 남아 있다.",
+        "example": "평소 스토리를 좋아하는 이용자도 이벤트 마감 직전에는 효율을 우선할 수 있다.",
+        "boundary": "타 문화권 및 상용 게임 실제 행동으로 일반화하려면 추가 검증이 필요하다."
+      }
+    ]
+  },
+  "variables": [
+    [
+      "가치 지향(Value Orientation)",
+      "게임의 목표가 충돌할 때 어떤 가치를 우선하여 선택하는지를 나타내는 선호 방향.",
+      "성격 검사나 플레이어를 영구적으로 고정하는 레이블이 아니다."
+    ],
+    [
+      "효율(Efficiency)",
+      "시간·노력 대비 성장 또는 목표 달성의 효율을 중시하는 방향.",
+      "효율이 높다고 무조건 결제 성향이 높다는 뜻은 아니다."
+    ],
+    [
+      "탐험(Exploration)",
+      "새로운 장소·시스템·가능성을 발견하는 경험을 중시하는 방향.",
+      "콘텐츠 총 이용량과 동일하지 않다."
+    ],
+    [
+      "스토리(Story)",
+      "이야기·설정·서사를 따라가는 경험을 중시하는 방향.",
+      "캐릭터 인기나 매출 수치와 동일하지 않다."
+    ],
+    [
+      "도전(Challenge)",
+      "난도와 숙련 요구가 있는 과제 수행을 중시하는 방향.",
+      "실제 게임 실력이나 승률의 직접 측정이 아니다."
+    ],
+    [
+      "트레이드오프(Trade-off)",
+      "한 선택을 위해 다른 가치나 기회를 포기해야 하는 조건.",
+      "문항 원문 전체를 검토한 것이 아니므로 여기의 상황 예시는 새로 작성한 것이다."
+    ]
+  ],
+  "methodDetails": [
+    {
+      "title": "왜 보통의 “좋아하는 요소” 설문 대신 트레이드오프를 썼나?",
+      "body": "성장·스토리·탐험을 모두 높게 평가하는 응답에서는 실제 선택 우선순위를 구분하기 어렵다. 이 연구는 한 요소를 얻기 위해 다른 요소를 포기하는 조건을 문항에 넣었다."
+    },
+    {
+      "title": "탐색적 요인분석(EFA)이란?",
+      "body": "문항들의 응답 패턴을 보고 몇 개의 공통된 묶음이 자연스럽게 나타나는지 탐색한다. 여기서는 16문항이 4개 가치 지향으로 구분됐다."
+    },
+    {
+      "title": "확인적 요인분석(CFA)이란?",
+      "body": "먼저 발견한 4개 묶음이 별도의 표본에서도 잘 맞는지 검증한다. 같은 데이터에서 만든 구조를 같은 데이터로만 평가하는 것보다 엄격하다."
+    },
+    {
+      "title": "추가 검증을 왜 했나?",
+      "body": "좋은 모형 적합도만으로 실제 선택과 연결되는지는 알 수 없다. 그래서 표현이 다른 상황 선택 과제에 대한 예측과 일정 시간 후 재검사 안정성을 함께 확인했다."
+    }
+  ],
+  "metricExplanations": [
+    [
+      "CFI=0.99",
+      "비교적합지수(Comparative Fit Index). 모형이 기준 모형 대비 응답 패턴을 얼마나 잘 설명하는지 나타내는 적합도 지수. 1에 가까울수록 적합한 편이지만 “99% 맞혔다”는 뜻이 아니다."
+    ],
+    [
+      "4요인",
+      "효율·탐험·스토리·도전이라는 서로 구분되는 네 차원의 응답 구조."
+    ],
+    [
+      "재검사 안정성",
+      "시간이 지나 다시 질문했을 때 평가 결과가 얼마나 비슷하게 유지되는가."
+    ]
+  ],
+  "results": [
+    {
+      "title": "기획자가 읽어야 할 주요 검증 결과",
+      "columns": [
+        "검증 내용",
+        "확인된 결과",
+        "읽는 법"
+      ],
+      "rows": [
+        [
+          "전체 연구",
+          "3개 연구, 총 813명",
+          "한 번의 소규모 설문에만 의존하지 않음"
+        ],
+        [
+          "척도 구조",
+          "16문항, 효율·탐험·스토리·도전 4요인",
+          "경쟁하는 목표의 우선순위를 네 축으로 분류"
+        ],
+        [
+          "다른 표본에서 재현",
+          "CFI=0.99",
+          "4요인 구조의 통계적 적합도가 높음"
+        ],
+        [
+          "실제 선택과의 연결",
+          "표현이 다른 상황 과제의 선택을 예측",
+          "단순 문항 반복이 아닌 추가 예측력 확인"
+        ]
+      ],
+      "note": "공식 초록/대학 리포지터리 기준. 각 요인의 세부 회귀계수와 문항별 원문 수치는 여기서 검증하지 못해 임의로 기입하지 않았다."
+    }
+  ],
+  "experiments": [
+    {
+      "title": "탐험 vs 효율, 어느 쪽을 먼저 선택할까?",
+      "hypothesis": "시간이 제한된 상황에서 선택해야 하는 목표를 구체적으로 제시하면 단순한 선호도 설문보다 개인 우선순위를 잘 구분할 수 있을까?",
+      "control": "효율·탐험·스토리·도전을 각각 얼마나 좋아하는지 별도로 질문",
+      "treatment": "같은 시간에 둘 중 하나만 가능한 가상 게임 선택 상황을 제시",
+      "primary": "나중에 제시한 다른 선택 과제에 대한 예측 정확도",
+      "guardrail": "선호를 고정된 유형으로 단정하지 않고 실제 행동과 비교"
+    }
+  ],
+  "citations": [
+    {
+      "label": "논문 DOI",
+      "url": "https://doi.org/10.1080/10447318.2026.2750678"
+    },
+    {
+      "label": "요크대학교 연구자료",
+      "url": "https://pure.york.ac.uk/portal/en/publications/value-orientation-in-players-development-and-validation-of-a-trad/"
+    }
+  ],
+  "dataCaveat": "공식 초록과 대학 리포지터리에서 표본·핵심 검증 결과를 확인했다. 모든 16개 설문 원문이나 각 요인의 효과 크기는 전체 본문에 대한 추가 확인 없이 재현하지 않았다."
+},
+{
+  "updated": "2026-11-16",
+  "researchType": "실증 연구",
+  "rank": 10,
+  "confidence": "원문·공식 초록 검증",
+  "id": "vr-llm-thinkaloud-2026",
+  "title": "AI가 플레이테스트 영상만 보고 난이도와 감정을 알아맞힐 수 있을까?",
+  "kicker": "VR 플레이 영상과 플레이 중 발화를 AI로 분석한 결과: 난이도 차이는 비교적 잘 찾았지만 감정 평가는 불안정",
+  "originalTitle": "LLM-Think-Alouds: Multimodal Player Experience Analysis for VR Playtesting",
+  "authors": "Erdem Murat · Yongqi Zhang · Liuchuan Yu · Siraj Sabah · Lap-Fai Yu",
+  "journal": "IEEE Transactions on Visualization and Computer Graphics · ISMAR 2026",
+  "doi": "10.1109/TVCG.2026.3747474",
+  "sourceUrl": "https://erdemmurat.com/assets/pdf/VR_LLM_TVCG.pdf",
+  "published": "2026-11-03",
+  "dataType": "플레이테스트",
+  "domain": "UX·플레이테스트",
+  "accent": "blue",
+  "tags": [
+    "플레이테스트",
+    "VR",
+    "난이도",
+    "AI 분석",
+    "Think-aloud",
+    "감정 측정",
+    "UX 검증"
+  ],
+  "dataSummary": "VR 게임 3종을 25명이 플레이한 75개 게임 세션·225개 레벨 단위 관측. 1인칭 게임 영상, 발화 녹음, 목소리 특징과 플레이어의 0~10점 주관 평가.",
+  "methodSummary": "멀티모달 LLM으로 난이도·감정 점수를 예측하고, 선형 혼합효과 모형과 레벨 간 순위 일치도·평균절대오차로 사람의 평가와 비교.",
+  "finding": "AI가 예측한 난이도는 3개 VR 게임 모두에서 참가자의 난이도 평가와 유의한 양의 관계를 보였다(p<0.05). 하지만 정확한 점수 오차는 0~10점 기준 평균 약 2점이었고, 행복·놀람·공포 등 감정 예측은 게임과 감정 종류에 따라 불안정했다.",
+  "shortFinding": "AI는 레벨 간 상대적 난이도는 비교적 잘 읽었지만, 감정 점수를 안정적으로 알아맞히지는 못함",
+  "limitation": "25명·자체 제작 VR 게임 3종에 한정되고 모델은 GPT-4o-2024-08-06. 발화하지 않은 감정 추정과 일반 장르 전이는 검증되지 않았다.",
+  "useCase": "플레이테스트 전체 영상을 AI가 먼저 훑어 “어느 구간이 상대적으로 어려웠나”를 찾는 보조 도구로 쓸 수 있지만, 감정·만족도의 최종 판정은 이용자에게 확인해야 한다.",
+  "audience": "전투·레벨 기획 · QA · UX 리서치",
+  "summaryRows": [
+    [
+      "연구 질문",
+      "영상·발화·음성 특징을 종합한 AI 분석이 실제 플레이어가 느낀 난이도와 감정을 알아맞힐 수 있는가?"
+    ],
+    [
+      "연구 데이터",
+      "최종 참가자 25명, VR 게임 3종, 75세션·225레벨 관측. 플레이 영상·발화·후속 0~10점 설문"
+    ],
+    [
+      "분석 방법",
+      "멀티모달 LLM 점수 추정 → 혼합효과 회귀(LMM)·레벨 순위 일치도·MAE와 인간 평가 비교"
+    ],
+    [
+      "결론",
+      "난이도는 세 게임 모두 유의한 양의 연관. 상대적 난이도 순서는 일부 재현했지만 평균 절대오차는 약 2점, 감정 추정은 불안정"
+    ],
+    [
+      "주요 한계",
+      "VR 3종·소규모 표본·특정 LLM을 사용. 사람의 감정을 AI만으로 정확히 판정한다고 볼 수 없음"
+    ]
+  ],
+  "evaluation": {
+    "lead": "AI는 플레이테스트 영상과 플레이어의 발화를 이용해 “어느 레벨이 더 어려웠는지”는 어느 정도 알아냈다. 하지만 플레이어의 감정은 일관되게 맞히지 못했다. 특히 “재미있다/행복하다” 같은 감정은 AI 추정만으로 판단하기 어렵다.",
+    "highlights": [
+      {
+        "stat": "25명 · 225레벨",
+        "title": "동일한 플레이어의 실제 점수와 AI 추정을 비교했다",
+        "plain": "VR 게임 3종의 영상·생각 말하기 음성, 플레이 후 난이도·감정 평점을 모아 같은 레벨 단위로 비교했다.",
+        "source": "원문 §5.2–5.3 · Dataset"
+      },
+      {
+        "stat": "3/3게임",
+        "title": "AI 난이도 추정이 모두 유의한 양의 관계를 보였다",
+        "plain": "난이도 추정과 자기평가 사이 관계는 게임별 p<0.001, 0.003, 0.040. 레벨 간 순위 일치 점수는 평균 0.61·0.67·0.60이었다.",
+        "source": "원문 Table 1, §6.2"
+      },
+      {
+        "stat": "약 2점 오차",
+        "title": "감정 추정보다 난이도 구분에서 근거가 강했다",
+        "plain": "0~10점 난이도의 MAE는 게임별 1.97·2.14·2.27점. 행복·놀람·공포 등 감정은 일부만 일치했고 게임에 따라 불안정했다.",
+        "source": "원문 §6.2–6.3"
+      }
+    ],
+    "interpretations": [
+      {
+        "title": "AI가 “어려운 구간 후보”를 찾아주는 것은 가능성이 있다",
+        "observed": "세 VR 게임에서 AI 난이도 추정과 플레이어 주관 난이도가 유의한 양의 관계였고 상대적 순서를 일부 포착했다.",
+        "reasoning": "정확한 난이도 점수를 맞히기보다 어느 구간이 다른 구간보다 어려웠는지 살펴볼 때 활용성이 더 크다.",
+        "example": "플레이테스트 영상 20개를 다 보기에 앞서 AI가 “3스테이지의 이 장애물 구간에서 난이도 상승” 후보를 표시하는 식.",
+        "boundary": "연구진도 다른 분석 방식 대비 우월함이나 자동 판정의 완전성을 입증하지 않았다고 명시했다."
+      },
+      {
+        "title": "AI가 “재미없다”라고 판정하면 바로 믿지 말자",
+        "observed": "감정 평가는 게임 종류·감정 범주에 따라 결과가 달랐고 행복 점수는 자주 과소평가됐다.",
+        "reasoning": "감정은 외부 영상이나 발화만으로 드러나지 않는 경우가 많아 해당 플레이어의 직접 평가와 다른 값을 낼 수 있다.",
+        "example": "플레이어가 말없이 집중해서 즐겼는데 AI가 행복감이 낮다고 평가하는 상황을 생각하면 된다.",
+        "boundary": "이 예시는 연구의 설명을 위한 가상 사례다. 해당 사례의 발생 빈도를 논문이 제시한 것은 아니다."
+      },
+      {
+        "title": "측정 대상이 뚜렷할수록 자동 분석이 잘 맞을 가능성이 있다",
+        "observed": "의도적으로 레벨 난이도를 달리 만든 게임에서는 난이도 신호가 비교적 안정적이었고, 감정은 자극이 명확한 게임에서만 일부 일치했다.",
+        "reasoning": "난이도는 장애물 실패·속도·반복 발화로 비교적 쉽게 드러나지만, 추상적인 기분은 외부 단서가 적을 수 있다.",
+        "example": "“다시 실패했어, 여기가 어렵네”는 난이도 판단 단서지만 말없이 미소 짓는 사람의 즐거움은 훨씬 모호하다.",
+        "boundary": "표현이 적은 플레이어의 실제 내부 감정을 측정한 연구는 아니다."
+      }
+    ]
+  },
+  "variables": [
+    [
+      "지각 난이도(Perceived Difficulty)",
+      "플레이어가 각 레벨을 얼마나 어렵게 느꼈는지 0~10점으로 직접 평가한 주관 난이도.",
+      "객관적 장애물 수나 사망률 그 자체가 아니다."
+    ],
+    [
+      "Think-aloud",
+      "플레이어가 진행 중 떠오르는 생각을 말로 표현하도록 하는 UX 조사 방식.",
+      "모든 생각을 발화하는 것은 아니므로 침묵을 감정 부재로 해석할 수 없다."
+    ],
+    [
+      "감정 평점",
+      "행복·놀람·공포·슬픔·혐오·분노를 0~10점으로 평가.",
+      "감정의 총체 또는 임상적 감정 상태를 완벽히 측정한 것은 아니다."
+    ],
+    [
+      "상대 난이도 순위 일치",
+      "AI와 플레이어가 어느 레벨을 더 어렵다고 본 순서를 비교하는 지표.",
+      "점수 자체를 정확히 맞힌다는 뜻은 아니다."
+    ],
+    [
+      "MAE(평균절대오차)",
+      "AI 점수와 플레이어 점수 차이의 절대값을 평균한 값. 0에 가까울수록 좋다.",
+      "MAE 약 2는 0~10점 척도에서 평균 2점 정도 어긋났다는 뜻이다."
+    ]
+  ],
+  "methodDetails": [
+    {
+      "title": "왜 영상·발화·목소리를 함께 분석했나?",
+      "body": "플레이 영상만으로는 혼란·좌절의 이유가 잘 드러나지 않고, 말만 보면 실제 실패 구간을 놓칠 수 있기 때문이다. 게임 화면, 말의 내용, 목소리의 높낮이·크기 특징을 시간에 맞춰 묶었다."
+    },
+    {
+      "title": "혼합효과 모형(LMM)은 뭘 확인하나?",
+      "body": "한 사람이 여러 레벨을 평가하면 관측값이 서로 독립이 아니다. 플레이어마다 점수의 기준이 다른 점을 고려하며 AI가 높게 예측할수록 사람이 매긴 점수도 높아지는지 분석한다."
+    },
+    {
+      "title": "레벨 순위 일치와 MAE를 둘 다 보는 이유",
+      "body": "AI가 8점·6점·4점을 모두 6점·5점·3점으로 예측해도 “어느 레벨이 더 어려운지” 순서는 맞을 수 있다. 순위 점수는 이런 구분 능력을, MAE는 점수 자체의 정확도를 보여준다."
+    },
+    {
+      "title": "시간별 감정 그래프는 어떻게 만들었나?",
+      "body": "발화 시점의 AI 점수를 RBF(곡선 보간)로 연결하고, DTW(시간축을 늘이거나 줄여 패턴 비교)로 여러 플레이어를 비교했다. 이 그래프는 탐색용이며 실제 감정의 연속 측정값으로 독립 검증된 것은 아니다."
+    }
+  ],
+  "metricExplanations": [
+    [
+      "p값",
+      "AI 난이도와 사람 난이도 사이 관계가 0이라는 가정에 얼마나 불리한 증거인지 나타낸다. 세 게임 모두 p<0.05지만 인과관계는 아니다."
+    ],
+    [
+      "MAE 1.97~2.27",
+      "0~10점 척도에서 예측 점수와 인간 점수의 평균 절대 차이가 약 2점. 낮을수록 정확하다."
+    ],
+    [
+      "순위 일치 0.60~0.67",
+      "세 레벨 중 쌍별 난이도 대소 관계를 AI와 사람이 얼마나 같게 판단했는지 나타내는 평균 점수(0~1). 높을수록 좋다."
+    ],
+    [
+      "β(혼합효과 회귀)",
+      "AI 추정 점수가 높을 때 인간 점수도 얼마나 높아지는지 추정한 기울기다. 상관계수나 백분율이 아니다."
+    ]
+  ],
+  "results": [
+    {
+      "title": "AI 난이도 추정과 사람 평가 비교",
+      "columns": [
+        "게임",
+        "관계의 유의성",
+        "순위 일치 평균",
+        "난이도 MAE(0~10점)"
+      ],
+      "rows": [
+        [
+          "게임 1 · VR 도로 건너기",
+          "p<0.001",
+          "0.61",
+          "1.97점"
+        ],
+        [
+          "게임 2 · 반사신경 게임",
+          "p=0.003",
+          "0.67",
+          "2.14점"
+        ],
+        [
+          "게임 3 · 고소공포 게임",
+          "p=0.040",
+          "0.60",
+          "2.27점"
+        ]
+      ],
+      "note": "혼합효과 회귀에서 모두 양의 기울기. MAE는 작을수록 좋고 순위 일치는 클수록 좋다. 원문 Table 1 / §6.2."
+    },
+    {
+      "title": "감정 추정에서 확인한 차이",
+      "columns": [
+        "항목",
+        "관찰된 결과",
+        "판단"
+      ],
+      "rows": [
+        [
+          "난이도",
+          "3개 게임 모두 주관 평가와 유의한 양의 관계",
+          "세 범주 중 가장 일관된 신호"
+        ],
+        [
+          "행복감",
+          "일부 게임에서만 유의, 추정값이 전반적으로 낮게 나타남",
+          "행복 점수 자동 판정 주의"
+        ],
+        [
+          "공포·놀람",
+          "해당 감정이 뚜렷한 게임 일부에서 일치",
+          "장면의 성격에 의존"
+        ],
+        [
+          "슬픔·혐오",
+          "참가자 점수 중앙값이 대부분 0",
+          "애초에 감정 변동이 적어 검증 난해"
+        ]
+      ],
+      "note": "AI는 플레이어의 감정을 완전히 읽는 도구라는 결론이 아니다."
+    }
+  ],
+  "experiments": [
+    {
+      "title": "AI 난이도 후보 구간이 실제로 유용한지 확인",
+      "hypothesis": "플레이테스트 영상을 먼저 AI로 요약하면 사람이 어려운 구간을 더 빠르게 찾아낼 수 있을까?",
+      "control": "영상과 플레이어 설문을 사람이 직접 대조해 검토",
+      "treatment": "AI의 난이도 변화 그래프·대표 발화를 먼저 보고 영상을 검토",
+      "primary": "실제 어려운 구간 발견율, 검토 소요 시간, 플레이어 직접 평가와의 일치",
+      "guardrail": "AI 단독으로 수정 우선순위를 확정하지 않고 이용자 설문과 원본 영상으로 교차 확인"
+    }
+  ],
+  "citations": [
+    {
+      "label": "정식 DOI",
+      "url": "https://doi.org/10.1109/TVCG.2026.3747474"
+    },
+    {
+      "label": "저자 공개 논문 PDF",
+      "url": "https://erdemmurat.com/assets/pdf/VR_LLM_TVCG.pdf"
+    },
+    {
+      "label": "PubMed 게재 정보",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/42976057/"
+    }
+  ],
+  "dataCaveat": "연구진 공개 원문 10페이지의 표 1·2와 본문을 확인했다. 참가자는 25명이며 225개 레벨 관측을 독립된 사람 225명처럼 해석하면 안 된다."
+},
+{
+  "updated": "2026-11-16",
+  "researchType": "실증 연구",
+  "rank": 11,
+  "confidence": "원문·공식 초록 검증",
+  "id": "contextual-generative-ai-2026",
+  "title": "AI가 만든 아이템과 NPC 대화가 게임 규칙에 연결되면 더 재미있을까?",
+  "kicker": "생성형 AI 콘텐츠를 게임 규칙에 연결하거나 NPC 대화에 반영했을 때 플레이 경험이 달라지는지 4조건으로 직접 비교",
+  "originalTitle": "How contextualized generative AI shapes player experience in games",
+  "authors": "Ming Yin · Hanzhi Zu · Wenqing Gu · Ziyan Wang 외",
+  "journal": "Entertainment Computing",
+  "doi": "10.1016/j.entcom.2026.101194",
+  "sourceUrl": "https://www.sciencedirect.com/science/article/pii/S1875952126001163",
+  "published": "2026-09-01",
+  "dataType": "사용자 실험",
+  "domain": "게임 시스템·AI",
+  "accent": "green",
+  "tags": [
+    "생성형 AI",
+    "NPC 대화",
+    "아이템 시스템",
+    "몰입감",
+    "자율성",
+    "게임 규칙",
+    "A/B 실험"
+  ],
+  "dataSummary": "참가자 72명이 직접 제작된 2D 픽셀아트 농장 게임 GenFlora를 네 가지 조건(아이템 동적/정적 × NPC 대화 적응형/고정형)에서 플레이하고 설문 응답.",
+  "methodSummary": "2×2 참가자 내 실험(같은 사람이 네 조건 경험)으로 아이템 상태의 동적 반영과 NPC 대화의 적응적 반영을 독립적으로 비교. 실재감·자율성·즐거움 점수 분석.",
+  "finding": "AI가 생성한 아이템 상태를 게임 규칙에 실제로 반영하는 조건과 NPC가 상황에 맞춰 대화하는 조건 모두 실재감·자율성·즐거움을 유의하게 높였다. 두 요소의 상호작용은 통계적으로 유의하지 않았다.",
+  "shortFinding": "AI로 만든 콘텐츠를 게임의 실제 규칙·NPC 반응에 연결한 조건에서 실재감·자율성·즐거움 점수가 높았음",
+  "limitation": "하나의 짧은 2D 농장 프로토타입·72명 평가. 장기 이용·리텐션, 운영비용, 대규모 상용 게임 결과는 측정하지 않음.",
+  "useCase": "AI 대사가 화려한가보다 플레이어가 생성 아이템을 실제로 사용했을 때 게임 상태가 바뀌는지, NPC가 그 변화를 이해하고 반응하는지가 플레이 경험에서 중요할 수 있다.",
+  "audience": "게임 시스템 · 콘텐츠 · AI NPC 기획",
+  "summaryRows": [
+    [
+      "연구 질문",
+      "AI가 생성한 내용이 텍스트로만 존재하는 것보다 아이템의 게임 내 상태와 NPC의 상황 반응에 연결될 때 경험이 좋아질까?"
+    ],
+    [
+      "연구 데이터",
+      "참가자 72명, 자체 제작 2D 농장 게임 GenFlora의 4개 플레이 조건"
+    ],
+    [
+      "분석 방법",
+      "아이템 동적/정적 × NPC 대화 적응형/고정형의 2×2 참가자 내 비교 실험"
+    ],
+    [
+      "결론",
+      "두 기능 모두 실재감·자율성·즐거움 점수를 유의하게 높임. 두 기능 사이의 유의한 상호작용은 확인되지 않음"
+    ],
+    [
+      "주요 한계",
+      "짧은 프로토타입 기반 실험. 실제 장기 플레이·리텐션·재미의 지속성을 검증하지 않음"
+    ]
+  ],
+  "evaluation": {
+    "lead": "AI가 생성한 콘텐츠를 그냥 보여주는 것보다 게임 안에서 실제로 작동하게 만들었을 때 이용자가 더 높은 실재감·자율성·즐거움을 보고했다. 아이템 상태의 변화와 NPC의 상황별 대화가 각각 유의한 차이를 보였다.",
+    "highlights": [
+      {
+        "stat": "72명",
+        "title": "같은 참가자가 4가지 게임 조건을 비교했다",
+        "plain": "동적/정적 아이템과 적응형/고정형 NPC 대화를 조합한 4개 조건을 하나의 게임에서 비교했다.",
+        "source": "논문 Experimental overview"
+      },
+      {
+        "stat": "모두 유의한 향상",
+        "title": "동적 아이템과 적응형 대화 모두 긍정적이었다",
+        "plain": "각 기능이 들어간 조건에서 실재감(presence), 자율성(autonomy), 즐거움(enjoyment) 점수가 유의하게 높았다.",
+        "source": "논문 Abstract / Highlights"
+      },
+      {
+        "stat": "상호작용 미확인",
+        "title": "두 기능이 결합되어 추가 상승한다고 증명되지는 않았다",
+        "plain": "아이템 기능과 대화 기능의 통계적으로 유의한 상호작용 효과는 발견되지 않았다.",
+        "source": "논문 Abstract / Results"
+      }
+    ],
+    "interpretations": [
+      {
+        "title": "AI가 “무슨 말을 만드는가”보다 그 말이 게임에서 실제로 성립하는지가 중요할 수 있다",
+        "observed": "생성된 내용을 아이템 상태에 연결하는 조건은 실재감·자율성·즐거움의 점수를 유의하게 높였다.",
+        "reasoning": "플레이어는 생성한 물건이 장식이 아니라 실제 행동과 결과에 연결될 때 자신이 게임 세계에 영향을 준다고 느낄 수 있다.",
+        "example": "“불타는 검”을 생성했다면 설명만 뜨는 것보다 실제로 불속성 피해가 적용되고 물속 적에게 다른 결과가 나타나는 게임.",
+        "boundary": "이 예시는 기획 이해용이며 실제 연구는 2D 농장 게임의 아이템 상태 기능을 시험했다."
+      },
+      {
+        "title": "NPC의 반응도 현재 게임 상태와 연결될 때 평가가 좋아질 수 있다",
+        "observed": "상황·플레이어 입력에 맞춰 답하는 NPC 대화 조건도 세 경험 지표에서 유의한 향상을 보였다.",
+        "reasoning": "플레이어가 한 행동을 NPC가 반영할 때 대화가 고정된 문장보다 상황에 맞게 느껴질 수 있다.",
+        "example": "플레이어가 농작물을 수확한 뒤 NPC가 “방금 거둔 작물이 필요했어”라고 반응하는 경우와 언제나 같은 인사만 하는 경우.",
+        "boundary": "모든 NPC에 생성형 AI를 도입하면 장기 리텐션이 오른다고 증명한 결과는 아니다."
+      },
+      {
+        "title": "두 기능을 무조건 묶어서 개발해야 한다고 볼 근거는 없다",
+        "observed": "두 기능의 주효과는 확인됐지만 통계적으로 유의한 상호작용은 없었다.",
+        "reasoning": "아이템 연동과 NPC 대화가 서로의 효과를 크게 증폭시킨다는 근거는 없으므로 각각의 가치부터 판단할 수 있다.",
+        "example": "NPC 대화 기능만 도입해도 경험 차이가 있는지 확인한 뒤 아이템 시스템까지 확장할지 결정하는 접근.",
+        "boundary": "상호작용을 못 찾았다는 사실은 효과가 완전히 0이라는 뜻은 아니다."
+      }
+    ]
+  },
+  "variables": [
+    [
+      "동적 아이템 상태(Dynamic item status)",
+      "AI 생성 아이템이 실제 게임 규칙과 상태 변화에 반영되어 플레이 중 사용할 수 있는 기능.",
+      "단순 생성 이미지나 설명 텍스트만 제시하는 것과 다르다."
+    ],
+    [
+      "적응형 NPC 대화(Adaptive NPC dialogue)",
+      "현재 상황·플레이어 입력·생성 콘텐츠를 참고해 NPC가 답하는 기능.",
+      "고정된 대사를 무작위로 고르는 것과는 구별된다."
+    ],
+    [
+      "실재감(Presence)",
+      "플레이어가 게임 환경 안에 실제로 존재하는 듯 느끼는 정도.",
+      "현실 그래픽의 사실성 점수와 동일하지 않다."
+    ],
+    [
+      "자율성(Autonomy)",
+      "플레이어가 선택하고 원하는 방향으로 행동할 수 있다고 느끼는 정도.",
+      "선택지 수만으로 결정되지 않는다."
+    ],
+    [
+      "즐거움(Enjoyment)",
+      "플레이 경험이 얼마나 즐거웠는지의 자기보고 평가.",
+      "실제 D7 리텐션을 의미하지 않는다."
+    ],
+    [
+      "AI 이해도 vs AI 인식",
+      "AI가 어떻게 작동하는지 이해하는 정도와 지금 게임에 AI가 쓰였다고 알아차리는 정도를 구분.",
+      "실험에서는 이해도가 더 일관된 긍정적 관계를 보였다고 보고됐다."
+    ]
+  ],
+  "methodDetails": [
+    {
+      "title": "왜 2×2 참가자 내 실험을 했나?",
+      "body": "동적 아이템 기능과 NPC 대화 기능을 따로 켰다 껐다 하여 각 기능이 플레이 경험에 어떤 차이를 만드는지 분리하기 위해서다. 같은 사람이 네 조건을 경험하므로 개인의 취향 차이를 일부 줄일 수 있다."
+    },
+    {
+      "title": "2×2 실험이란?",
+      "body": "아이템 상태(정적/동적) 2종 × NPC 대화(고정형/적응형) 2종 = 네 조건. 각 기능 자체의 효과(주효과)와 둘이 함께 있을 때 추가 차이가 있는지(상호작용)를 비교한다."
+    },
+    {
+      "title": "왜 주효과와 상호작용을 나눠서 해석하나?",
+      "body": "두 기능이 각각 좋아졌다는 결과와, 두 기능이 서로를 더 강하게 만든다는 결과는 다르다. 연구에서는 각각의 주효과가 유의했지만 상호작용은 유의하지 않았다."
+    },
+    {
+      "title": "내적 일관성(크론바흐 α)을 왜 확인했나?",
+      "body": "실재감·자율성·즐거움 등 한 개념을 여러 문항으로 물었다면 문항들이 비슷한 개념을 안정적으로 측정하는지 살펴야 한다. 연구는 조건별 설문 신뢰도를 평가했다."
+    }
+  ],
+  "metricExplanations": [
+    [
+      "유의한 주효과",
+      "어느 한 기능을 켰을 때 경험 점수가 통계적으로 일관되게 달라진다는 결과. 실제 효과 크기 또는 장기 잔존 증가율과는 별개다."
+    ],
+    [
+      "유의하지 않은 상호작용",
+      "두 기능이 동시에 있을 때 예상 이상의 추가 효과가 있다고 결론 내릴 증거가 부족하다는 뜻. 효과가 정확히 0이라는 증명은 아니다."
+    ],
+    [
+      "N=72",
+      "72명의 사람이 실험에 참여했다는 뜻. 네 조건의 측정값을 288명의 독립 응답자로 취급하면 안 된다."
+    ],
+    [
+      "실재감·자율성·즐거움",
+      "게임 이후 플레이어가 답한 경험 점수이며, 실제 리텐션이나 매출 지표가 아니다."
+    ]
+  ],
+  "results": [
+    {
+      "title": "네 가지 실험 조건",
+      "columns": [
+        "조건",
+        "아이템 상태",
+        "NPC 대화"
+      ],
+      "rows": [
+        [
+          "1",
+          "동적(규칙 연결)",
+          "적응형(상황 반영)"
+        ],
+        [
+          "2",
+          "동적(규칙 연결)",
+          "고정형"
+        ],
+        [
+          "3",
+          "정적",
+          "적응형(상황 반영)"
+        ],
+        [
+          "4",
+          "정적",
+          "고정형"
+        ]
+      ],
+      "note": "하나의 GenFlora 2D 농장 프로토타입에서 비교했다. 참가자는 72명."
+    },
+    {
+      "title": "연구에서 확인한 결과",
+      "columns": [
+        "비교",
+        "결과",
+        "해석"
+      ],
+      "rows": [
+        [
+          "동적 아이템 상태 사용",
+          "실재감·자율성·즐거움 유의한 향상",
+          "생성 내용이 게임 규칙에 반영될 때 주관 경험 향상"
+        ],
+        [
+          "적응형 NPC 대화 사용",
+          "실재감·자율성·즐거움 유의한 향상",
+          "NPC 반응이 상황에 맞을 때 주관 경험 향상"
+        ],
+        [
+          "두 기능의 상호작용",
+          "통계적으로 유의하지 않음",
+          "서로의 효과를 추가로 증폭한다고 단정 불가"
+        ]
+      ],
+      "note": "공개된 논문 결과의 유의성 방향을 정리했다. 해당 비교의 정확한 평균차·효과 크기는 이번에 확인한 공개 발췌에서 검증되지 않아 기입하지 않았다."
+    }
+  ],
+  "experiments": [
+    {
+      "title": "생성형 콘텐츠가 “게임에 반영된다”는 차이 검증",
+      "hypothesis": "설명만 달라지는 AI 콘텐츠보다 실제 게임 상태가 바뀌는 콘텐츠에서 플레이어가 더 강한 자율성과 즐거움을 느낄까?",
+      "control": "AI가 만든 아이템 이름·설명만 제공하되 실제 규칙은 동일",
+      "treatment": "생성 아이템의 속성과 효과가 전투·파밍 규칙에 실제 반영",
+      "primary": "자율성·실재감·즐거움 설문, 행동 성공률",
+      "guardrail": "예측 불가능한 아이템·버그로 게임 상태가 깨지지 않도록 검증"
+    }
+  ],
+  "citations": [
+    {
+      "label": "논문 DOI",
+      "url": "https://doi.org/10.1016/j.entcom.2026.101194"
+    },
+    {
+      "label": "출판사 원문",
+      "url": "https://www.sciencedirect.com/science/article/pii/S1875952126001163"
+    }
+  ],
+  "dataCaveat": "출판사 원문에 공개된 방법과 초록·결론을 대조했다. 특정 수치의 정확한 효과 크기를 확보하지 못해 “유의한 향상” 수준으로만 표시하며, 장기 서비스 데이터로 확대 해석하지 않는다."
+}
+];
+
+</script>
+<script>
+(()=>{
+'use strict';
+const papers=window.RESEARCH_REVIEWS||[];
+const savedKey='playbook-atlas-saved-v1';
+let saved=[];try{saved=JSON.parse(localStorage.getItem(savedKey)||'[]')||[]}catch{};
+const state={search:'',tag:'',data:'all',domain:'all',method:'all',sort:'updated',mode:'all'};
+const e=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const icon=name=>`<svg class="icon" aria-hidden="true"><use href="#i-${name}"></use></svg>`;
+const date=s=>{if(!s)return '미확인';const a=s.split('-');return `${a[0]}.${a[1]}`;};
+const sortedByUpdated=()=>[...papers].sort((a,b)=>b.updated.localeCompare(a.updated)||b.published.localeCompare(a.published)||a.rank-b.rank);
+const getTags=()=>{let counts={};papers.forEach(p=>p.tags.forEach(t=>counts[t]=(counts[t]||0)+1));return Object.entries(counts).sort((a,b)=>b[1]-a[1]||a[0].localeCompare(b[0],'ko'));};
+const card=(p,fromNew=false)=>`<article class="card ${e(p.accent||'violet')}"><div class="card-body"><div class="card-top"><div class="chipline"><span class="category">${e(p.domain)}</span>${fromNew?'<span class="new-stamp">NEW</span>':''}</div><span class="sub-meta">${date(p.published)}</span></div><h3><button data-action="open-paper" data-id="${e(p.id)}">${e(p.title)}</button></h3><p class="description">${e(p.shortFinding)}</p><div class="tag-wrap">${p.tags.slice(0,5).map(t=>`<button class="tag" data-action="filter-tag" data-tag="${e(t)}" title="${e(t)} 태그 연구 보기">#${e(t)}</button>`).join('')}</div></div><div class="card-bottom"><div class="foot-note">${e(p.dataType)} · ${e(p.researchType)} ${saved.includes(p.id)?' · ★ 저장됨':''}</div><button data-action="open-paper" data-id="${e(p.id)}">리뷰 읽기 ${icon('arrow')}</button></div></article>`;
+function refreshNav(){document.getElementById('all-count').textContent=papers.length;document.getElementById('header-status').textContent=`연구 위키 · ${papers.length} papers`;document.getElementById('sidebar-updated').textContent=`마지막 리뷰 업데이트 ${date(sortedByUpdated()[0]?.updated)}`;document.getElementById('sidebar-topics').innerHTML=Object.entries(papers.reduce((acc,p)=>(acc[p.domain]=(acc[p.domain]||0)+1,acc),{})).map(([t,n])=>`<button class="side-link ${state.domain===t?'active':''}" data-action="filter-domain" data-domain="${e(t)}">${icon('tag')}${e(t)}<span class="side-count">${n}</span></button>`).join('');['home','new','saved'].forEach(x=>document.getElementById('nav-'+x).classList.toggle('active',state.mode=== (x==='home'?'all':x)));}
+function home(){refreshNav();document.getElementById('breadcrumbs').innerHTML='<b>Research library</b><span>/</span> 전체 연구';const newPapers=sortedByUpdated().slice(0,3);const domains=[...new Set(papers.map(p=>p.domain))];const types=[...new Set(papers.map(p=>p.dataType))];const methods=[...new Set(papers.map(p=>p.researchType))];let c=`<div class="wrap"><section class="hero"><span class="orb" aria-hidden="true"></span><div class="eyebrow">GAME DESIGN × EVIDENCE</div><h1>게임을 이해하는<br><b class="emph">더 나은 근거.</b></h1><p>몰입, 선택, UX, 리텐션까지. 연구에서 확인한 사실과 기획적 해석을 분리해, 게임 기획자가 바로 활용할 수 있도록 정리한 논문 위키입니다.</p><div class="hero-pills"><span class="hero-pill">검토한 연구 <strong>${papers.length}편</strong></span><span class="hero-pill">연구 분야 <strong>${domains.length}개</strong></span><span class="hero-pill">최근 업데이트 <strong>${date(newPapers[0]?.updated)}</strong></span></div></section>`;
+if(state.mode!=='saved'&&state.mode!=='new') c+=`<section class="section" id="new-section"><div class="sect-head"><div><div class="section-overline">FRESHLY REVIEWED</div><h2>✦ NEW <span style="font-size:12px;color:#8896ac;font-weight:600;vertical-align:middle;">최근 업데이트 · 최대 3편</span></h2><div class="section-subtitle">이번에 새롭게 추가되거나 업데이트한 연구</div></div><button class="link-btn" data-action="nav-new">최근 리뷰 모두 보기 →</button></div><div class="cards">${newPapers.map(p=>card(p,true)).join('')}</div></section>`;
+c+=`<section class="section" id="library-section"><div class="sect-head"><div><div class="section-overline">EXPLORE THE LIBRARY</div><h2>${state.mode==='saved'?'저장한 연구':state.mode==='new'?'최근 업데이트한 연구':'모든 연구 살펴보기'}</h2><div class="section-subtitle">관심 있는 키워드를 선택하거나, 검색해 연구를 찾아보세요.</div></div></div><div class="filter-bar"><label class="searchbox">${icon('search')}<input id="search-input" type="search" placeholder="연구 제목, 태그, 주제 검색..." aria-label="연구 검색" value="${e(state.search)}" autocomplete="off"></label><select class="select" id="domain-select" aria-label="분야 필터"><option value="all">모든 연구 분야</option>${domains.map(t=>`<option value="${e(t)}" ${t===state.domain?'selected':''}>${e(t)}</option>`).join('')}</select><select class="select" id="data-select" aria-label="데이터 유형"><option value="all">모든 데이터</option>${types.map(t=>`<option value="${e(t)}" ${t===state.data?'selected':''}>${e(t)}</option>`).join('')}</select><select class="select" id="sort-select" aria-label="정렬"><option value="updated" ${state.sort==='updated'?'selected':''}>최근 업데이트순</option><option value="published" ${state.sort==='published'?'selected':''}>최신 발표순</option><option value="title" ${state.sort==='title'?'selected':''}>제목 가나다순</option></select></div><div class="filter-tags" id="tag-filters"><button class="filter-tag ${!state.tag?'active':''}" data-action="filter-tag" data-tag="">전체 태그</button>${getTags().map(([t])=>`<button class="filter-tag ${state.tag===t?'active':''}" data-action="filter-tag" data-tag="${e(t)}">#${e(t)}</button>`).join('')}</div><div class="all-header"><span id="result-count"></span><button class="clear" data-action="reset-filters">필터 초기화</button></div><div class="cards" id="all-cards"></div></section><footer class="footer"><span>© Playbook Atlas · 연구 결과와 기획적 가설을 구분하여 기록합니다.</span><span>개별 원문 저작권은 원저자에게 있습니다.</span></footer></div>`;
+document.getElementById('content').innerHTML=c;list();}
+function filtered(){let list=[...papers];if(state.mode==='saved')list=list.filter(p=>saved.includes(p.id));if(state.mode==='new')list=sortedByUpdated().slice(0,3);if(state.tag)list=list.filter(p=>p.tags.includes(state.tag));if(state.data!=='all')list=list.filter(p=>p.dataType===state.data);if(state.domain!=='all')list=list.filter(p=>p.domain===state.domain);if(state.method!=='all')list=list.filter(p=>p.researchType===state.method);if(state.search.trim()){const q=state.search.toLocaleLowerCase();list=list.filter(p=>[p.title,p.originalTitle,p.kicker,p.finding,p.dataSummary,p.methodSummary,...p.tags].join(' ').toLocaleLowerCase().includes(q));}list.sort((a,b)=>state.sort==='title'?a.title.localeCompare(b.title,'ko'):state.sort==='published'?b.published.localeCompare(a.published):b.updated.localeCompare(a.updated)||b.published.localeCompare(a.published));return list;}
+function list(){const el=document.getElementById('all-cards');if(!el)return;const arr=filtered();document.getElementById('result-count').textContent=`${arr.length}개의 연구를 찾았습니다${state.tag?' · #'+state.tag:''}`;el.innerHTML=arr.length?arr.map(p=>card(p)).join(''):`<div class="empty"><div style="font-size:23px">⌕</div><strong>조건에 맞는 연구가 없어요</strong>검색어와 필터를 바꿔보세요.</div>`;}
+const rowTable=(rows,headers=null,summary=false)=>`<div class="paper-table-wrap"><table class="paper-table ${summary?'summary-table':''}">${headers?`<thead><tr>${headers.map(x=>`<th>${e(x)}</th>`).join('')}</tr></thead>`:''}<tbody>${rows.map(row=>`<tr>${row.map(c=>`<td>${e(c)}</td>`).join('')}</tr>`).join('')}</tbody></table></div>`;
+const insight=(label,body,color='')=>`<div class="insight ${color}"><div class="insight-label">${e(label)}</div><p>${e(body)}</p></div>`;
+function detail(p){refreshNav();document.getElementById('breadcrumbs').innerHTML=`<b>Research library</b><span>/</span> ${e(p.domain)} <span>/</span> 상세 분석`;const anchor=(k,title)=>`<a href="#section-${k}" data-action="scroll-section" data-target="section-${k}">${e(title)}</a>`;let html=`<div class="wrap"><button class="back-button" data-action="back">${icon('back')} 전체 연구로 돌아가기</button><header class="detail-header"><div class="eyebrow">RESEARCH DEEP DIVE · ${e(p.researchType)}</div><h1>${e(p.title)}</h1><p>${e(p.kicker)}</p><div class="detail-meta"><span><strong>출처</strong> · ${e(p.journal)}</span><span><strong>발표</strong> · ${date(p.published)}</span><span><strong>데이터</strong> · ${e(p.dataType)}</span><span><strong>분석 메모</strong> · ${e(p.confidence)}</span></div><div class="tag-wrap">${p.tags.map(t=>`<button class="tag" data-action="filter-tag" data-tag="${e(t)}">#${e(t)}</button>`).join('')}</div><div style="display:flex;flex-wrap:wrap;gap:9px;margin-top:20px;"><button class="source-link" data-action="save" data-id="${e(p.id)}">${icon('bookmark')} ${saved.includes(p.id)?'저장 해제':'읽기 목록에 저장'}</button><a class="source-link" href="${e(p.sourceUrl)}" target="_blank" rel="noopener noreferrer">${icon('external')} 논문 원문</a></div></header><div class="detail-body"><div class="article">`;
+html+=`<section class="paper-section" id="section-summary"><h2><span class="section-num">01</span> 한눈에 보는 연구 요약</h2>${rowTable(p.summaryRows,null,true)}<div class="insight green"><div class="insight-label">연구가 실제로 확인한 핵심</div><p>${e(p.finding)}</p></div></section>`;
+html+=`<section class="paper-section" id="section-eval"><h2><span class="section-num">02</span> 눈여겨볼 결과와 그 의미</h2><div class="eval-lead"><div class="eval-eyebrow">핵심 결론</div><p>${e(p.evaluation.lead)}</p></div><h3>실제 데이터에서 확인된 결과</h3><p class="interpretation-footnote">아래에는 논문의 정량 분석·실험 비교·질적 관찰 결과를 구분해 정리했다. 통계적 관련성이 곧 인과관계는 아니다.</p><div class="evidence-list">${p.evaluation.highlights.map(x=>`<div class="evidence-item"><div class="evidence-stat">${e(x.stat)}</div><div><div class="evidence-title">${e(x.title)}</div><p class="evidence-description">${e(x.plain)}</p><a class="evidence-cite" href="${e(p.sourceUrl)}" target="_blank" rel="noopener noreferrer">논문 근거 · ${e(x.source)}</a></div></div>`).join('')}</div><h3>결과에서 도출한 기획적 인사이트</h3><p class="interpretation-footnote">연구 근거 → 해석의 이유 → 이해를 돕는 게임 사례 순서로 구분했다. 연구에서 입증하지 않은 것은 단정하지 않는다.</p><div class="interpretation-list">${p.evaluation.interpretations.map((x,i)=>`<div class="interpretation-item"><h4>${i+1}. ${e(x.title)}</h4><div class="reasoning-step"><b>연구에서 확인한 근거</b><p>${e(x.observed)}</p></div><div class="reasoning-step"><b>이 근거에서 도출한 해석</b><p>${e(x.reasoning)}</p></div><div class="reasoning-step example"><b>게임 속 사례</b><p>${e(x.example)}</p></div><p class="interpretation-boundary">해석의 범위: ${e(x.boundary)}</p></div>`).join('')}</div><p class="eval-bottom">기획자가 기억할 결론 · ${e(p.evaluation.takeaway)}</p></section>`;
+html+=`<section class="paper-section" id="section-purpose"><h2><span class="section-num">03</span> 연구 주제와 목적</h2><p>${e(p.kicker)}</p>${insight('연구 질문',p.summaryRows[0][1])}<h3>논문 정보</h3><p>${e(p.originalTitle)}<br>${e(p.authors)}<br>${e(p.journal)} · DOI ${e(p.doi)}</p></section>`;
+html+=`<section class="paper-section" id="section-variables"><h2><span class="section-num">04</span> 변수의 정확한 정의</h2><p>연구자가 무엇을 측정했는지 확인해야 연구 결과를 올바르게 읽을 수 있어.</p>${rowTable(p.variables,['변수','연구에서 뜻하는 내용','해석할 때 주의할 점'])}</section>`;
+html+=`<section class="paper-section" id="section-data"><h2><span class="section-num">05</span> 어떤 데이터를 사용했나?</h2><p>${e(p.dataSummary)}</p>${insight('데이터를 읽을 때',p.dataCaveat||(p.dataType==='설문'?'실제 접속 기록이 아닌 설문 기반 자기보고 자료이다.':'실제 게임 행동 데이터를 분석했지만 원문의 측정 범위를 확인하고 해석해야 한다.'),'gold')}</section>`;
+html+=`<section class="paper-section" id="section-method"><h2><span class="section-num">06</span> 분석 방법과 사용 이유</h2><p>${e(p.methodSummary)}</p><div class="info-stack">${p.methodDetails.map(m=>`<div class="info-block"><strong>${e(m.title)}</strong><p>${e(m.body)}</p></div>`).join('')}</div><h3>결과 수치를 읽는 법</h3>${rowTable(p.metricExplanations,['지표','쉽게 이해하는 방법'])}</section>`;
+html+=`<section class="paper-section" id="section-results"><h2><span class="section-num">07</span> 실제 분석 결과</h2>`;
+if(p.id==='dynamic-group-churn-2026')html+='<div class="metric-kpi">98.2%</div><p class="tiny-muted">논문 초록·하이라이트에 보고된 최고 분류 정확도. 이탈자의 비율과 정밀도·재현율 확인 전에는 실서비스 성능이라고 평가할 수 없어.</p>';
+html+=p.results.map((r,i)=>`<h3>${i+1}. ${e(r.title)}</h3>${r.chart?`<div class="charts">${r.chart.map(x=>`<div class="chart-row"><span class="chart-name">${e(x.name)}</span><div class="chart-track"><div class="chart-fill" style="width:${Math.min(100,x.value/.6*100)}%"></div></div><span class="chart-value">${x.value.toFixed(3)}</span></div>`).join('')}</div>`:''}${rowTable(r.rows,r.columns)}${insight('결과를 해석할 때',r.note,'gold')}`).join('')+'</section>';
+html+=`<section class="paper-section" id="section-use"><h2><span class="section-num">08</span> 게임 기획·운영에 적용</h2>${insight('논문으로 확인된 사실',p.finding,'green')}${insight('기획자의 해석 / 검증해야 할 가설',p.useCase)}${p.suggestedMetrics?`<h3>라이브 서비스용 제안 지표</h3><p class="tiny-muted">아래 계산식은 논문의 변수를 그대로 재현한 것이 아니라 게임 운영용으로 제안한 것이야.</p>${rowTable(p.suggestedMetrics,['제안 지표','계산 방법'])}`:''}<h3>직접 검증해 볼 실험</h3>${p.experiments.map((x,i)=>`<div class="experiment"><h4>${i+1}. ${e(x.title)}</h4><p>${e(x.hypothesis)}</p><dl><dt>기존군 / 모델</dt><dd>${e(x.control)}</dd><dt>실험군 / 모델</dt><dd>${e(x.treatment)}</dd><dt>주요 지표</dt><dd>${e(x.primary)}</dd><dt>가드레일</dt><dd>${e(x.guardrail)}</dd></dl></div>`).join('')}</section>`;
+html+=`<section class="paper-section" id="section-limits"><h2><span class="section-num">09</span> 한계와 출처</h2>${insight('연구의 한계',p.limitation,'gold')}<h3>원문 및 출처</h3><div>${p.citations.map(c=>`<a href="${e(c.url)}" class="source-link" target="_blank" rel="noopener noreferrer">${icon('external')} ${e(c.label)}</a>`).join('')}</div><p class="tiny-muted">이 페이지는 연구 결과를 해석한 2차 요약 자료이며, 논문 원문과는 별개의 기획적 해석 및 제안 실험을 포함합니다. 모든 수치를 인과관계로 해석하지 마세요.</p></section>`;
+html+=`</div><nav class="toc" aria-label="상세 목차"><b>ON THIS PAGE</b>${[['summary','연구 요약'],['eval','기획 인사이트'],['purpose','주제와 목적'],['variables','변수 정의'],['data','사용 데이터'],['method','분석 방법'],['results','실제 결과'],['use','기획·운영 활용'],['limits','한계와 출처']].map(x=>anchor(...x)).join('')}</nav></div><footer class="footer"><span>Playbook Atlas · 논문의 사실과 기획적 가설을 구분합니다.</span><span>원문 출처 표기 포함</span></footer></div>`;
+document.getElementById('content').innerHTML=html;window.scrollTo(0,0);}
+function goHome(){location.hash='#home';}
+function route(){let hash=decodeURIComponent(location.hash||'#home');if(hash.startsWith('#paper/')){const p=papers.find(x=>x.id===hash.slice(7));if(p){detail(p);return;}}home();window.scrollTo(0,0);}
+const reset=()=>{state.search='';state.tag='';state.data='all';state.domain='all';state.method='all';state.sort='updated';};
+document.addEventListener('click',event=>{const t=event.target.closest('[data-action]');if(!t)return;const action=t.dataset.action;if(action==='open-paper'){location.hash='#paper/'+t.dataset.id;return;}
+if(action==='back'){goHome();return;}
+if(action==='nav-home'||action==='nav-new'||action==='nav-saved'){reset();state.mode=action==='nav-new'?'new':action==='nav-saved'?'saved':'all';goHome();if(location.hash==='#home')home();return;}
+if(action==='filter-tag'||action==='filter-domain'){const tag=t.dataset.tag||'',domain=t.dataset.domain||'all';reset();state.mode='all';if(action==='filter-tag')state.tag=tag;else state.domain=domain;location.hash='#home';home();document.getElementById('library-section')?.scrollIntoView({behavior:'smooth',block:'start'});return;}
+if(action==='reset-filters'){reset();home();document.getElementById('library-section')?.scrollIntoView({behavior:'smooth',block:'start'});return;}
+if(action==='save'){const id=t.dataset.id;saved=saved.includes(id)?saved.filter(x=>x!==id):[...saved,id];try{localStorage.setItem(savedKey,JSON.stringify(saved));}catch{};detail(papers.find(x=>x.id===id));return;}
+if(action==='scroll-section'){event.preventDefault();document.getElementById(t.dataset.target)?.scrollIntoView({behavior:'smooth'});return;}
+});
+document.addEventListener('input',ev=>{if(ev.target.id==='search-input'){state.search=ev.target.value;list();}});
+document.addEventListener('change',ev=>{if(ev.target.id==='domain-select'){state.domain=ev.target.value;list();}if(ev.target.id==='data-select'){state.data=ev.target.value;list();}if(ev.target.id==='sort-select'){state.sort=ev.target.value;list();}});
+window.addEventListener('hashchange',route);route();
+})();
+</script>
+</body>
+</html>
