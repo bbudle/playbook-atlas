@@ -81,6 +81,14 @@
   .card-bottom button:hover{text-decoration:underline;}
   .chipline { display:flex;gap:6px;align-items:center;flex-wrap:wrap; }
   .new-stamp {font-size:9px;color:#df7650; font-weight:900;letter-spacing:.07em;margin-left:3px; }
+  .best-badge {display:inline-flex;align-items:center;justify-content:center;gap:3px;border:1px solid #c99a42;background:#fff4d9;color:#815311;border-radius:7px;padding:5px 8px;font-size:10px;line-height:1.2;font-weight:900;letter-spacing:.03em;white-space:nowrap;}
+  .best-badge:hover,.best-badge:focus-visible {background:#f9e8b6;border-color:#b27d29;}
+  .best-award {background:#fffaf0;border:1px solid #edd9ac;border-radius:12px;padding:14px 17px;margin-top:18px;color:#5f4c24;font-size:12px;line-height:1.8;}
+  .best-award strong {display:block;font-size:13px;color:#76510b;margin-bottom:4px;}
+  .best-award a {color:#815311;font-weight:800;text-underline-offset:3px;}
+  .best-award a:hover {color:#583600;}
+  .filter-tag.best-filter {background:#fff9ec;border-color:#edd9ac;color:#805811;}
+  .filter-tag.best-filter.active {background:#fce9b9;border-color:#d2a248;color:#664008;}
   .filter-bar { display:flex; gap:9px;align-items:center; flex-wrap:wrap;margin-top:16px;margin-bottom:18px; }
   .searchbox { flex:1 1 250px;display:flex;align-items:center;gap:8px;height:41px;border:1px solid var(--border);border-radius:10px;background:white;padding:0 13px;color:#8799af; }
   .searchbox:focus-within {border-color:#8c83ee;box-shadow:0 0 0 3px #e9e6ff;}
@@ -300,7 +308,7 @@
     <div class="sidebar-spacer"></div>
     <div class="side-foot">논문에서 확인한 사실과<br>게임 기획자의 해석을 분리한<br>근거 중심 연구 위키.<br><br><span id="sidebar-updated"></span></div>
   </aside>
-  <main class="main" id="main"><header class="masthead"><div class="mobile-nav"><button type="button" class="mobile-menu-button" data-action="toggle-mobile-menu" aria-controls="mobile-menu" aria-expanded="false" aria-label="탐색 메뉴 열기"><span class="menu-lines" aria-hidden="true"><i></i><i></i><i></i></span></button><span class="mobile-site-name">게임 기획 리뷰</span></div><div class="bread" id="breadcrumbs"><b>게임 기획 리뷰</b><span>/</span> Home</div><div class="header-right"><span class="live"></span><span id="header-status">연구 위키 · 11편</span></div><nav id="mobile-menu" class="mobile-menu" aria-label="모바일 탐색 메뉴" hidden><button type="button" data-action="nav-home">모든 연구</button><button type="button" data-action="nav-new">새로운 연구</button><button type="button" data-action="nav-saved">저장한 연구</button></nav></header><div id="content"></div></main>
+  <main class="main" id="main"><header class="masthead"><div class="mobile-nav"><button type="button" class="mobile-menu-button" data-action="toggle-mobile-menu" aria-controls="mobile-menu" aria-expanded="false" aria-label="탐색 메뉴 열기"><span class="menu-lines" aria-hidden="true"><i></i><i></i><i></i></span></button><span class="mobile-site-name">게임 기획 리뷰</span></div><div class="bread" id="breadcrumbs"><b>게임 기획 리뷰</b><span>/</span> Home</div><div class="header-right"><span class="live"></span><span id="header-status">연구 위키 · 14편</span></div><nav id="mobile-menu" class="mobile-menu" aria-label="모바일 탐색 메뉴" hidden><button type="button" data-action="nav-home">모든 연구</button><button type="button" data-action="nav-new">새로운 연구</button><button type="button" data-action="nav-saved">저장한 연구</button></nav></header><div id="content"></div></main>
 </div>
 <svg xmlns="http://www.w3.org/2000/svg" style="position:absolute;width:0;height:0;overflow:hidden"><symbol id="i-grid" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></symbol><symbol id="i-spark" viewBox="0 0 24 24"><path d="m12 2 2.5 7.5L22 12l-7.5 2.5L12 22l-2.5-7.5L2 12l7.5-2.5z"/></symbol><symbol id="i-bookmark" viewBox="0 0 24 24"><path d="M5 4.5A1.5 1.5 0 0 1 6.5 3h11A1.5 1.5 0 0 1 19 4.5V21l-7-4-7 4z"/></symbol><symbol id="i-tag" viewBox="0 0 24 24"><path d="m20 13-7 7-10-10V3h7z"/><circle cx="7.8" cy="7.8" r="1.4"/></symbol><symbol id="i-search" viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="7"/><path d="m16 16 5 5"/></symbol><symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14m-6-6 6 6-6 6"/></symbol><symbol id="i-back" viewBox="0 0 24 24"><path d="M19 12H5m6-6-6 6 6 6"/></symbol><symbol id="i-external" viewBox="0 0 24 24"><path d="M14 3h7v7m0-7-9 9"/><path d="M21 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h6"/></symbol></svg>
 <script>
@@ -571,6 +579,11 @@ window.RESEARCH_REVIEWS = [
   },
 {
   "id": "cross-game-choice-flexibility-2026",
+  "best": {
+    "award": "CHI 2026 Best Paper Honorable Mention",
+    "evidenceUrl": "https://engineering.ucsc.edu/news/chi-2026-uc-santa-cruz-contribution/",
+    "evidenceName": "UC Santa Cruz 공식 수상 발표 (Honorable Mention · 상위 5%)"
+  },
   "title": "게임마다 유리한 전략이 달라도 플레이어의 선택 성향은 유지될까?",
   "kicker": "LoL과 TFT를 모두 플레이한 같은 이용자의 선택 기록으로 전략 다양성과 성과를 비교한 연구",
   "originalTitle": "Change is Hard: Consistent Player Behavior Across Games with Conflicting Incentives",
@@ -2830,6 +2843,753 @@ window.RESEARCH_REVIEWS = [
     }
   ],
   "dataCaveat": "출판사 원문에 공개된 방법과 초록·결론을 대조했다. 특정 수치의 정확한 효과 크기를 확보하지 못해 “유의한 향상” 수준으로만 표시하며, 장기 서비스 데이터로 확대 해석하지 않는다."
+},
+{
+  "id": "dynamic-difficulty-rct-2025",
+  "title": "난이도를 낮추면 결제는 줄어들까, 오히려 늘어날까?",
+  "kicker": "이탈 위험 이용자의 퍼즐 난이도를 낮춘 33만 명 무작위 실험",
+  "originalTitle": "Personalized game design for improved user retention and monetization in freemium games",
+  "authors": "Eva Ascarza · Oded Netzer · Julian Runge",
+  "journal": "International Journal of Research in Marketing",
+  "doi": "10.1016/j.ijresmar.2025.01.006",
+  "sourceUrl": "https://business.columbia.edu/sites/default/files-efs/citation_file_upload/Personalized_games.pdf",
+  "published": "2025-12-01",
+  "updated": "2026-11-17",
+  "researchType": "무작위 현장실험",
+  "dataType": "행동 로그",
+  "domain": "난이도·리텐션",
+  "rank": 12,
+  "confidence": "높음",
+  "accent": "blue",
+  "tags": [
+    "동적 난이도",
+    "리텐션",
+    "이탈",
+    "A/B 테스트",
+    "보상",
+    "수익화",
+    "F2P"
+  ],
+  "dataSummary": "F2P 모바일 퍼즐 게임, 실험 대상 329,999명. 이탈 위험 이용자를 무작위로 난이도 조정군·기존 난이도군에 배정해 플레이·진행·결제 기록을 비교.",
+  "methodSummary": "대규모 무작위 대조 현장실험(RCT). ITT(배정 기준 분석)로 첫날 플레이와 향후 재방문, 지출을 비교하고 30일 누적 행동도 분석.",
+  "finding": "이탈 위험 이용자의 퍼즐을 쉽게 만들자 첫날 평균 1.247판을 더 플레이했고 새 레벨을 0.746개 더 통과했다. 이후 7일 이내 재방문은 2.46%p 증가했다. 개별 판의 도움 아이템 사용은 줄었지만 누적 지출은 증가했다.",
+  "shortFinding": "퍼즐을 쉽게 조정한 집단에서 첫날 +1.25판, 7일 내 재방문 +2.46%p. 한 판에서의 아이템 수요는 줄어도 전체 지출은 증가",
+  "limitation": "한 F2P 퍼즐 게임의 이탈 위험 이용자를 대상으로 한 실험이며 모든 장르·전체 유저를 대표하지 않는다. 논문의 Retention 7은 7일째 접속이 아니라 향후 7일 중 1회 이상 접속이다. 매출의 추산값 일부는 실제 광고 로그가 아닌 가정과 업계 평균에 기반한다.",
+  "useCase": "한 판의 실패율이나 즉시 과금률만 보면 오판할 수 있다. 이용자가 얼마나 더 진행하고 다시 돌아오는지, 누적 지출이 어떻게 달라지는지를 함께 보아야 한다.",
+  "audience": "난이도 기획 · 라이브 밸런스 · 퍼즐/스테이지 · BM",
+  "summaryRows": [
+    [
+      "연구 질문",
+      "이탈 위험 이용자의 난이도를 낮추면 지루해져 과금이 줄까, 아니면 더 오래 플레이해 전체 수익이 늘까?"
+    ],
+    [
+      "연구 데이터",
+      "F2P 모바일 매치3 퍼즐 게임 이용자 329,999명, 난이도 변경 전후의 행동·진행·결제 로그"
+    ],
+    [
+      "분석 방법",
+      "실험군·대조군 무작위 배정, ITT 분석 및 재방문·누적 지출 비교"
+    ],
+    [
+      "핵심 결론",
+      "첫날 +1.247판·+0.746 레벨, 이후 7일 중 재방문 +2.46%p(모두 통계적으로 유의). 개별 판의 도움 아이템 사용은 감소, 전체 플레이와 누적 지출은 증가."
+    ],
+    [
+      "해석 한계",
+      "이탈 위험 이용자에게만 적용한 실험. 7일째 잔존율(D7)과 7일 내 재방문 지표를 혼동하지 말 것."
+    ]
+  ],
+  "evaluation": {
+    "lead": "난이도 완화는 “지금 한 판에서 아이템을 사게 만들기”에는 불리했지만, 이용자가 더 많이 진행하고 다시 플레이하도록 만들면서 전체 지출에는 유리했어. 이는 실제 33만 명을 무작위로 나눈 실험에서 나타난 결과야.",
+    "highlights": [
+      {
+        "stat": "+2.46%p",
+        "title": "다음 7일 동안 한 번이라도 다시 플레이한 비율이 상승",
+        "plain": "실험군은 대조군보다 향후 7일 중 재방문 비율이 0.0246 높았다(p<0.001). 7일째 접속률(D7)을 의미하지 않는다.",
+        "source": "Table 6 · Retention 7"
+      },
+      {
+        "stat": "+1.247판",
+        "title": "난이도를 낮춘 날 실제 플레이한 판수가 늘었다",
+        "plain": "하루 평균 플레이 판수는 5.565판(대조군 기준)에서 약 6.812판(처치 추정치)으로 높아졌고, 새 레벨 진행도 +0.746개였다.",
+        "source": "Table 6 · Rounds & Progress"
+      },
+      {
+        "stat": "판별로 ↓ / 누적으로 ↑",
+        "title": "개별 판의 도움 아이템 소비와 총 지출이 반대 방향으로 움직였다",
+        "plain": "한 판이 쉬워져 도움 아이템을 쓰는 비율은 감소했다. 반면 더 오래 플레이해 누적 인앱 지출은 증가했다.",
+        "source": "Table 7–8 · Fig. 6"
+      }
+    ],
+    "interpretations": [
+      {
+        "title": "한 판의 과금만 보면 전체 매출에 대한 판단을 잘못할 수 있다",
+        "observed": "쉬워진 퍼즐에서는 도움 아이템 수요가 줄었지만 더 많은 판을 플레이하고 재방문해 누적 지출이 늘었다.",
+        "reasoning": "각 판에서의 구매 확률뿐 아니라 플레이할 기회 자체가 늘어나기 때문이다.",
+        "example": "막힌 스테이지를 쉽게 풀게 하면 즉시 부스터를 사지 않아도, 다음 챕터까지 더 진행하며 게임을 계속 즐길 수 있다.",
+        "boundary": "이 연구는 이탈 위험이 높은 F2P 퍼즐 유저에 관한 결과다. 모든 게임에서 난이도를 낮추라는 뜻은 아니다."
+      },
+      {
+        "title": "난이도를 조정할 때도 어떤 이용자에게 적용했는지가 중요하다",
+        "observed": "회사는 이탈 위험 이용자의 퍼즐 난이도를 개인별로 다르게 낮췄고, 반응은 기존 진행·결제 성향에 따라 달랐다.",
+        "reasoning": "모든 유저에게 동일하게 쉽게 만드는 것과 이탈 위험 유저에게만 조정하는 것은 다른 실험이다.",
+        "example": "잘 진행하는 유저의 보스는 그대로 두고, 동일 스테이지에서 여러 번 막힌 유저의 난이도만 조정하는 경우.",
+        "boundary": "연구가 모든 실력 수준에서 최적의 조정 알고리즘을 확립한 것은 아니다."
+      },
+      {
+        "title": "진행을 막는 장벽이 매출로 이어진다는 전제는 다시 확인해야 한다",
+        "observed": "단기적인 장애물 해소 아이템에 대한 수요 감소와 달리, 장기 재방문과 누적 수익은 증가했다.",
+        "reasoning": "유료 도움 없이 진행하는 경험도 소비 기회와 더 긴 이용 기간을 만들 수 있다.",
+        "example": "챕터 진행을 한 번 더 허용하는 것이, 그 자리에서 재도전 아이템을 판매하는 것보다 서비스에 유리할 수 있는 상황.",
+        "boundary": "사후 해석 예시이며 모든 과금장벽에 대한 일괄 규칙은 아니다."
+      }
+    ],
+    "takeaway": "난이도 완화의 성공 여부는 한 판의 결제보다 진행·재방문·누적 지출을 함께 보고 판단해야 한다."
+  },
+  "variables": [
+    [
+      "동적 난이도 조절(DDA)",
+      "이탈 위험으로 판단된 이용자에게 같은 퍼즐 레벨을 더 쉬운 조각 배치로 제공하는 개입.",
+      "스테이지 목표나 진행 순서를 전면 교체한 것이 아니다."
+    ],
+    [
+      "실험군(Treatment)",
+      "난이도를 개인별로 낮춰주는 정책에 무작위로 배정된 이용자.",
+      "실제 난이도 완화 정도는 이용자의 행동에 따라 바뀔 수 있다."
+    ],
+    [
+      "대조군(Control)",
+      "기존 난이도 정책을 유지하도록 무작위 배정된 이용자.",
+      "비교를 통해 개입 자체의 평균 영향을 추정한다."
+    ],
+    [
+      "Retention 7",
+      "개입 이후 7일 동안 적어도 1번 다시 플레이했는지.",
+      "D7(정확히 7일째 접속)과 다른 지표다."
+    ],
+    [
+      "진행(Progress)",
+      "기존에 통과하지 않았던 새 레벨을 몇 개 통과했는지.",
+      "무조건 게임이 더 재미있었다는 증거는 아니다."
+    ],
+    [
+      "Extras(도움 아이템)",
+      "해당 퍼즐 판의 통과를 쉽게 만들어 주는 부스터.",
+      "챕터 접근권한을 사는 Gate와 구분된다."
+    ],
+    [
+      "누적 수익",
+      "일정 기간 동안 이용자에게서 발생한 전체 지출.",
+      "광고 수익 추산에는 업계 평균 등 외부 가정이 포함된다."
+    ]
+  ],
+  "methodDetails": [
+    {
+      "title": "왜 실험군·대조군을 무작위로 나눴을까?",
+      "body": "원래 게임을 오래 할 사람만 쉬운 난이도를 선택했을 수 있다는 문제를 줄이기 위해서다. 무작위로 두 집단을 나누고 한쪽에만 난이도 변경 정책을 적용해, 정책 효과를 더 믿을 만하게 비교했다."
+    },
+    {
+      "title": "ITT(Intention-to-Treat)는 무엇인가?",
+      "body": "이용자가 실제로 어느 정도 쉬운 퍼즐을 경험했는지와 관계없이 처음 무작위 배정된 그룹 기준으로 비교하는 방식이다. 배정 이후 활동량에 따라 실제 처치를 받은 사람만 골라 분석할 때 생기는 선택편향을 방지한다."
+    },
+    {
+      "title": "왜 첫날과 이후 30일을 구분했을까?",
+      "body": "쉬운 난이도는 첫날 도움 아이템 구매를 줄일 수 있지만 시간이 지나면 재방문과 총 소비가 달라질 수 있다. 특정 판의 행동과 누적 행동을 따로 비교해야 두 효과를 구분할 수 있다."
+    }
+  ],
+  "metricExplanations": [
+    [
+      "+2.46%p",
+      "재방문 확률 0.0246의 절대 증가분. 예를 들어 64.30%라면 66.76%가 되는 차이이지, 2.46배 증가가 아니다."
+    ],
+    [
+      "+1.247판",
+      "대조군 대비 개입 첫날 평균 추가 플레이 판수. 모든 이용자가 똑같이 1.247판 더 플레이했다는 뜻은 아니다."
+    ],
+    [
+      "p<0.001",
+      "무효과라는 가정과 비교해 관측된 차이가 통계적으로 매우 작게 나타날 가능성을 뜻한다. 효과의 가치나 다른 게임에서의 재현을 보증하지 않는다."
+    ],
+    [
+      "누적 매출/판당 구매율",
+      "전자는 한 이용자가 전체 기간에 쓴 돈, 후자는 개별 판에서 결제할 가능성. 방향이 달라질 수 있다."
+    ]
+  ],
+  "results": [
+    {
+      "title": "난이도 완화는 재방문과 진행량을 늘렸다",
+      "columns": [
+        "지표",
+        "실험군-대조군 차이",
+        "의미"
+      ],
+      "rows": [
+        [
+          "개입 첫날 플레이 판수",
+          "+1.247판",
+          "통계적으로 유의(p<0.001)"
+        ],
+        [
+          "새 레벨 통과 수",
+          "+0.746개",
+          "진행량 증가(p<0.001)"
+        ],
+        [
+          "다음날 재방문",
+          "+2.70%p",
+          "Retention 1"
+        ],
+        [
+          "향후 7일 중 재방문",
+          "+2.46%p",
+          "Retention 7 · 정확히 D7 아님"
+        ],
+        [
+          "향후 14일 중 재방문",
+          "+1.99%p",
+          "Retention 14"
+        ]
+      ],
+      "note": "Table 6은 실험에 배정된 집단 간 ITT 차이. 일부 이용자는 추적 기간이 충분하지 않아 재방문 지표별 분석 표본이 다르다."
+    },
+    {
+      "title": "한 판의 소비는 줄었지만 기간 전체 지출은 늘었다",
+      "columns": [
+        "수익 관점",
+        "관찰 결과"
+      ],
+      "rows": [
+        [
+          "개별 퍼즐 판에서 도움 아이템/코인 사용",
+          "쉬운 퍼즐일수록 확률 감소"
+        ],
+        [
+          "하루 동안의 전체 활동과 소비",
+          "플레이 판수·코인 사용·일부 지출 지표 증가"
+        ],
+        [
+          "30일 누적",
+          "플레이일·판수·진행량·지출에서 실험군 우위"
+        ],
+        [
+          "수익 환산 참고",
+          "연구진의 가정 기반 계산으로 이용자당 약 $0.07 추가 수익 추정"
+        ]
+      ],
+      "note": "수익 환산치는 실제 광고 매출 데이터가 아닌 업계 수치와 기업 보고를 활용한 추산이므로, 직접 관찰된 플레이·재방문 효과와 신뢰 수준을 구분해야 한다."
+    }
+  ],
+  "experiments": [
+    {
+      "title": "반복 실패 이용자에게만 난이도 미세 조정",
+      "hypothesis": "동일 구간에서 여러 번 실패한 유저에게만 일부 난이도를 낮추면 즉시 부스터 구매는 감소해도 진행량·7일 내 재방문·누적 수익은 개선될 수 있다.",
+      "control": "기존 스테이지 난이도 유지",
+      "treatment": "실패 횟수와 활동 감소 조건을 충족할 때 퍼즐 난이도를 소폭 낮춤",
+      "primary": "이후 7일 중 재방문율, 신규 레벨 통과 수, 30일 누적 지출",
+      "guardrail": "상위 숙련자 이탈, 장기 난이도 만족, 이벤트 경제 영향, 판당 부스터 구매율을 함께 측정"
+    }
+  ],
+  "citations": [
+    {
+      "label": "저자 공개 원문 PDF · Columbia Business School",
+      "url": "https://business.columbia.edu/sites/default/files-efs/citation_file_upload/Personalized_games.pdf"
+    },
+    {
+      "label": "출판사 논문 · DOI",
+      "url": "https://doi.org/10.1016/j.ijresmar.2025.01.006"
+    }
+  ],
+  "dataCaveat": "연구 대상은 모든 이용자가 아니라 이탈 위험이 있는 F2P 퍼즐 이용자이며, 논문의 Retention 7은 이후 7일 내 1회 이상 접속이다. 광고 수익 추산은 실제 관측 자료와 구분한다."
+},
+{
+  "id": "unavoidable-stun-autonomy-2024",
+  "title": "피할 수 없는 기절이 플레이어의 통제감을 더 크게 해칠까?",
+  "kicker": "같은 3초 기절도 피할 수 있는지에 따라 자율성 경험이 달랐다",
+  "originalTitle": "Set Players to Stun: Inducing Basic Psychological Need Frustration in a Casual Video Game",
+  "authors": "Cody Phillips · Parker Neufeld · Madison Klarkowski",
+  "journal": "Interacting with Computers",
+  "doi": "10.1093/iwc/iwae015",
+  "sourceUrl": "https://academic.oup.com/iwc/article/38/3/409/7702004",
+  "published": "2024-07-01",
+  "updated": "2026-11-17",
+  "researchType": "무작위 실험",
+  "dataType": "실험·설문",
+  "domain": "전투·통제감",
+  "rank": 13,
+  "confidence": "높음",
+  "accent": "violet",
+  "tags": [
+    "행동 제한",
+    "자율성",
+    "플레이어 경험",
+    "CC",
+    "전투 UX",
+    "실험"
+  ],
+  "dataSummary": "19~72세 156명을 네 가지 기절 조건에 무작위 배정. 5분 게임 플레이 후 5점 척도로 자율성·유능감의 충족/좌절을 측정.",
+  "methodSummary": "기절 없음, 회피 가능, 회피 불가, 혼합의 4집단을 무작위 비교. 일원분산분석(ANOVA)과 Bonferroni 사후 비교.",
+  "finding": "피할 수 없는 기절 그룹의 자율성 좌절감(평균 2.86/5)은 피할 수 있는 기절 그룹(2.25/5)보다 유의하게 높았다(p=0.046). 유능감 좌절에는 집단 간 유의한 차이가 없었다.",
+  "shortFinding": "회피 불가능 기절의 자율성 좌절 점수 2.86, 회피 가능 기절 2.25(p=0.046). 유능감 점수 차이는 유의하지 않음",
+  "limitation": "단순한 5분짜리 캐주얼 게임의 즉각적 심리 설문이다. 실제 PvP 전투, 장기 재미, 리텐션·이탈을 측정한 연구가 아니다. 출판사 본문 내 일부 집단별 n 표기가 서로 달라 집단별 표는 해당 기술통계 표를 우선했다.",
+  "useCase": "기절 시간이 똑같더라도 “피할 방법이 있었는지”는 다른 경험이다. 불쾌한 행동 제한을 설계할 때 길이뿐 아니라 예고·회피 가능성을 따로 살펴볼 이유가 있다.",
+  "audience": "전투 시스템 · 상태 이상 · 조작 UX",
+  "summaryRows": [
+    [
+      "연구 질문",
+      "동일하게 조작을 막는 기절도 피할 수 있는지에 따라 자율성 좌절감이 달라지는가?"
+    ],
+    [
+      "연구 데이터",
+      "총 156명, 웹 기반 캐주얼 게임 5분 플레이, 4개 무작위 조건, 5점 심리 욕구 설문"
+    ],
+    [
+      "분석 방법",
+      "4집단 ANOVA + Bonferroni 다중비교 보정"
+    ],
+    [
+      "핵심 결론",
+      "회피 불가 기절은 회피 가능 기절보다 자율성 좌절감이 유의하게 높았음(2.86 vs 2.25, p=0.046). 유능감의 차이는 유의하지 않음."
+    ],
+    [
+      "해석 한계",
+      "기절 빈도 차이와 회피 가능성의 차이가 동시에 있으므로 순수한 회피 가능성 효과만 분리하기는 어렵고 장기 리텐션은 측정하지 않음."
+    ]
+  ],
+  "evaluation": {
+    "lead": "같은 “3초 동안 조작 불가능”이라는 제약도, 플레이어가 피할 수 있었는지에 따라 자율성 좌절감이 달랐어. 반면 유능감에는 통계적으로 확인되는 차이가 없었어.",
+    "highlights": [
+      {
+        "stat": "2.86 vs 2.25",
+        "title": "회피할 수 없는 기절에서 자율성 좌절감이 높았다",
+        "plain": "5점 척도 평균이 회피 불가 2.86, 회피 가능 2.25. 두 조건 간 사후비교 p=0.046.",
+        "source": "Results · Table 1, §4.3.1"
+      },
+      {
+        "stat": "p=0.001",
+        "title": "기절 조건에 따라 자율성 충족 점수도 달랐다",
+        "plain": "자율성 충족에 대한 전체 ANOVA는 유의했다. 회피 불가·혼합 기절 집단은 기절 없음·회피 가능 집단보다 낮은 자율성 충족을 보였다.",
+        "source": "Results §4.3.2"
+      },
+      {
+        "stat": "p=0.364",
+        "title": "유능감 좌절은 집단 사이에서 확인되는 차이가 없었다",
+        "plain": "자율성 경험은 악화되었지만 유능감 좌절 점수 차이는 통계적으로 유의하지 않았다.",
+        "source": "Results §4.3.1"
+      }
+    ],
+    "interpretations": [
+      {
+        "title": "전투 방해 효과는 지속시간만으로 설명하기 어렵다",
+        "observed": "회피 가능 3초 기절과 회피 불가 3초 기절은 자율성 좌절 점수가 달랐다.",
+        "reasoning": "플레이어가 막을 기회 자체가 있는지에 따라 조작 제한을 받아들이는 경험이 다를 수 있다.",
+        "example": "보스의 기절 공격이 사전 예고되고 회피할 수 있는 경우와, 예고 없이 확정적으로 기절시키는 경우의 차이.",
+        "boundary": "두 조건은 실제 기절 발생 빈도도 달랐으므로 순수하게 “회피 가능성 때문”이라고 단정할 수 없다."
+      },
+      {
+        "title": "자율성 좌절과 유능감 좌절은 같은 감정이 아니다",
+        "observed": "자율성 점수 차이는 있었으나 유능감 좌절의 4집단 차이는 유의하지 않았다.",
+        "reasoning": "움직임을 빼앗겨 답답한 것과 자신의 실력이 낮다고 느끼는 것은 다른 차원의 경험이다.",
+        "example": "피할 수 없는 컷신형 기절을 맞아도 “내가 못해서 졌다”기보다는 “왜 조작을 못하게 하지?”라고 느낄 수 있다.",
+        "boundary": "설명용 예시이며 실제 참가자의 감정을 개별적으로 판정한 결과는 아니다."
+      }
+    ],
+    "takeaway": "상태 이상은 몇 초간 조작을 막는지만 보지 말고, 막을 수 있었는지와 플레이어가 통제권을 느꼈는지를 구분해 보자."
+  },
+  "variables": [
+    [
+      "자율성 충족",
+      "내가 원해서 행동하고 선택할 수 있다고 느끼는 경험.",
+      "조작 버튼 수가 많다는 뜻만은 아니다."
+    ],
+    [
+      "자율성 좌절",
+      "원하지 않는 방식으로 강제로 통제당한다고 느끼는 경험.",
+      "단순히 재미없음이나 낮은 성취감과는 다른 개념."
+    ],
+    [
+      "유능감 충족/좌절",
+      "게임을 잘 해낼 수 있다고 느끼는지 또는 능력을 발휘하지 못한다고 느끼는지.",
+      "자율성과 독립된 심리적 요인."
+    ],
+    [
+      "회피 가능 기절",
+      "캐릭터가 바닥 함정을 밟았을 때 3초 정지, 숙련된 이용자는 피할 수 있음.",
+      "실제 발생 횟수는 플레이어마다 달라짐."
+    ],
+    [
+      "회피 불가 기절",
+      "15초마다 투사체에 맞아 3초간 모든 입력이 막히는 효과.",
+      "모든 플레이어에게 높은 빈도로 발생."
+    ]
+  ],
+  "methodDetails": [
+    {
+      "title": "왜 4가지 버전으로 나눠서 플레이시켰을까?",
+      "body": "같은 게임을 사용하면서 기절 조건만 바꾸면 원래 게임 취향 차이를 줄이고 기절 조건에 따른 심리 경험 변화를 비교할 수 있다. 참가자는 무작위로 한 조건에 배정됐다."
+    },
+    {
+      "title": "ANOVA(분산분석)는 무엇인가?",
+      "body": "4집단의 평균 심리 점수가 모두 같다고 가정한 뒤 실제 차이가 얼마나 큰지 검정하는 방법이다. 전체 차이가 있다는 사실만으로 어느 두 집단이 다른지는 알 수 없다."
+    },
+    {
+      "title": "왜 Bonferroni 사후비교가 필요했을까?",
+      "body": "4집단에서 여러 쌍을 반복 비교하면 우연한 유의 결과가 생길 위험이 높아진다. Bonferroni 보정은 반복 비교에 따른 잘못된 판정을 줄이기 위한 절차다."
+    }
+  ],
+  "metricExplanations": [
+    [
+      "5점 평균",
+      "높을수록 해당 심리 상태(자율성 좌절 또는 충족)를 강하게 느꼈다는 자기보고 응답."
+    ],
+    [
+      "p=0.046",
+      "회피 불가와 회피 가능 두 조건의 자율성 좌절 차이에 대한 보정 사후검정의 p값. 일반적인 0.05 기준에서 유의."
+    ],
+    [
+      "η²=0.059",
+      "자율성 좌절 점수의 전체 변동 중 기절 조건에 연결된 비율을 나타내는 ANOVA 효과 크기. 5.9%의 분산 설명을 뜻함."
+    ],
+    [
+      "p=0.364",
+      "유능감 좌절에 대한 집단 차이가 통계적으로 유의하지 않음. 완전히 차이가 없다는 증명은 아님."
+    ]
+  ],
+  "results": [
+    {
+      "title": "자율성 좌절은 회피 불가 기절에서 높았다",
+      "columns": [
+        "조건",
+        "자율성 좌절 평균(5점)",
+        "해석"
+      ],
+      "rows": [
+        [
+          "기절 없음",
+          "2.29",
+          "기준 집단"
+        ],
+        [
+          "회피 가능",
+          "2.25",
+          "함정에 걸릴 때만 기절"
+        ],
+        [
+          "회피 불가",
+          "2.86",
+          "회피 가능 조건 대비 유의하게 높음(p=0.046)"
+        ],
+        [
+          "혼합",
+          "2.38",
+          "무조건 가장 높지는 않았음"
+        ]
+      ],
+      "note": "4집단 전체 ANOVA F(3,152)=3.186, p=0.026, η²=0.059. 모든 쌍에서 차이가 확인된 것은 아니며, 피할 수 있는 함정과 피할 수 없는 투사체의 발생 횟수 차이가 있었다."
+    },
+    {
+      "title": "자율성과 유능감은 다르게 반응했다",
+      "columns": [
+        "결과",
+        "통계적 판정"
+      ],
+      "rows": [
+        [
+          "자율성 충족",
+          "집단별 차이 유의: F(3,152)=5.78, p=0.001"
+        ],
+        [
+          "유능감 좌절",
+          "집단별 차이 유의하지 않음: p=0.364"
+        ],
+        [
+          "유능감 충족",
+          "집단별 차이 유의하지 않음: p=0.187"
+        ]
+      ],
+      "note": "연구는 장기 리텐션이나 재미 지표의 변화까지 입증한 것이 아니다. 5분 플레이 직후 자율성 경험을 측정했다."
+    }
+  ],
+  "experiments": [
+    {
+      "title": "회피 가능성이 상태 이상 체감에 미치는 영향",
+      "hypothesis": "동일한 기절 빈도와 지속시간을 유지한 상태에서 회피 경고를 제공하면 자율성 좌절 점수가 낮아질 것이다.",
+      "control": "일정 간격으로 피할 수 없이 발생하는 3초 기절",
+      "treatment": "동일 간격·동일 지속시간이지만 경고와 회피 수단을 제공",
+      "primary": "자율성 좌절/충족 설문, 실제 회피 성공률",
+      "guardrail": "두 조건의 기절 발생 횟수·전투 난이도 차이가 결과에 섞이지 않도록 통제하고 실패율 확인"
+    }
+  ],
+  "citations": [
+    {
+      "label": "Oxford Academic 연구 원문",
+      "url": "https://academic.oup.com/iwc/article/38/3/409/7702004"
+    },
+    {
+      "label": "DOI",
+      "url": "https://doi.org/10.1093/iwc/iwae015"
+    }
+  ],
+  "dataCaveat": "2024년 온라인 공개되었고 학술지 권·호는 2026년 5월로 표시된다. 같은 논문이다. 본문에 집단별 참가자 수의 기술표와 서술 간 일부 불일치가 있어 전체 n=156을 기준으로 소개한다."
+},
+{
+  "id": "sdt-motivational-pull-2006",
+  "title": "사람은 왜 게임을 재미있어하고 다시 플레이할까?",
+  "kicker": "자율성·유능감·관계성을 게임 동기와 연결한 영향력 있는 고전 실증연구",
+  "originalTitle": "The Motivational Pull of Video Games: A Self-Determination Theory Approach",
+  "authors": "Richard M. Ryan · C. Scott Rigby · Andrew K. Przybylski",
+  "journal": "Motivation and Emotion",
+  "doi": "10.1007/s11031-006-9051-8",
+  "sourceUrl": "https://selfdeterminationtheory.org/SDT/documents/2006_RyanRigbyPrzybylski_MandE.pdf",
+  "published": "2006-12-01",
+  "updated": "2026-11-17",
+  "researchType": "다중 실증연구",
+  "dataType": "실험·설문",
+  "domain": "동기·재플레이",
+  "rank": 14,
+  "confidence": "높음",
+  "accent": "green",
+  "tags": [
+    "동기",
+    "자율성",
+    "유능감",
+    "관계성",
+    "몰입",
+    "PENS",
+    "재이용 의향"
+  ],
+  "best": {
+    "award": "인용 2,839회 (2025년 1월 집계)",
+    "evidenceUrl": "https://explore.metascienceobservatory.org/papers/W2023062420",
+    "evidenceName": "Metascience Observatory · SciSciNet 기반 인용 집계"
+  },
+  "dataSummary": "4개 연구: 슈퍼 마리오 64 플레이 참가자 89명, 게임 2종 비교 50명, 게임 4종 비교 58명, MMO 경험자 온라인 설문 730명.",
+  "methodSummary": "플레이 전후 설문, 게임 비교 반복측정, 다층모형과 다중회귀 분석으로 자율성·유능감·관계성이 즐거움·향후 플레이 의향과 연결되는지 검증.",
+  "finding": "게임 내 자율성과 유능감을 높게 느낀 참가자는 게임을 더 즐겁게 평가하고 다시 플레이할 의향도 높았다. MMO 설문 730명 분석에서는 관계성까지 포함한 세 욕구가 향후 플레이 의향과 각각 유의한 양의 관계를 보였다.",
+  "shortFinding": "네 가지 실증연구에서 자율성·유능감·관계성이 게임 즐거움과 향후 플레이 의향을 설명. 2025년 초 기준 인용 2,839회",
+  "limitation": "초기 실험의 표본은 대부분 대학생이고 오래된 Nintendo 64 게임을 사용했다. MMO 연구는 온라인 자발적 설문으로 실제 향후 플레이 행동이 아니라 플레이 의향을 측정했다. 이론 전체를 인과 실험으로 확정한 것은 아니다.",
+  "useCase": "게임이 재미있는 이유를 보상 크기나 플레이 시간만으로 설명하지 않고, 스스로 선택했다고 느꼈는지·실력을 발휘했는지·다른 사람과 연결됐는지를 나눠 생각하는 관점.",
+  "audience": "전투·시스템 기획 · UX · 리텐션 · 게임 연구",
+  "summaryRows": [
+    [
+      "연구 질문",
+      "게임이 즐겁고 다시 하고 싶어지는 심리적 요인은 무엇인가?"
+    ],
+    [
+      "연구 데이터",
+      "4개 실증연구: 마리오 64 89명, 게임 2종 비교 50명, 게임 4종 비교 58명, MMO 설문 730명"
+    ],
+    [
+      "분석 방법",
+      "게임별 플레이 전후 설문, 반복측정, 개인 내·개인 간 다층모형, 다중회귀"
+    ],
+    [
+      "핵심 결론",
+      "자율성(내 의지로 행동), 유능감(잘 해낸 느낌), 관계성(다른 사람과 연결된 느낌)이 즐거움과 향후 플레이 의향을 설명. MMO 설문에서 미래 플레이 의향의 표준화 회귀계수는 각각 0.15·0.14·0.12."
+    ],
+    [
+      "BEST 근거",
+      "외부 서지 데이터에서 인용 2,839회(2025년 1월 기준). 2026년 현재의 실시간 인용 수는 아님."
+    ]
+  ],
+  "evaluation": {
+    "lead": "게임의 재미를 단순히 “보상이 많다”나 “승리했다”로 설명하지 않고, 게임 안에서 내 의지로 선택하고, 실력이 통한다고 느끼고, 다른 사람과 연결됐다고 느끼는 경험으로 나눠 검증했어.",
+    "highlights": [
+      {
+        "stat": "4개 연구",
+        "title": "다른 게임·표본에서도 자율성과 유능감이 즐거움과 연결됐다",
+        "plain": "플랫폼 게임, 게임 2종·4종 비교, MMO 설문을 통해 여러 환경에서 심리 욕구와 즐거움·재플레이 의향 사이의 관계를 분석했다.",
+        "source": "Abstract · Studies 1–4"
+      },
+      {
+        "stat": "β .15 / .14 / .12",
+        "title": "MMO 이용자 730명에서 세 욕구가 모두 미래 플레이 의향을 설명",
+        "plain": "자율성 β=.15, 유능감 β=.14, 관계성 β=.12이며 모두 p<0.01. 실제 접속 로그가 아닌 앞으로 몇 달 플레이할 의향이 있는지 설문으로 측정했다.",
+        "source": "Study 4 · Table 9"
+      },
+      {
+        "stat": "2,839회",
+        "title": "게임 동기 연구에서 폭넓게 인용된 논문",
+        "plain": "2025년 1월까지의 SciSciNet 기반 인용 집계. 최근 논문과 연결할 수 있는 중요한 이론적 출발점이다.",
+        "source": "Metascience Observatory · 2025.01 집계"
+      }
+    ],
+    "interpretations": [
+      {
+        "title": "재미의 이유가 전부 같은 것은 아니다",
+        "observed": "네 연구에서 자율성·유능감·관계성은 즐거움이나 미래 플레이 의향에 각각 연결됐다.",
+        "reasoning": "이용자가 게임을 좋아해도 누구는 선택의 자유, 누구는 숙련의 성취, 누구는 함께하는 관계를 크게 경험할 수 있다.",
+        "example": "새 빌드를 직접 만드는 재미, 보스 패턴을 익혀 쓰러뜨리는 재미, 친구와 레이드를 뛰는 재미는 서로 다른 경험이다.",
+        "boundary": "세 요소의 중요도가 모든 장르에서 같다는 뜻은 아니다."
+      },
+      {
+        "title": "게임의 조작감은 심리적 만족과도 연결될 수 있다",
+        "observed": "이 논문은 직관적 조작이 자율성과 유능감 경험과 관련되며, 이 심리적 경험이 선호·몰입과도 연결되는 관계를 다뤘다.",
+        "reasoning": "조작이 편하다는 것이 단순 편의성뿐 아니라 원하는 행동을 할 수 있다는 경험과 이어질 가능성을 보여준다.",
+        "example": "패링 버튼이 예측 가능하게 반응할 때, 단순히 입력이 편한 것과 “내가 해냈다”는 느낌이 함께 생기는 상황.",
+        "boundary": "조작 지연을 줄이면 리텐션이 얼마나 오르는지 직접 실험한 연구는 아니다."
+      },
+      {
+        "title": "최근 연구 결과를 읽는 공통 언어가 된다",
+        "observed": "2024년 기절 연구는 자율성 좌절을 직접 조작했고, 2025년 난이도 연구는 이용자의 진행 가능성을 조정했다.",
+        "reasoning": "전자는 내 행동을 통제할 수 있는가, 후자는 진행할 수 있을 만큼 실력을 발휘할 수 있는가라는 경험을 생각하게 한다.",
+        "example": "똑같이 어려운 보스라도 회피할 기회가 있는 공격과 불가능한 공격은 다르게 느껴질 수 있다.",
+        "boundary": "2025년 DDA 실험은 유능감 설문을 직접 측정하지 않았으므로 그 효과를 심리 욕구 변화로 확정할 수 없다."
+      }
+    ],
+    "takeaway": "플레이어가 게임을 계속할 이유를 찾을 때 자율성·유능감·관계성을 서로 다른 경험으로 나누어 관찰해 볼 만하다."
+  },
+  "variables": [
+    [
+      "자율성(Autonomy)",
+      "자신이 관심 있는 행동을 자신의 의지로 선택하고 실행한다고 느끼는 상태.",
+      "선택지의 개수와 동일하지 않다."
+    ],
+    [
+      "유능감(Competence)",
+      "과제가 자신에게 도전이 되지만 압도적이지 않고, 자신이 효과적으로 해낸다고 느끼는 상태.",
+      "실제 승률·레벨만으로 측정하지 않는다."
+    ],
+    [
+      "관계성(Relatedness)",
+      "게임 속 다른 사람과 연결되어 있고 관계가 의미 있다고 느끼는 상태.",
+      "친구 수나 채팅 횟수와 동일하지 않다."
+    ],
+    [
+      "PENS",
+      "Player Experience of Need Satisfaction. 게임 중 심리적 욕구 충족을 설문으로 측정하는 척도.",
+      "실제 D7·D30 재방문 데이터가 아니다."
+    ],
+    [
+      "즐거움(Game Enjoyment)",
+      "게임이 재미있고 즐거웠는지 설문으로 응답.",
+      "객관적인 게임 평점과 다르다."
+    ],
+    [
+      "미래 플레이 의향",
+      "게임을 앞으로 몇 달 더 플레이할 계획인지 묻는 자기보고 응답.",
+      "실제 미래 플레이 지속을 검증한 것이 아니다."
+    ]
+  ],
+  "methodDetails": [
+    {
+      "title": "왜 게임을 여러 종류로 바꿔가며 검증했을까?",
+      "body": "하나의 게임에서만 나타난 취향이나 조작 익숙함에 대한 결과일 수 있기 때문이다. 연구 1에서 플랫폼 게임, 연구 2에서 2개 어드벤처 게임, 연구 3에서 4개 장르 게임, 연구 4에서 MMO 플레이어를 분석했다."
+    },
+    {
+      "title": "다층모형(Hierarchical/Multilevel Model)은 왜 사용했을까?",
+      "body": "연구 3에서는 한 사람이 여러 게임을 플레이했다. 같은 사람의 응답끼리는 독립 표본이 아니므로, 사람 간 차이와 같은 사람이 게임마다 느끼는 차이를 나누어 분석해야 한다."
+    },
+    {
+      "title": "다중회귀는 무엇을 확인했나?",
+      "body": "연구 4에서 자율성·유능감·관계성을 동시에 모형에 포함해, 다른 욕구를 고려하더라도 각각 미래 플레이 의향과 유의한 관계가 남는지 살펴봤다."
+    },
+    {
+      "title": "왜 BEST인가?",
+      "body": "새로운 모델을 내가 좋다고 평가해서가 아니라, 외부 서지 데이터에 2025년 1월 기준 2,839회 인용된 기록이 확인되어 영향력이 높다고 판단했다."
+    }
+  ],
+  "metricExplanations": [
+    [
+      "β (표준화 회귀계수)",
+      "다른 변수를 통제했을 때 변수 간 관계의 방향·크기. 매출이나 리텐션의 % 변화율이 아니다."
+    ],
+    [
+      "p<0.01",
+      "귀무가설에서 관측된 통계값의 가능성이 낮다는 뜻. 인과관계·재현성을 자동 보장하지 않는다."
+    ],
+    [
+      "PENS 평균",
+      "각 욕구에 해당하는 설문 여러 문항의 평균. 설문 문항·표본이 다르면 단순 비교가 어렵다."
+    ],
+    [
+      "인용 수",
+      "다른 학술 자료가 해당 연구를 참고한 횟수. BEST 근거지만 연구 결론의 진실성을 증명하는 숫자는 아니다."
+    ]
+  ],
+  "results": [
+    {
+      "title": "MMO 플레이어 설문에서 세 욕구는 미래 플레이 의향과 각각 양의 관계",
+      "columns": [
+        "설명 변수",
+        "표준화 회귀계수 β",
+        "유의성"
+      ],
+      "rows": [
+        [
+          "자율성",
+          "+0.15",
+          "p<0.01"
+        ],
+        [
+          "유능감",
+          "+0.14",
+          "p<0.01"
+        ],
+        [
+          "관계성",
+          "+0.12",
+          "p<0.01"
+        ]
+      ],
+      "note": "연구 4(n=730)의 Table 9. 미래 플레이 의향을 설명하는 모형의 R²=0.10으로, 심리적 요인이 중요한 일부이지만 전부를 설명하지는 못한다."
+    },
+    {
+      "title": "다른 게임을 플레이해도 심리 욕구와 즐거움의 관계가 관찰됐다",
+      "columns": [
+        "연구",
+        "표본/대상",
+        "주요 결과"
+      ],
+      "rows": [
+        [
+          "연구 1",
+          "89명 · Super Mario 64",
+          "자율성·유능감 인식이 즐거움 및 미래 플레이 선호와 연관"
+        ],
+        [
+          "연구 2",
+          "50명 · Zelda vs A Bug’s Life",
+          "두 게임 간 즐거움·선호 차이와 자율성·유능감 차이를 함께 확인"
+        ],
+        [
+          "연구 3",
+          "58명 · 4개 게임 반복 플레이",
+          "같은 사람의 게임별 즐거움 차이에도 자율성·유능감이 유의하게 관련"
+        ],
+        [
+          "연구 4",
+          "730명 · MMO 커뮤니티 설문",
+          "세 욕구가 미래 플레이 의향과 각각 유의하게 관련"
+        ]
+      ],
+      "note": "연구마다 조작·분석과 표본이 다르며, 네 연구를 동일 조건의 대규모 무작위 실험 하나로 합쳐 해석해서는 안 된다."
+    }
+  ],
+  "experiments": [
+    {
+      "title": "비슷한 전투 승률인데 즐거움이 다른 이유 확인",
+      "hypothesis": "승리 여부가 비슷해도 자신이 선택했다고 느끼고 실력이 늘었다고 느끼는 플레이어는 즐거움·재도전 의향이 다를 수 있다.",
+      "control": "동일 전투 콘텐츠 이용자의 일반 만족도 조사만 수행",
+      "treatment": "일반 만족도에 자율성·유능감·관계성을 구분한 설문을 추가",
+      "primary": "각 욕구 점수와 즐거움·재도전 의향의 독립적 관련성",
+      "guardrail": "상관분석을 인과효과로 바꾸지 말고 실력·경험·친구 동반 여부 등을 함께 고려"
+    }
+  ],
+  "citations": [
+    {
+      "label": "원저자 공개 원문 PDF",
+      "url": "https://selfdeterminationtheory.org/SDT/documents/2006_RyanRigbyPrzybylski_MandE.pdf"
+    },
+    {
+      "label": "DOI",
+      "url": "https://doi.org/10.1007/s11031-006-9051-8"
+    },
+    {
+      "label": "외부 인용 집계 (2025년 1월 기준)",
+      "url": "https://explore.metascienceobservatory.org/papers/W2023062420"
+    }
+  ],
+  "dataCaveat": "고전 연구의 실험 대상·게임은 2000년대 환경이다. MMO의 향후 플레이 기간은 설문으로 측정한 의향이며 실제 향후 접속 기록이 아니다."
 }
 ];
 
@@ -2852,18 +3612,18 @@ const e=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt
 const icon=name=>`<svg class="icon" aria-hidden="true"><use href="#i-${name}"></use></svg>`;
 const date=s=>{if(!s)return '미확인';const a=s.split('-');return `${a[0]}.${a[1]}`;};
 const sortedByUpdated=()=>[...papers].sort((a,b)=>b.updated.localeCompare(a.updated)||b.published.localeCompare(a.published)||a.rank-b.rank);
-const getTags=()=>{let counts={};papers.forEach(p=>p.tags.forEach(t=>counts[t]=(counts[t]||0)+1));return Object.entries(counts).sort((a,b)=>b[1]-a[1]||a[0].localeCompare(b[0],'ko'));};
-const card=(p,fromNew=false)=>`<article class="card ${e(p.accent||'violet')}"><div class="card-body"><div class="card-top"><div class="chipline"><span class="category">${e(p.domain)}</span>${fromNew?'<span class="new-stamp">NEW</span>':''}</div><span class="sub-meta">${date(p.published)}</span></div><h3><button data-action="open-paper" data-id="${e(p.id)}">${e(p.title)}</button></h3><p class="description">${e(p.shortFinding)}</p><div class="tag-wrap">${p.tags.slice(0,5).map(t=>`<button class="tag" data-action="filter-tag" data-tag="${e(t)}" title="${e(t)} 태그 연구 보기">#${e(t)}</button>`).join('')}</div></div><div class="card-bottom"><div class="foot-note">${e(p.dataType)} · ${e(p.researchType)} ${saved.includes(p.id)?' · ★ 저장됨':''}</div><button data-action="open-paper" data-id="${e(p.id)}">리뷰 읽기 ${icon('arrow')}</button></div></article>`;
+const getTags=()=>{let counts={};papers.forEach(p=>{if(p.best)counts.BEST=(counts.BEST||0)+1;p.tags.forEach(t=>counts[t]=(counts[t]||0)+1);});return Object.entries(counts).sort((a,b)=>a[0]==='BEST'?-1:b[0]==='BEST'?1:b[1]-a[1]||a[0].localeCompare(b[0],'ko'));};
+const card=(p,fromNew=false)=>`<article class="card ${e(p.accent||'violet')}"><div class="card-body"><div class="card-top"><div class="chipline"><span class="category">${e(p.domain)}</span>${fromNew?'<span class="new-stamp">NEW</span>':''}${p.best?'<button class="best-badge" data-action="filter-tag" data-tag="BEST" title="BEST 선정 연구만 보기">★ BEST</button>':''}</div><span class="sub-meta">${date(p.published)}</span></div><h3><button data-action="open-paper" data-id="${e(p.id)}">${e(p.title)}</button></h3><p class="description">${e(p.shortFinding)}</p><div class="tag-wrap">${p.tags.slice(0,5).map(t=>`<button class="tag" data-action="filter-tag" data-tag="${e(t)}" title="${e(t)} 태그 연구 보기">#${e(t)}</button>`).join('')}</div></div><div class="card-bottom"><div class="foot-note">${e(p.dataType)} · ${e(p.researchType)} ${saved.includes(p.id)?' · ★ 저장됨':''}</div><button data-action="open-paper" data-id="${e(p.id)}">리뷰 읽기 ${icon('arrow')}</button></div></article>`;
 function refreshNav(){document.getElementById('all-count').textContent=papers.length;document.getElementById('header-status').textContent=`연구 위키 · ${papers.length}편`;document.getElementById('sidebar-updated').textContent=`마지막 리뷰 업데이트 ${date(sortedByUpdated()[0]?.updated)}`;document.getElementById('sidebar-topics').innerHTML=Object.entries(papers.reduce((acc,p)=>(acc[p.domain]=(acc[p.domain]||0)+1,acc),{})).map(([t,n])=>`<button class="side-link ${state.domain===t?'active':''}" data-action="filter-domain" data-domain="${e(t)}">${icon('tag')}${e(t)}<span class="side-count">${n}</span></button>`).join('');['home','new','saved'].forEach(x=>document.getElementById('nav-'+x).classList.toggle('active',state.mode=== (x==='home'?'all':x)));}
 function home(){refreshNav();document.getElementById('breadcrumbs').innerHTML='<b>게임 기획 리뷰</b><span>/</span> 전체 연구';const newPapers=sortedByUpdated().slice(0,3);const domains=[...new Set(papers.map(p=>p.domain))];const types=[...new Set(papers.map(p=>p.dataType))];const methods=[...new Set(papers.map(p=>p.researchType))];let c=`<div class="wrap"><section class="hero"><span class="orb" aria-hidden="true"></span><div class="eyebrow">GAME DESIGN × EVIDENCE</div><h1>게임 기획 리뷰<span class="hero-headline-sub">플레이어의 선택과 경험을 데이터로 읽다.</span></h1><p>몰입, 선택, UX, 리텐션까지. 연구에서 확인한 사실과 기획적 해석을 분리해, 게임 기획자가 바로 활용할 수 있도록 정리한 논문 위키입니다.</p><div class="hero-pills"><span class="hero-pill">검토한 연구 <strong>${papers.length}편</strong></span><span class="hero-pill">연구 분야 <strong>${domains.length}개</strong></span><span class="hero-pill">최근 업데이트 <strong>${date(newPapers[0]?.updated)}</strong></span></div></section>`;
 if(state.mode!=='saved'&&state.mode!=='new') c+=`<section class="section" id="new-section"><div class="sect-head"><div><div class="section-overline">FRESHLY REVIEWED</div><h2>✦ NEW <span style="font-size:12px;color:#8896ac;font-weight:600;vertical-align:middle;">최근 업데이트 · 최대 3편</span></h2><div class="section-subtitle">이번에 새롭게 추가되거나 업데이트한 연구</div></div><button class="link-btn" data-action="nav-new">최근 리뷰 모두 보기 →</button></div><div class="cards">${newPapers.map(p=>card(p,true)).join('')}</div></section>`;
-c+=`<section class="section" id="library-section"><div class="sect-head"><div><div class="section-overline">EXPLORE THE LIBRARY</div><h2>${state.mode==='saved'?'저장한 연구':state.mode==='new'?'최근 업데이트한 연구':'모든 연구 살펴보기'}</h2><div class="section-subtitle">관심 있는 키워드를 선택하거나, 검색해 연구를 찾아보세요.</div></div></div><div class="filter-bar"><label class="searchbox">${icon('search')}<input id="search-input" type="search" placeholder="연구 제목, 태그, 주제 검색..." aria-label="연구 검색" value="${e(state.search)}" autocomplete="off"></label><select class="select" id="domain-select" aria-label="분야 필터"><option value="all">모든 연구 분야</option>${domains.map(t=>`<option value="${e(t)}" ${t===state.domain?'selected':''}>${e(t)}</option>`).join('')}</select><select class="select" id="data-select" aria-label="데이터 유형"><option value="all">모든 데이터</option>${types.map(t=>`<option value="${e(t)}" ${t===state.data?'selected':''}>${e(t)}</option>`).join('')}</select><select class="select" id="sort-select" aria-label="정렬"><option value="updated" ${state.sort==='updated'?'selected':''}>최근 업데이트순</option><option value="published" ${state.sort==='published'?'selected':''}>최신 발표순</option><option value="title" ${state.sort==='title'?'selected':''}>제목 가나다순</option></select></div><div class="filter-tags" id="tag-filters"><button class="filter-tag ${!state.tag?'active':''}" data-action="filter-tag" data-tag="">전체 태그</button>${getTags().map(([t])=>`<button class="filter-tag ${state.tag===t?'active':''}" data-action="filter-tag" data-tag="${e(t)}">#${e(t)}</button>`).join('')}</div><div class="all-header"><span id="result-count"></span><button class="clear" data-action="reset-filters">필터 초기화</button></div><div class="cards" id="all-cards"></div></section><footer class="footer"><span>© 게임 기획 리뷰 · 연구 결과와 기획적 가설을 구분하여 기록합니다.</span><span>개별 원문 저작권은 원저자에게 있습니다.</span></footer></div>`;
+c+=`<section class="section" id="library-section"><div class="sect-head"><div><div class="section-overline">EXPLORE THE LIBRARY</div><h2>${state.mode==='saved'?'저장한 연구':state.mode==='new'?'최근 업데이트한 연구':'모든 연구 살펴보기'}</h2><div class="section-subtitle">관심 있는 키워드를 선택하거나, 검색해 연구를 찾아보세요.</div></div></div><div class="filter-bar"><label class="searchbox">${icon('search')}<input id="search-input" type="search" placeholder="연구 제목, 태그, 주제 검색..." aria-label="연구 검색" value="${e(state.search)}" autocomplete="off"></label><select class="select" id="domain-select" aria-label="분야 필터"><option value="all">모든 연구 분야</option>${domains.map(t=>`<option value="${e(t)}" ${t===state.domain?'selected':''}>${e(t)}</option>`).join('')}</select><select class="select" id="data-select" aria-label="데이터 유형"><option value="all">모든 데이터</option>${types.map(t=>`<option value="${e(t)}" ${t===state.data?'selected':''}>${e(t)}</option>`).join('')}</select><select class="select" id="sort-select" aria-label="정렬"><option value="updated" ${state.sort==='updated'?'selected':''}>최근 업데이트순</option><option value="published" ${state.sort==='published'?'selected':''}>최신 발표순</option><option value="title" ${state.sort==='title'?'selected':''}>제목 가나다순</option></select></div><div class="filter-tags" id="tag-filters"><button class="filter-tag ${!state.tag?'active':''}" data-action="filter-tag" data-tag="">전체 태그</button>${getTags().map(([t])=>`<button class="filter-tag ${t==='BEST'?'best-filter ':''}${state.tag===t?'active':''}" data-action="filter-tag" data-tag="${e(t)}">#${e(t)}</button>`).join('')}</div><div class="all-header"><span id="result-count"></span><button class="clear" data-action="reset-filters">필터 초기화</button></div><div class="cards" id="all-cards"></div></section><footer class="footer"><span>© 게임 기획 리뷰 · 연구 결과와 기획적 가설을 구분하여 기록합니다.</span><span>개별 원문 저작권은 원저자에게 있습니다.</span></footer></div>`;
 document.getElementById('content').innerHTML=c;list();}
-function filtered(){let list=[...papers];if(state.mode==='saved')list=list.filter(p=>saved.includes(p.id));if(state.mode==='new')list=sortedByUpdated().slice(0,3);if(state.tag)list=list.filter(p=>p.tags.includes(state.tag));if(state.data!=='all')list=list.filter(p=>p.dataType===state.data);if(state.domain!=='all')list=list.filter(p=>p.domain===state.domain);if(state.method!=='all')list=list.filter(p=>p.researchType===state.method);if(state.search.trim()){const q=state.search.toLocaleLowerCase();list=list.filter(p=>[p.title,p.originalTitle,p.kicker,p.finding,p.dataSummary,p.methodSummary,...p.tags].join(' ').toLocaleLowerCase().includes(q));}list.sort((a,b)=>state.sort==='title'?a.title.localeCompare(b.title,'ko'):state.sort==='published'?b.published.localeCompare(a.published):b.updated.localeCompare(a.updated)||b.published.localeCompare(a.published));return list;}
+function filtered(){let list=[...papers];if(state.mode==='saved')list=list.filter(p=>saved.includes(p.id));if(state.mode==='new')list=sortedByUpdated().slice(0,3);if(state.tag)list=list.filter(p=>state.tag==='BEST'?Boolean(p.best):p.tags.includes(state.tag));if(state.data!=='all')list=list.filter(p=>p.dataType===state.data);if(state.domain!=='all')list=list.filter(p=>p.domain===state.domain);if(state.method!=='all')list=list.filter(p=>p.researchType===state.method);if(state.search.trim()){const q=state.search.toLocaleLowerCase();list=list.filter(p=>[p.title,p.originalTitle,p.kicker,p.finding,p.dataSummary,p.methodSummary,...(p.best?['BEST',p.best.award]:[]),...p.tags].join(' ').toLocaleLowerCase().includes(q));}list.sort((a,b)=>state.sort==='title'?a.title.localeCompare(b.title,'ko'):state.sort==='published'?b.published.localeCompare(a.published):b.updated.localeCompare(a.updated)||b.published.localeCompare(a.published));return list;}
 function list(){const el=document.getElementById('all-cards');if(!el)return;const arr=filtered();document.getElementById('result-count').textContent=`${arr.length}개의 연구를 찾았습니다${state.tag?' · #'+state.tag:''}`;el.innerHTML=arr.length?arr.map(p=>card(p)).join(''):`<div class="empty"><div style="font-size:23px">⌕</div><strong>조건에 맞는 연구가 없어요</strong>검색어와 필터를 바꿔보세요.</div>`;}
 const rowTable=(rows,headers=null,summary=false)=>`<div class="paper-table-wrap"><table class="paper-table ${summary?'summary-table':''}">${headers?`<thead><tr>${headers.map(x=>`<th>${e(x)}</th>`).join('')}</tr></thead>`:''}<tbody>${rows.map(row=>`<tr>${row.map(c=>`<td>${e(c)}</td>`).join('')}</tr>`).join('')}</tbody></table></div>`;
 const insight=(label,body,color='')=>`<div class="insight ${color}"><div class="insight-label">${e(label)}</div><p>${e(body)}</p></div>`;
-function detail(p){refreshNav();document.getElementById('breadcrumbs').innerHTML=`<b>게임 기획 리뷰</b><span>/</span> ${e(p.domain)} <span>/</span> 상세 분석`;const anchor=(k,title)=>`<a href="#section-${k}" data-action="scroll-section" data-target="section-${k}">${e(title)}</a>`;let html=`<div class="wrap"><button class="back-button" data-action="back">${icon('back')} 전체 연구로 돌아가기</button><header class="detail-header"><div class="eyebrow">RESEARCH DEEP DIVE · ${e(p.researchType)}</div><h1>${e(p.title)}</h1><p>${e(p.kicker)}</p><div class="detail-meta"><span><strong>출처</strong> · ${e(p.journal)}</span><span><strong>발표</strong> · ${date(p.published)}</span><span><strong>데이터</strong> · ${e(p.dataType)}</span><span><strong>분석 메모</strong> · ${e(p.confidence)}</span></div><div class="tag-wrap">${p.tags.map(t=>`<button class="tag" data-action="filter-tag" data-tag="${e(t)}">#${e(t)}</button>`).join('')}</div><div style="display:flex;flex-wrap:wrap;gap:9px;margin-top:20px;"><button class="source-link" data-action="save" data-id="${e(p.id)}">${icon('bookmark')} ${saved.includes(p.id)?'저장 해제':'읽기 목록에 저장'}</button><a class="source-link" href="${e(p.sourceUrl)}" target="_blank" rel="noopener noreferrer">${icon('external')} 논문 원문</a></div></header><div class="detail-body"><div class="article">`;
+function detail(p){refreshNav();document.getElementById('breadcrumbs').innerHTML=`<b>게임 기획 리뷰</b><span>/</span> ${e(p.domain)} <span>/</span> 상세 분석`;const anchor=(k,title)=>`<a href="#section-${k}" data-action="scroll-section" data-target="section-${k}">${e(title)}</a>`;let html=`<div class="wrap"><button class="back-button" data-action="back">${icon('back')} 전체 연구로 돌아가기</button><header class="detail-header"><div class="eyebrow">RESEARCH DEEP DIVE · ${e(p.researchType)}</div><h1>${e(p.title)}</h1><p>${e(p.kicker)}</p><div class="detail-meta"><span><strong>출처</strong> · ${e(p.journal)}</span><span><strong>발표</strong> · ${date(p.published)}</span><span><strong>데이터</strong> · ${e(p.dataType)}</span><span><strong>분석 메모</strong> · ${e(p.confidence)}</span></div>${p.best?`<div class="best-award"><button class="best-badge" data-action="filter-tag" data-tag="BEST" title="BEST 선정 연구만 보기">★ BEST</button><strong style="margin-top:8px">${e(p.best.award)}</strong>선정 근거: <a href="${e(p.best.evidenceUrl)}" target="_blank" rel="noopener noreferrer">${e(p.best.evidenceName)}</a></div>`:''}<div class="tag-wrap" style="margin-top:16px">${p.tags.map(t=>`<button class="tag" data-action="filter-tag" data-tag="${e(t)}">#${e(t)}</button>`).join('')}</div><div style="display:flex;flex-wrap:wrap;gap:9px;margin-top:20px;"><button class="source-link" data-action="save" data-id="${e(p.id)}">${icon('bookmark')} ${saved.includes(p.id)?'저장 해제':'읽기 목록에 저장'}</button><a class="source-link" href="${e(p.sourceUrl)}" target="_blank" rel="noopener noreferrer">${icon('external')} 논문 원문</a></div></header><div class="detail-body"><div class="article">`;
 html+=`<section class="paper-section" id="section-summary"><h2><span class="section-num">01</span> 한눈에 보는 연구 요약</h2>${rowTable(p.summaryRows,null,true)}<div class="insight green"><div class="insight-label">연구가 실제로 확인한 핵심</div><p>${e(p.finding)}</p></div></section>`;
 html+=`<section class="paper-section" id="section-eval"><h2><span class="section-num">02</span> 눈여겨볼 결과와 그 의미</h2><div class="eval-lead"><div class="eval-eyebrow">핵심 결론</div><p>${e(p.evaluation.lead)}</p></div><h3>실제 데이터에서 확인된 결과</h3><p class="interpretation-footnote">아래에는 논문의 정량 분석·실험 비교·질적 관찰 결과를 구분해 정리했다. 통계적 관련성이 곧 인과관계는 아니다.</p><div class="evidence-list">${p.evaluation.highlights.map(x=>`<div class="evidence-item"><div class="evidence-stat">${e(x.stat)}</div><div><div class="evidence-title">${e(x.title)}</div><p class="evidence-description">${e(x.plain)}</p><a class="evidence-cite" href="${e(p.sourceUrl)}" target="_blank" rel="noopener noreferrer">논문 근거 · ${e(x.source)}</a></div></div>`).join('')}</div><h3>결과에서 도출한 기획적 인사이트</h3><p class="interpretation-footnote">연구 근거 → 해석의 이유 → 이해를 돕는 게임 사례 순서로 구분했다. 연구에서 입증하지 않은 것은 단정하지 않는다.</p><div class="interpretation-list">${p.evaluation.interpretations.map((x,i)=>`<div class="interpretation-item"><h4>${i+1}. ${e(x.title)}</h4><div class="reasoning-step"><b>연구에서 확인한 근거</b><p>${e(x.observed)}</p></div><div class="reasoning-step"><b>이 근거에서 도출한 해석</b><p>${e(x.reasoning)}</p></div><div class="reasoning-step example"><b>게임 속 사례</b><p>${e(x.example)}</p></div><p class="interpretation-boundary">해석의 범위: ${e(x.boundary)}</p></div>`).join('')}</div><p class="eval-bottom">기획자가 기억할 결론 · ${e(p.evaluation.takeaway)}</p></section>`;
 html+=`<section class="paper-section" id="section-purpose"><h2><span class="section-num">03</span> 연구 주제와 목적</h2><p>${e(p.kicker)}</p>${insight('연구 질문',p.summaryRows[0][1])}<h3>논문 정보</h3><p>${e(p.originalTitle)}<br>${e(p.authors)}<br>${e(p.journal)} · DOI ${e(p.doi)}</p></section>`;
